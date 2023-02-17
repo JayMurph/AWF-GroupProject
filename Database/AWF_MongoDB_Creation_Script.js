@@ -23,6 +23,8 @@ db.quizes.insertMany([
 db.quizes.insertMany([
     { category: "Math", qTxt: "(1 + 1)*(2 - 3) = ?:", qAns: 3, a1Txt: "1", a2Txt: "2", a3Txt: "-2", a4Txt: "3"},
     { category: "Math", qTxt: "The derivative of the function 4*x^2 = ?:", qAns: 4, a1Txt: "2*x", a2Txt: "4*x", a3Txt: "6*x", a4Txt: "8*x"},
+    { category: "Math", qTxt: "1 + 1 = ?", a1: {txt: "2", correct: true}, a2Txt: {txt: "3", correct: false}, a3Txt: {txt: "4", correct: false}, a4Txt: {txt: "5", correct: false}}, 
+    //the above entry is an alternate schema for a quiz question: I'm unsure about what is better.
     { category: "Math", qTxt: "", qAns: 0, a1Txt: "", a2Txt: "", a3Txt: "", a4Txt: ""}/*STUB*/, 
 ]);
 
