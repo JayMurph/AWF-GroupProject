@@ -21,3 +21,8 @@ app.get("/", (req, res) => {
     res.contentType = res.type("html");
     res.sendFile(__dirname + "/main.html");
 }).listen(port);
+
+app.get("/quiz", (req, res) => {
+  res.contentType = res.type("json");
+  res.send(quizzes);
+});
