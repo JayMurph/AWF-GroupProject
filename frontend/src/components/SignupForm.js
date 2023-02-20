@@ -1,6 +1,5 @@
 import React from 'react';
 import FormField from './FormField';
-import Styles from '../styles.module.css';
 import {FormButton, CenteredDiv, ButtonDiv} from '../StyledElements';
 
 export default class SignupForm extends React.Component {
@@ -34,7 +33,7 @@ export default class SignupForm extends React.Component {
           <FormField fieldName={'First Name'} fieldValue={this.state.firstName} onChangeCB={(e)=>this.setState({firstName:e.target.value})}/>
           <FormField fieldName={'Last Name'} fieldValue={this.state.lastName} onChangeCB={(e)=>this.setState({lastName:e.target.value})}/>
           <ButtonDiv>
-              <FormButton type="submit" className={Styles.FormButton}>Create</FormButton>
+              <FormButton type="submit">Create</FormButton>
           </ButtonDiv>
         </form>
       </CenteredDiv>

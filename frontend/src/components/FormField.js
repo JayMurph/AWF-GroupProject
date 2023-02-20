@@ -1,4 +1,4 @@
-import Styles from '../styles.module.css';
+import {FormTextbox} from '../StyledElements'
 
 export default function FormField(props) {
     return  (
@@ -6,7 +6,7 @@ export default function FormField(props) {
             <p>
                 <label>{props.fieldName}</label>
             </p>
-            <input className={Styles.FormFieldTextbox} type="text" value={props.fieldValue} onChange={props.onChangeCB}/>
+            <FormTextbox type="text" value={props.fieldValue} onChange={props.onChangeCB}/>
         </div>
     );
 }

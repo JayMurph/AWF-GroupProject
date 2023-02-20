@@ -3,13 +3,5 @@
   --navText: #A6A2A2;
   --navTextActive:#4D4DFF;
   --buttonText:#847577;
-  --activeButton:#CFD2CD
-}
-
-.FormFieldTextbox{
-  width:240px;
-}
-
-.FormButton{
-  font-size:26px;
+  --activeButton:#CFD2CD;
 }
