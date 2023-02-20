@@ -91,7 +91,7 @@ export default class SignupForm extends React.Component {
             {this.state.errors.last_name ? this.state.errors.last_name : ""}
           </ErrorLabel>
           <ButtonDiv>
-            <FormButton type="submit">Login</FormButton>
+            <FormButton type="submit">Create</FormButton>
           </ButtonDiv>
         </form>
       </CenteredDiv>

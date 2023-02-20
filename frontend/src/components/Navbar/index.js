@@ -1,9 +1,10 @@
 import React from "react";
-import { Nav, NavLink, NavMenu } from "./NavbarElements";
+import { Nav, NavLink, NavMenu, Header, Title } from "./NavbarElements";
 
 const Navbar = () => {
 return (
-	<>
+	<Header>
+		<Title>Trivia Mania</Title>
 		<Nav>
 			<NavMenu>
 			<NavLink to="/about" activeStyle>
@@ -17,7 +18,7 @@ return (
 			</NavLink>
 			</NavMenu>
 		</Nav>
-	</>
+	</Header>
 	);
 };
 

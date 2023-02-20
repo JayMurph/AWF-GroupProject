@@ -3,13 +3,26 @@ import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 import "../../styles.module.css";
 
-export const Nav = styled.nav`
+export const Header = styled.div`
 	background:var(--navBackground); 
 	height: 85px;
 	display: flex;
 	justify-content: space-between;
-	padding: 0.2rem calc((100vw - 350px));
 	z-index: 12;
+`
+export const Title = styled.h1`
+	position:absolute;
+	padding-left:3vw;
+	@media screen and (max-width: 560px) {
+		display: none;
+	}
+`
+
+export const Nav = styled.nav`
+	display: flex;
+	justify-content: space-between;
+	padding: 0.2rem calc((100vw - 350px));
+	position:relative;
 `;
 
 export const NavLink = styled(Link)`
