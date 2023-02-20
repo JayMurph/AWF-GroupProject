@@ -1,18 +1,26 @@
 import React from 'react';
+import Styles from '../styles.module.css';
+import {Paragraph, CenteredDiv} from '../StyledElements'
 
 
 const Home = () => {
 return (
-	<div>
-	<h1>Trivia Mania</h1>
-    <div>
-        <run>
-            Unleash your inner genius with Trivia Mania! Test your knowledge in math,
-            history, science, literature, and more. Play now and become the ultimate trivia
-            champion!
-        </run>
-    </div>
-	</div>
+	<CenteredDiv>
+            <h1>
+                Trivia Mania
+            </h1>
+            <div>
+                <Paragraph className="{Styles.Paragraph}">
+                    Unleash your inner genius with Trivia Mania! 
+                </Paragraph> 
+                <Paragraph  className={Styles.Paragraph}>
+                    Test your knowledge in math, history, science, literature, and more. 
+                </Paragraph>
+                <Paragraph>
+                    Play now and become the ultimate trivia champion!
+                </Paragraph>
+            </div>
+	</CenteredDiv>
 );
 };
 

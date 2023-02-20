@@ -1,18 +1,13 @@
-.Form{
-  display: flex;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
+:root {
+  --navBackground: #E5E6E4;
+  --navText: #A6A2A2;
+  --navTextActive:#4D4DFF;
+  --buttonText:#847577;
+  --activeButton:#CFD2CD
 }
 
 .FormFieldTextbox{
   width:240px;
-}
-
-.FormButtonContainer{
-  display:flex;
-  justify-content: center;
-  padding:1rem 0;
 }
 
 .FormButton{
