@@ -5,3 +5,7 @@
   --buttonText:#847577;
   --activeButton:#CFD2CD;
 }
+
+.FormTextbox {
+  width:240px;
+}

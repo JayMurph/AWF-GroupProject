@@ -1,12 +1,18 @@
-import {FormTextbox} from '../StyledElements'
+import { FormTextbox } from "../StyledElements";
 
 export default function FormField(props) {
-    return  (
-        <div >
-            <p>
-                <label>{props.fieldName}</label>
-            </p>
-            <FormTextbox type="text" value={props.fieldValue} onChange={props.onChangeCB}/>
-        </div>
-    );
+  return (
+    <>
+      <p>
+        <label>{props.fieldName}</label>
+      </p>
+      <FormTextbox
+        type={props.type}
+        name={props.name}
+        value={props.fieldValue}
+        onChange={props.onChangeCB}
+        onBlur={props.onBlueCB}
+      />
+    </>
+  );
 }

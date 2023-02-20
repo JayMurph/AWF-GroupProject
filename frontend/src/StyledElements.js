@@ -37,3 +37,8 @@ export const FormTextbox = styled.input`
     width:
     240px;
 `;
+
+export const ErrorLabel = styled(CenteredDiv)`
+    className:'error';
+    color:#df0000;
+`;

@@ -1,35 +1,62 @@
-import React from 'react';
-import FormField from './FormField';
-import {FormButton, CenteredDiv, ButtonDiv} from '../StyledElements'
+import React from "react";
+import FormField from "./FormField";
+import { FormButton, CenteredDiv, ButtonDiv, ErrorLabel} from "../StyledElements";
+import ReactFormInputValidation from "react-form-input-validation";
 
 export default class LoginForm extends React.Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			userName:'',
-			password:''
-		};
+    this.state = {
+      fields: {
+        user_name: "",
+        password: "",
+      },
+      errors: {},
+    };
 
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+    //this.handleSubmit = this.handleSubmit.bind(this);
+    this.form = new ReactFormInputValidation(this);
+    this.form.useRules({
+      user_name: "required",
+      password: "required",
+    });
+    this.form.onformsubmit = (fields) => {
+      console.log(fields);
+    };
+  }
 
-	handleSubmit(event) {
-		console.log(this.state);
-		event.preventDefault();
-	}
-
-	render() {
-		return (
-			<CenteredDiv>
-				<form onSubmit={this.handleSubmit} >
-				<FormField fieldName={'User Name'} fieldValue={this.state.userName} onChangeCB={(e)=>this.setState({userName:e.target.value})}/>
-				<FormField fieldName={'Password'} fieldValue={this.state.password} onChangeCB={(e)=>this.setState({password:e.target.value})}/>
-				<ButtonDiv>
-					<FormButton type="submit">Login</FormButton>
-				</ButtonDiv>
-				</form>
-			</CenteredDiv>
-		);
-	}
+  render() {
+    return (
+      <CenteredDiv>
+        <form onSubmit={this.form.handleSubmit}>
+          <FormField
+            fieldName="User Name"
+            type="text"
+            name="user_name"
+            fieldValue={this.state.fields.user_name}
+            onChangeCB={this.form.handleChangeEvent}
+            onBlurCB={this.form.handleBlurEvent}
+          />
+          <ErrorLabel>
+            {this.state.errors.user_name ? this.state.errors.user_name : ""}
+          </ErrorLabel>
+          <FormField
+            fieldName="Password"
+            type="text"
+            name="password"
+            fieldValue={this.state.fields.password}
+            onChangeCB={this.form.handleChangeEvent}
+            onBlurCB={this.form.handleBlurEvent}
+          />
+          <ErrorLabel>
+            {this.state.errors.password ? this.state.errors.password : ""}
+          </ErrorLabel>
+          <ButtonDiv>
+            <FormButton type="submit">Login</FormButton>
+          </ButtonDiv>
+        </form>
+      </CenteredDiv>
+    );
+  }
 }
