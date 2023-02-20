@@ -7,7 +7,7 @@ background: #ffb3ff;
 height: 85px;
 display: flex;
 justify-content: space-between;
-padding: 0.2rem calc((100vw - 500px));
+padding: 0.2rem calc((100vw - 350px));
 z-index: 12;
 `;
 
@@ -16,9 +16,9 @@ color: #808080;
 display: flex;
 align-items: center;
 text-decoration: none;
-width: 80px;
-padding: 0 1rem;
-height: 100%;
+width: 100px;
+padding: 1 1rem;
+height: 900%;
 cursor: pointer;
 &.active {
 	color: #4d4dff;
@@ -47,7 +47,7 @@ margin-right: -24px;
 /* margin-right: 24px; */
 /* Third Nav */
 /* width: 100vw; white-space: nowrap; */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 300px) {
 	display: none;
 }
 `;
