@@ -18,9 +18,11 @@ export const FormButton = styled.button`
     padding: 0.5rem 0;
     margin: 0.5rem 1rem;
     width: 11rem;
-    border: 2px solid black;
+    border: 0px; 
+    color:var(--buttonText);
+    transition: background-color .1s ease-in;
     &:hover{
-        background: var(--navBackground)
+        background-color: var(--navBackground)
     }
     &:active{
         background: var(--activeButton)

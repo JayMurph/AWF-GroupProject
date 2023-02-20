@@ -32,7 +32,7 @@ export const NavLink = styled(Link)`
 	text-decoration: none;
 	width: 100px;
 	padding: 1 1rem;
-	height: 900%;
+	height: 90%;
 	cursor: pointer;
 	&.active {
 		color: var(--navTextActive)
