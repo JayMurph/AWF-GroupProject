@@ -25,16 +25,18 @@ export default class SignupForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <FormField fieldName={'Email'} fieldValue={this.state.email} onChangeCB={(e)=>this.setState({email:e.target.value})}/>
-        <FormField fieldName={'User Name'} fieldValue={this.state.userName} onChangeCB={(e)=>this.setState({userName:e.target.value})}/>
-        <FormField fieldName={'Password'} fieldValue={this.state.password} onChangeCB={(e)=>this.setState({password:e.target.value})}/>
-        <FormField fieldName={'First Name'} fieldValue={this.state.firstName} onChangeCB={(e)=>this.setState({firstName:e.target.value})}/>
-        <FormField fieldName={'Last Name'} fieldValue={this.state.lastName} onChangeCB={(e)=>this.setState({lastName:e.target.value})}/>
-        <p>
-            <button type="submit" className={Styles.FormButton}>Sign Up</button>
-        </p>
-      </form>
+      <div className={Styles.Form}>
+        <form onSubmit={this.handleSubmit} >
+          <FormField fieldName={'Email'} fieldValue={this.state.email} onChangeCB={(e)=>this.setState({email:e.target.value})}/>
+          <FormField fieldName={'User Name'} fieldValue={this.state.userName} onChangeCB={(e)=>this.setState({userName:e.target.value})}/>
+          <FormField fieldName={'Password'} fieldValue={this.state.password} onChangeCB={(e)=>this.setState({password:e.target.value})}/>
+          <FormField fieldName={'First Name'} fieldValue={this.state.firstName} onChangeCB={(e)=>this.setState({firstName:e.target.value})}/>
+          <FormField fieldName={'Last Name'} fieldValue={this.state.lastName} onChangeCB={(e)=>this.setState({lastName:e.target.value})}/>
+          <p className={Styles.FormButtonContainer}>
+              <button type="submit" className={Styles.FormButton}>Create</button>
+          </p>
+        </form>
+      </div>
     );
   }
 }
