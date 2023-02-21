@@ -47,6 +47,36 @@ app.get("/quiz", (req, res) => {
   res.send(filtered);
 });
 
+app.post("/quiz", (req, res) => {
+  const leaderboardEntry = {
+    userID: req.body.userID,
+    finalScore: req.body.finalScore,
+    timeStamp: req.body.timeStamp,
+  };
+
+  const {error} = validateLeaderboardEntry(leaderboardEntry);
+  if (error) {
+    res.status(400).send(error.message);
+    console.log(error.message);
+    return;
+  }
+
+  //TODO: Add call to mongodb to insert leaderboard entry.
+
+  console.log(leaderboardEntry);
+  res.status(200).send();
+});
+
+function validateLeaderboardEntry(requestBody) {
+  //TODO: Once the project has become more fleshed out, come back and update the Joi schema to fit better.
+  const schema = Joi.object({
+    userID: Joi.string().alphanum().required(),
+    finalScore: Joi.number().min(0).required(),
+    timeStamp: Joi.string().required()
+  });
+
+  return schema.validate(requestBody);
+}
 
 
 function isEmptyObject(obj) {
