@@ -4,13 +4,6 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-//const jsdom = require('jsdom');
-//const {JSDOM} = jsdom;
-//const {window} = new JSDOM().window;
-//global.document = document;
-
-//const $ = jQuery = require('jquery')(window);
-
 //test - beyond dummy data
 var quizzes = [
   {_id: "GuId832645", category: "Science", qTxt: "The chemical symbol for Gold is:", qAns: 4, a1Txt: "Ag", a2Txt: "Gl", a3Txt: "Fe", a4Txt: "Au"},
