@@ -5,11 +5,24 @@ import { CenteredDiv } from '../StyledElements';
 export default class Quiz extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            phase:0,
+            root:null,
+            categories:[],
+            onCategorySelection:(c)=>console.log(c)
+        }
+
+        this.state.root = (
+            <CategorySelection
+                categories={this.state.categories}
+                onCategorySelection={this.state.onCategorySelection}
+            />
+        );
     }
 
     render() {
         return (
-            <CategorySelection/>
+            this.state.root
         )
     }
 }
