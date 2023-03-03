@@ -39,7 +39,8 @@ export const ScrollDiv = styled(CenteredDiv)`
 
 export const CategorySelectionScrollDiv = styled(ScrollDiv)`
     width:90%;
-    height:95%;
+    min-height:0px;
+    height:90%;
     align-self:center;
 `;
 
