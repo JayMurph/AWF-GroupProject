@@ -12,12 +12,9 @@ export default class QuizStartForm extends React.Component {
 
   render() {
     return (
-      <FlexColumnContainer>
-        <PageHeader>{this.state.category}</PageHeader>
         <CenteredDiv style={{ height: "80%" }}>
           <BigButton onClick={this.state.onButtonClick}>Start</BigButton>
         </CenteredDiv>
-      </FlexColumnContainer>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import QuizStartForm from "./QuizStartForm";
 import QuestionForm from "./QuestionForm";
+import { FlexColumnContainer, QuestionSequenceHeaderContainer, PageHeader } from "../StyledElements";
 
 export default class QuestionsSequence extends React.Component {
   constructor(props) {
@@ -8,6 +9,8 @@ export default class QuestionsSequence extends React.Component {
     this.state = {
       pages: [],
       currPgIdx:0,
+      currQuestionNum:0,
+      currTime:0.0,
       category: props.category,
       questionsArr: props.questionsArr,
     };
@@ -34,6 +37,17 @@ export default class QuestionsSequence extends React.Component {
   };
 
   render() {
-    return this.state.pages[this.state.currPgIdx];
+    return (
+      <FlexColumnContainer>
+        <QuestionSequenceHeaderContainer>
+            <PageHeader style={{justifySelf:"start"}}>Question {this.state.currQuestionNum}</PageHeader>
+            <PageHeader style={{justifySelf:"center"}}>{this.state.currTime} secs</PageHeader>
+            <PageHeader style={{justifySelf:"end"}}>{this.state.category}</PageHeader>
+        </QuestionSequenceHeaderContainer>
+        <FlexColumnContainer>
+            {this.state.pages[this.state.currPgIdx]}
+        </FlexColumnContainer>
+      </FlexColumnContainer>
+    );
   }
 }

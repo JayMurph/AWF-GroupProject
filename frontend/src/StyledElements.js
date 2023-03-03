@@ -11,9 +11,7 @@ export const CenteredDiv = styled.div`
 
 export const PageHeader = styled.h1`
     text-align: center;
-
     min-width:0px;
-    width:100%;
 `
 export const ButtonDiv = styled(CenteredDiv)`
     margin: 2rem 0;
@@ -26,6 +24,17 @@ export const FlexColumnContainer = styled.div`
     width:100%;
     min-height: 0px;
     height: 100%; 
+`
+
+export const QuestionSequenceHeaderContainer = styled.div`
+    display:grid;
+    grid-auto-flow:column;
+    grid-template-columns:33% 33% 33%;
+    width:90%;
+    min-width:0px;
+    min-height: 0px;
+    justify-content:space-between;
+    align-self:center;
 `
 
 export const AppContentContainer = styled(FlexColumnContainer)`
