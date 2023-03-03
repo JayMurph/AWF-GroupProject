@@ -9,6 +9,10 @@ export const CenteredDiv = styled.div`
     align-items: center;
 `;
 
+export const PageHeader = styled.h1`
+    text-align: center;
+`
+
 export const ButtonDiv = styled(CenteredDiv)`
 margin: 2rem 0;
 `

@@ -1,10 +1,11 @@
 import React from 'react';
 import SignupForm from '../components/SignupForm.js'
+import { PageHeader } from '../StyledElements.js';
 
 const SignUp = () => {
     return (
         <>
-            <h1 style={{textAlign:'center'}}>Create a New Account</h1>
+            <PageHeader>Create a New Account</PageHeader>
             <SignupForm></SignupForm>
         </>
     );
