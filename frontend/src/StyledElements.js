@@ -17,7 +17,7 @@ export const ButtonDiv = styled(CenteredDiv)`
 margin: 2rem 0;
 `
 
-export const FormButton = styled.button`
+export const Button = styled.button`
     border-radius: 6px;
     padding: 0.5rem 0;
     margin: 0.5rem 1rem;
@@ -32,7 +32,13 @@ export const FormButton = styled.button`
         background: var(--activeButton)
     }
     font-size:26px;
-`;
+`
+
+export const FormButton = Button;
+
+export const BigButton = styled(Button)`
+    
+`
 
 export const Paragraph = styled.p`
     text-align: center;

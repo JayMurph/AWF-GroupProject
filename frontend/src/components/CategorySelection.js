@@ -1,25 +1,27 @@
-import React from 'react';
-import { CenteredDiv, PageHeader } from '../StyledElements';
+import React from "react";
+import { BigButton, CenteredDiv, PageHeader } from "../StyledElements";
+import CategoryButton from "./CategoryButton";
 
 export default class CategorySelection extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            categories:props.categories,
-            onCategorySelection:props.onCategorySelection
-        }
-    }
+    console.log(props.categories);
+    this.state = {
+      categories: props.categories,
+      onCategorySelection: props.onCategorySelection,
+    };
+  }
 
-    render() {
-        return (
-            <>
-                <PageHeader>
-                    Categories
-                </PageHeader>
-                <CenteredDiv>
-                </CenteredDiv>
-            </>
-        );
-    }
+  render() {
+    const listItems = this.state.categories.map((c) => <CategoryButton category={c}/>)
+    return (
+      <>
+        <PageHeader>Categories</PageHeader>
+        <CenteredDiv>
+            {listItems}
+        </CenteredDiv>
+      </>
+    );
+  }
 }
