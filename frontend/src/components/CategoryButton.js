@@ -4,15 +4,15 @@ import { BigButton } from '../StyledElements';
 export default class CategoryButton extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props.category);
         this.state = {
-            category:props.category
+            category:props.category,
+            onClick:props.onClick
         }
     }
 
     render() {
         return (
-            <BigButton>
+            <BigButton onClick={(ev)=>this.state.onClick(this.state.category)}>
                 {this.state.category}
             </BigButton>
         )
