@@ -5,24 +5,30 @@ import "../../styles.module.css";
 
 export const Header = styled.div`
 	background:var(--navBackground); 
-	height: 85px;
 	display: flex;
+	flex-direction:row;
+	min-height: 85px;
+	height: 10vh;
+	min-width:0px;
+	width:100vw;
 	justify-content: space-between;
 	z-index: 12;
-`
+`;
+
 export const Title = styled.h1`
 	position:absolute;
 	padding-left:3vw;
 	@media screen and (max-width: 560px) {
 		display: none;
 	}
-`
+`;
 
 export const Nav = styled.nav`
 	display: flex;
+	min-width:0px;
 	justify-content: space-between;
-	padding: 0.2rem calc((100vw - 350px));
-	position:relative;
+	margin-left:auto;
+	padding-right:min(10vw, 46px);
 `;
 
 export const NavLink = styled(Link)`

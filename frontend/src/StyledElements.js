@@ -12,9 +12,28 @@ export const CenteredDiv = styled.div`
 export const PageHeader = styled.h1`
     text-align: center;
 `
-
 export const ButtonDiv = styled(CenteredDiv)`
-margin: 2rem 0;
+    margin: 2rem 0;
+`
+
+export const FlexColumnContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    min-height: 0px;
+    height: 100%; 
+`
+
+export const AppContentContainer = styled(FlexColumnContainer)`
+    height:88vh;
+    width:100vw;
+`
+
+export const ScrollDiv = styled(CenteredDiv)`
+    min-height:0px;
+    height:100%;
+    min-width:0px;
+    width:100%;
+    overflow-y:scroll;
 `
 
 export const Button = styled.button`
@@ -37,7 +56,12 @@ export const Button = styled.button`
 export const FormButton = Button;
 
 export const BigButton = styled(Button)`
-    
+    width: 70vw;
+    height: 7rem;
+    margin : 1rem 0 1rem 0;
+    color: black;
+    font-weight:bold;
+    font-size: 2rem;
 `
 
 export const Paragraph = styled.p`

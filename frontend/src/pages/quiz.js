@@ -8,7 +8,7 @@ export default class Quiz extends React.Component {
         this.state = {
             phase:0,
             root:null,
-            categories:["T1", "T2", "T3"],
+            categories:["T1", "T2", "T3", "t4", "t5", "t6", "t7"],
             onCategorySelection:(c)=>console.log(c)
         }
 

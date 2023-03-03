@@ -1,5 +1,5 @@
 import React from "react";
-import { BigButton, CenteredDiv, PageHeader } from "../StyledElements";
+import { BigButton, ScrollDiv , PageHeader, FlexColumnContainer } from "../StyledElements";
 import CategoryButton from "./CategoryButton";
 
 export default class CategorySelection extends React.Component {
@@ -16,12 +16,14 @@ export default class CategorySelection extends React.Component {
   render() {
     const listItems = this.state.categories.map((c) => <CategoryButton category={c}/>)
     return (
-      <>
+      <FlexColumnContainer>
         <PageHeader>Categories</PageHeader>
-        <CenteredDiv>
-            {listItems}
-        </CenteredDiv>
-      </>
+        <FlexColumnContainer>
+            <ScrollDiv>
+                {listItems}
+            </ScrollDiv>
+        </FlexColumnContainer>
+      </FlexColumnContainer>
     );
   }
 }
