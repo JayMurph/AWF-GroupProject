@@ -39,6 +39,7 @@ export default class QuestionsSequence extends React.Component {
 
   render() {
     let content;
+    let questionCountText;
 
     if (this.state.currPgIdx > 0)  {
         content = 
@@ -47,6 +48,7 @@ export default class QuestionsSequence extends React.Component {
           triviaQuestion={this.state.triviaQuestionsArr[this.state.currPgIdx - 1]}
           onQuestionAnswered={this.onQuestionAnswered}
         />;
+        questionCountText = <h2>Question {this.state.currPgIdx} / {this.state.triviaQuestionsArr.length}</h2>;
     }
     else {
       content = 
@@ -54,13 +56,14 @@ export default class QuestionsSequence extends React.Component {
           category={this.state.category}
           onButtonClick={this.onStartButtonClick}
         />
+        questionCountText = <h2>Question 1 / {this.state.triviaQuestionsArr.length}</h2>;
     }
 
     return (
       <FlexColumnContainer>
         <QuestionSequenceHeaderContainer>
           <div style={{ justifySelf: "start" }}>
-            <h2>Question {this.state.currQuestionNum}</h2>
+            {questionCountText}
           </div>
           <div
             style={{
