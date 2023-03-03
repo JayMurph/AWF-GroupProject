@@ -1,7 +1,7 @@
 export default class TriviaQuestion {
-    constructor(question, answers, answerIdx) {
-        this.question = question;
-        this.answers = answers;
-        this.answerIdx = answerIdx;
+    constructor(questionTxt, answerTxtArr, correctAnswerIdx) {
+        this.question = questionTxt;
+        this.answers = answerTxtArr;
+        this.answerIdx = correctAnswerIdx;
     }
 }

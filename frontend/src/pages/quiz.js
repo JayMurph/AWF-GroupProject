@@ -9,7 +9,7 @@ export default class Quiz extends React.Component {
     this.state = {
       root: null,
       currCategory: "",
-      categories: ["T1", "T2", "T3", "t4", "t5", "t6", "t7"],
+      categories: ["History", "Science", "Math", "Literature"],
     };
 
     // get categories from API

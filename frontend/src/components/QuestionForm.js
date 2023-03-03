@@ -1,5 +1,6 @@
 import React from "react";
 import { PageHeader, BigButton, CenteredDiv } from "../StyledElements";
+import UserAnswerInfo from "../UserAnswerInfo";
 
 export default class QuestionForm extends React.Component {
   constructor(props) {
@@ -8,11 +9,16 @@ export default class QuestionForm extends React.Component {
       triviaQuestion: props.triviaQuestion,
       onQuestionAnswered: props.onQuestionAnswered,
     };
-    console.log(this.state.triviaQuestion.question);
   }
 
-  handleClick = (answer) => {
-    this.state.onQuestionAnswered("info");
+  handleClick = (ev) => {
+    this.state.onQuestionAnswered(
+      new UserAnswerInfo(
+        this.state.triviaQuestion,
+        20,
+        ev.target.id
+      )
+    );
   };
 
   render() {
@@ -22,16 +28,36 @@ export default class QuestionForm extends React.Component {
           {this.state.triviaQuestion.question}
         </PageHeader>
         <CenteredDiv>
-          <BigButton onClick={(ev) => this.handleClick(this.state.triviaQuestion.answers[0])}>
+          <BigButton
+            id={0}
+            onClick={(ev) =>
+              this.handleClick(ev)
+            }
+          >
             {this.state.triviaQuestion.answers[0]}
           </BigButton>
-          <BigButton onClick={(ev) => this.handleClick(this.state.triviaQuestion.answers[1])}>
+          <BigButton
+            id={1}
+            onClick={(ev) =>
+              this.handleClick(ev)
+            }
+          >
             {this.state.triviaQuestion.answers[1]}
           </BigButton>
-          <BigButton onClick={(ev) => this.handleClick(this.state.triviaQuestion.answers[2])}>
+          <BigButton
+            id={2}
+            onClick={(ev) =>
+              this.handleClick(ev)
+            }
+          >
             {this.state.triviaQuestion.answers[2]}
           </BigButton>
-          <BigButton onClick={(ev) => this.handleClick(this.state.triviaQuestion.answers[3])}>
+          <BigButton
+            id={3}
+            onClick={(ev) =>
+              this.handleClick(ev)
+            }
+          >
             {this.state.triviaQuestion.answers[3]}
           </BigButton>
         </CenteredDiv>

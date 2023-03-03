@@ -15,14 +15,22 @@ export default class QuestionsSequence extends React.Component {
       pgCount: props.triviaQuestions.length + 1,
       currTime: 0.0,
       category: props.category,
-      triviaQuestions: props.triviaQuestions,
+      triviaQuestionsArr: props.triviaQuestions,
+      answerInfoArr:[]
     };
   }
 
-  onQuestionAnswered = (info) => {
-    this.setState((state) => ({
-      currPgIdx: (state.currPgIdx + 1) % state.pgCount,
-    }));
+  onQuestionAnswered = (userAnswerInfo) => {
+    this.setState((state) => {
+      let answerInfoArr = [...state.answerInfoArr];
+      answerInfoArr.push(userAnswerInfo);
+      let currPgIdx = (state.currPgIdx + 1) % state.pgCount;
+
+      return ({
+        currPgIdx: currPgIdx,
+        answerInfoArr: answerInfoArr
+      })}
+    );
   };
 
   onStartButtonClick = () => {
@@ -36,11 +44,9 @@ export default class QuestionsSequence extends React.Component {
         content = 
         <QuestionForm
           key={this.state.currPgIdx - 1}
-          triviaQuestion={this.state.triviaQuestions[this.state.currPgIdx - 1]}
+          triviaQuestion={this.state.triviaQuestionsArr[this.state.currPgIdx - 1]}
           onQuestionAnswered={this.onQuestionAnswered}
         />;
-        console.log(this.state.currPgIdx);
-        console.log(content);
     }
     else {
       content = 
