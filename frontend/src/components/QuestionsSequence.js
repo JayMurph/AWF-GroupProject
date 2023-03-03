@@ -1,7 +1,7 @@
 import React from "react";
 import QuizStartForm from "./QuizStartForm";
 import QuestionForm from "./QuestionForm";
-import { FlexColumnContainer, QuestionSequenceHeaderContainer, PageHeader } from "../StyledElements";
+import { FlexColumnContainer, QuestionSequenceHeaderContainer, QuestionSequenceHeaderItem} from "../StyledElements";
 
 export default class QuestionsSequence extends React.Component {
   constructor(props) {
@@ -40,9 +40,24 @@ export default class QuestionsSequence extends React.Component {
     return (
       <FlexColumnContainer>
         <QuestionSequenceHeaderContainer>
-            <PageHeader style={{justifySelf:"start"}}>Question {this.state.currQuestionNum}</PageHeader>
-            <PageHeader style={{justifySelf:"center"}}>{this.state.currTime} secs</PageHeader>
-            <PageHeader style={{justifySelf:"end"}}>{this.state.category}</PageHeader>
+            <div style={{justifySelf:"start"}}>
+                <h2>
+                    Question {this.state.currQuestionNum}
+                </h2>
+            </div>
+            <div style={{justifySelf:"center", display:"flex", flexDirection:"row", alignItems:"center"}}>
+                <h1 style={{marginRight:"22px"}}>
+                    {this.state.currTime.toFixed(2)} 
+                </h1>
+                <h2>
+                    secs
+                </h2>
+            </div>
+            <div style={{justifySelf:"end"}}>
+                <h2>
+                    {this.state.category}
+                </h2>
+            </div>
         </QuestionSequenceHeaderContainer>
         <FlexColumnContainer>
             {this.state.pages[this.state.currPgIdx]}

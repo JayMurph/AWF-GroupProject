@@ -35,6 +35,7 @@ export const QuestionSequenceHeaderContainer = styled.div`
     min-height: 0px;
     justify-content:space-between;
     align-self:center;
+    align-items:center;
 `
 
 export const AppContentContainer = styled(FlexColumnContainer)`
