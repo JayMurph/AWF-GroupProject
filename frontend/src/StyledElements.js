@@ -11,6 +11,8 @@ export const CenteredDiv = styled.div`
 
 export const PageHeader = styled.h1`
     text-align: center;
+    min-width:0px;
+    width:100%;
 `
 export const ButtonDiv = styled(CenteredDiv)`
     margin: 2rem 0;
@@ -19,22 +21,27 @@ export const ButtonDiv = styled(CenteredDiv)`
 export const FlexColumnContainer = styled.div`
     display:flex;
     flex-direction:column;
+    min-width:0px;
+    width:100%;
     min-height: 0px;
     height: 100%; 
 `
 
 export const AppContentContainer = styled(FlexColumnContainer)`
     height:88vh;
-    width:100vw;
-`
+    width:100%;
+`;
 
 export const ScrollDiv = styled(CenteredDiv)`
-    min-height:0px;
-    height:100%;
-    min-width:0px;
-    width:100%;
+    display:grid;
     overflow-y:scroll;
-`
+`;
+
+export const CategorySelectionScrollDiv = styled(ScrollDiv)`
+    width:90%;
+    height:95%;
+    align-self:center;
+`;
 
 export const Button = styled.button`
     border-radius: 6px;

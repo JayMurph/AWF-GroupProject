@@ -1,5 +1,5 @@
 import React from "react";
-import { BigButton, ScrollDiv , PageHeader, FlexColumnContainer } from "../StyledElements";
+import { BigButton, ScrollDiv , PageHeader, FlexColumnContainer, CategorySelectionScrollDiv } from "../StyledElements";
 import CategoryButton from "./CategoryButton";
 
 export default class CategorySelection extends React.Component {
@@ -19,9 +19,9 @@ export default class CategorySelection extends React.Component {
       <FlexColumnContainer>
         <PageHeader>Categories</PageHeader>
         <FlexColumnContainer>
-            <ScrollDiv>
+            <CategorySelectionScrollDiv>
                 {listItems}
-            </ScrollDiv>
+            </CategorySelectionScrollDiv>
         </FlexColumnContainer>
       </FlexColumnContainer>
     );
