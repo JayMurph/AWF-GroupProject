@@ -1,16 +1,17 @@
-import React from 'react';
+import React from "react";
+import { PageHeader } from "../StyledElements";
 
 export default class QuestionForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            questionTxt: props.qTxt,
-            answerTxts:[props.a1Txt, props.a2Txt, props.a3Txt, props.a4Txt],
-            questionAnswer: props.qAns,
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      question: props.question,
+      answers: props.answers,
+      answerIdx: props.answerIdx,
+    };
+  }
 
-    render() {
-        return (<>Yo</>)
-    }
+  render() {
+    return <PageHeader>Yo</PageHeader>;
+  }
 }

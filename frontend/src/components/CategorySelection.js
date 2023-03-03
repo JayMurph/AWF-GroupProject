@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  BigButton,
-  ScrollDiv,
   PageHeader,
   FlexColumnContainer,
   CategorySelectionScrollDiv,

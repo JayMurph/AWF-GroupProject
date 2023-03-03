@@ -11,6 +11,7 @@ export const CenteredDiv = styled.div`
 
 export const PageHeader = styled.h1`
     text-align: center;
+
     min-width:0px;
     width:100%;
 `
