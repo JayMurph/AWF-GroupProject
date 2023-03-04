@@ -6,6 +6,8 @@ import {
   QuestionSequenceHeaderContainer,
 } from "../../StyledElements";
 import Timer from "react-compound-timer";
+import QuizResults from "../../Quiz/QuizResults";
+import QuizResultsForm from "./QuizResultsForm";
 
 const QUESTION_DURATION = 20000;
 
@@ -19,9 +21,9 @@ export default class QuestionsSequence extends React.Component {
       currTime: 0.0,
       category: props.category,
       triviaQuestionsArr: props.triviaQuestions,
-      answerInfoArr: [],
     };
 
+    this.quizResults = new QuizResults(props.category);
     this.timerRef = React.createRef();
   }
 
@@ -33,40 +35,42 @@ export default class QuestionsSequence extends React.Component {
     timer.reset();
 
     userAnswerInfo.timeTakenMs = QUESTION_DURATION - elapsedTime;
-    this.setState((state) => {
-      let answerInfoArr = [...state.answerInfoArr];
-      answerInfoArr.push(userAnswerInfo);
-      return {
-        answerInfoArr: answerInfoArr,
-      };
-    });
+    this.quizResults.addAnswerInfo(userAnswerInfo);
 
     this.goToNextPage();
-    timer.start();
   };
 
   onStartButtonClick = () => {
-    this.timerRef.current.start();
     this.goToNextPage();
   };
 
   onTimeElapsed = () => {
+    this.timerRef.stop();
+    this.timerRef.reset();
     this.goToNextPage();
   };
 
   goToNextPage = () => {
     if (this.state.currPgIdx < this.state.pgCount) {
-      this.setState((state) => ({
-        currPgIdx: state.currPgIdx + 1,
-      }));
+      this.setState((state) => {
+        const newPgIdx = state.currPgIdx + 1;
+
+        if (newPgIdx != 0 && newPgIdx != state.pgCount - 1) {
+          this.timerRef.current.start();
+        }
+
+        return ({ currPgIdx: newPgIdx });
+    });
     }
   };
 
   render() {
     let content;
-    let questionCountText;
+    let questionCountText = "";
 
-    if (this.state.currPgIdx > 0) {
+    if (this.state.currPgIdx == this.state.pgCount - 1) {
+      content = <QuizResultsForm quizResults={this.quizResults} />;
+    } else if (this.state.currPgIdx > 0) {
       content = (
         <QuestionForm
           key={this.state.currPgIdx - 1}
