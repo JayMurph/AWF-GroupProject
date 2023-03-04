@@ -11,7 +11,21 @@ export default class UserAnswerInfo {
 
     getScore() {
         return (this.userAnswerIdx === this.triviaQuestion.answerIdx) ?
-        this.timeTakenMs :
+        Math.floor(this.timeTakenMs * 0.1) :
         0.0;
+    }
+
+    isCorrect() {
+        return this.userAnswerIdx === this.triviaQuestion.answerIdx;
+    }
+
+    getQuestionText() {
+        return this.triviaQuestion.question;
+    }
+
+    getSelectedAnswerText() {
+        return this.userAnswerIdx >= 0 ? 
+            this.triviaQuestion.answers[this.userAnswerIdx] :
+            "NONE";
     }
 }

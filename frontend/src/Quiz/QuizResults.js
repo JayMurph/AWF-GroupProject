@@ -9,6 +9,6 @@ export default class QuizResults {
     }
 
     getScore() {
-        return Math.floor(this.answers.reduce((acc, val) => acc + val.getScore(), 0) * 0.1);
+        return this.answers.reduce((acc, val) => acc + val.getScore(), 0);
     }
 }

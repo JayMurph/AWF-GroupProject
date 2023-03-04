@@ -8,6 +8,7 @@ import {
 import Timer from "react-compound-timer";
 import QuizResults from "../../Quiz/QuizResults";
 import QuizResultsForm from "./QuizResultsForm";
+import UserAnswerInfo from "../../Quiz/UserAnswerInfo";
 
 const QUESTION_DURATION = 20000;
 
@@ -20,7 +21,7 @@ export default class QuestionsSequence extends React.Component {
       pgCount: props.triviaQuestions.length + 2,
       category: props.category,
       triviaQuestionsArr: props.triviaQuestions,
-      quizResults:new QuizResults(props.category) 
+      quizResults: new QuizResults(props.category),
     };
 
     this.timerRef = React.createRef();
@@ -62,8 +63,14 @@ export default class QuestionsSequence extends React.Component {
   };
 
   onTimeElapsed = () => {
-    this.timerRef.stop();
-    this.timerRef.reset();
+    this.timerRef.current.stop();
+    this.timerRef.current.reset();
+
+    const currQuestion =
+      this.state.triviaQuestionsArr[this.state.currPgIdx - 1];
+    const nonAnswer = new UserAnswerInfo(currQuestion, -1);
+    this.state.quizResults.addAnswerInfo(nonAnswer);
+
     this.goToNextPage();
   };
 
@@ -89,7 +96,7 @@ export default class QuestionsSequence extends React.Component {
       questionCountText = (
         <h2>Question 1 / {this.state.triviaQuestionsArr.length}</h2>
       );
-    } else if (this.state.currPgIdx !== this.state.pgCount -1) {
+    } else if (this.state.currPgIdx !== this.state.pgCount - 1) {
       questionCountText = (
         <h2>
           Question {this.state.currPgIdx} /{" "}
@@ -110,27 +117,29 @@ export default class QuestionsSequence extends React.Component {
               alignItems: "center",
             }}
           >
-            <Timer
-              ref={this.timerRef}
-              initialTime={QUESTION_DURATION}
-              lastUnit="ms"
-              direction="backward"
-              timeToUpdate={100}
-              startImmediately={false}
-              checkpoints={[
-                {
-                  time: 0,
-                  callback: this.onTimeElapsed,
-                },
-              ]}
-            >
-              <h1 style={{ marginRight: "22px" }}>
-                <Timer.Milliseconds
-                  formatValue={(val) => (val * 0.001).toFixed(1)}
-                />
-              </h1>
-              <h2>secs</h2>
-            </Timer>
+            {this.state.currPgIdx < this.state.pgCount - 1 && (
+              <Timer
+                ref={this.timerRef}
+                initialTime={QUESTION_DURATION}
+                lastUnit="ms"
+                direction="backward"
+                timeToUpdate={100}
+                startImmediately={false}
+                checkpoints={[
+                  {
+                    time: 0,
+                    callback: this.onTimeElapsed,
+                  },
+                ]}
+              >
+                <h1 style={{ marginRight: "22px" }}>
+                  <Timer.Milliseconds
+                    formatValue={(val) => (val * 0.001).toFixed(1)}
+                  />
+                </h1>
+                <h2>secs</h2>
+              </Timer>
+            )}
           </div>
           <div style={{ justifySelf: "end" }}>
             <h2>{this.state.category}</h2>
