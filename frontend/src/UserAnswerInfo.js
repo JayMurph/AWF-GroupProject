@@ -1,7 +1,7 @@
 export default class UserAnswerInfo {
-    constructor(triviaQuestion, timeTakenMs, userAnswerIdx) {
+    constructor(triviaQuestion, userAnswerIdx) {
         this.userAnswerIdx = userAnswerIdx;
-        this.timeTakenMs = timeTakenMs;
         this.triviaQuestion = triviaQuestion;
+        this.timeTakenMs = 0.0;
     }
 }

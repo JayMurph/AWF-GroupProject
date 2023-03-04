@@ -5,6 +5,9 @@ import {
   FlexColumnContainer,
   QuestionSequenceHeaderContainer,
 } from "../StyledElements";
+import Timer from 'react-compound-timer';
+
+const QUESTION_DURATION = 20000;
 
 export default class QuestionsSequence extends React.Component {
   constructor(props) {
@@ -73,10 +76,18 @@ export default class QuestionsSequence extends React.Component {
               alignItems: "center",
             }}
           >
-            <h1 style={{ marginRight: "22px" }}>
-              {this.state.currTime.toFixed(2)}
-            </h1>
-            <h2>secs</h2>
+            <Timer
+              initialTime={QUESTION_DURATION}
+              lastUnit='ms'
+              direction="backward"
+              timeToUpdate={100}
+              startImmediately={false}
+            >
+              <h1 style={{ marginRight: "22px" }}>
+                <Timer.Milliseconds formatValue={val => (val * 0.001).toFixed(1)}/>
+              </h1>
+              <h2>secs</h2>
+            </Timer>
           </div>
           <div style={{ justifySelf: "end" }}>
             <h2>{this.state.category}</h2>
