@@ -3,7 +3,7 @@ import {
   PageHeader,
   FlexColumnContainer,
   CategorySelectionScrollDiv,
-} from "../StyledElements";
+} from "../../StyledElements";
 import CategoryButton from "./CategoryButton";
 
 export default class CategorySelection extends React.Component {

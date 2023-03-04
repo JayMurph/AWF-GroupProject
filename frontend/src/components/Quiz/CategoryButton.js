@@ -1,5 +1,5 @@
 import React from 'react';
-import { BigButton } from '../StyledElements';
+import { BigButton } from '../../StyledElements';
 
 export default class CategoryButton extends React.Component {
     constructor(props) {

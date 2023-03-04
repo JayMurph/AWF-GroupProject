@@ -1,6 +1,6 @@
 import React from "react";
-import CategorySelection from "../components/CategorySelection";
-import QuestionsSequence from "../components/QuestionsSequence";
+import CategorySelection from "../components/Quiz/CategorySelection";
+import QuestionsSequence from "../components/Quiz/QuestionsSequence";
 import TriviaQuestion from "../TriviaQuestion.js";
 
 export default class Quiz extends React.Component {

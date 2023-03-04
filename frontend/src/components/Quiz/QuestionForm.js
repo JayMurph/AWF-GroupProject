@@ -1,6 +1,6 @@
 import React from "react";
-import { PageHeader, BigButton, CenteredDiv } from "../StyledElements";
-import UserAnswerInfo from "../UserAnswerInfo";
+import { PageHeader, BigButton, CenteredDiv } from "../../StyledElements";
+import UserAnswerInfo from "../../UserAnswerInfo";
 
 export default class QuestionForm extends React.Component {
   constructor(props) {

@@ -4,7 +4,7 @@ import QuestionForm from "./QuestionForm";
 import {
   FlexColumnContainer,
   QuestionSequenceHeaderContainer,
-} from "../StyledElements";
+} from "../../StyledElements";
 import Timer from "react-compound-timer";
 
 const QUESTION_DURATION = 20000;
