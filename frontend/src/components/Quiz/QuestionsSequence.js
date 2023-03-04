@@ -37,7 +37,7 @@ export default class QuestionsSequence extends React.Component {
       let answerInfoArr = [...state.answerInfoArr];
       answerInfoArr.push(userAnswerInfo);
       return {
-        answerInfoArr: answerInfoArr
+        answerInfoArr: answerInfoArr,
       };
     });
 

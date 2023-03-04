@@ -23,7 +23,7 @@ export default class QuestionForm extends React.Component {
   render() {
     return (
       <>
-        <PageHeader style={{ backgroundColor: "gray" }}>
+        <PageHeader style={{ backgroundColor: "lightGray" }}>
           {this.state.triviaQuestion.question}
         </PageHeader>
         <CenteredDiv>
