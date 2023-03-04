@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeader } from '../../StyledElements';
+import { FlexColumnContainer, PageHeader } from '../../StyledElements';
 
 export default class QuizResultsForm extends React.Component {
     constructor(props) {
@@ -10,7 +10,10 @@ export default class QuizResultsForm extends React.Component {
     }
     render() {
         return (
-            <PageHeader>Results</PageHeader>
+            <>
+                <PageHeader>Results</PageHeader>
+                <PageHeader>Score : {this.state.quizResults.getScore()}</PageHeader>
+            </>
         )
     }
 }

@@ -15,7 +15,7 @@ export default class QuestionForm extends React.Component {
     this.state.onQuestionAnswered(
       new UserAnswerInfo(
         this.state.triviaQuestion,
-        ev.target.id
+        Number.parseInt(ev.target.id)
       )
     );
   };

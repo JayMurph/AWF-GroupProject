@@ -18,13 +18,30 @@ export default class QuestionsSequence extends React.Component {
     this.state = {
       currPgIdx: 0,
       pgCount: props.triviaQuestions.length + 2,
-      currTime: 0.0,
       category: props.category,
       triviaQuestionsArr: props.triviaQuestions,
+      quizResults:new QuizResults(props.category) 
     };
 
-    this.quizResults = new QuizResults(props.category);
     this.timerRef = React.createRef();
+    this.pages = [];
+
+    this.pages.push(
+      <QuizStartForm
+        category={this.state.category}
+        onButtonClick={this.onStartButtonClick}
+      />
+    );
+    this.state.triviaQuestionsArr.forEach((q, idx) => {
+      this.pages.push(
+        <QuestionForm
+          key={idx}
+          triviaQuestion={q}
+          onQuestionAnswered={this.onQuestionAnswered}
+        />
+      );
+    });
+    this.pages.push(<QuizResultsForm quizResults={this.state.quizResults} />);
   }
 
   onQuestionAnswered = (userAnswerInfo) => {
@@ -34,8 +51,8 @@ export default class QuestionsSequence extends React.Component {
     const elapsedTime = timer.getTime();
     timer.reset();
 
-    userAnswerInfo.timeTakenMs = QUESTION_DURATION - elapsedTime;
-    this.quizResults.addAnswerInfo(userAnswerInfo);
+    userAnswerInfo.setTimeTakenMs(elapsedTime);
+    this.state.quizResults.addAnswerInfo(userAnswerInfo);
 
     this.goToNextPage();
   };
@@ -55,46 +72,29 @@ export default class QuestionsSequence extends React.Component {
       this.setState((state) => {
         const newPgIdx = state.currPgIdx + 1;
 
-        if (newPgIdx != 0 && newPgIdx != state.pgCount - 1) {
+        if (newPgIdx !== 0 && newPgIdx !== state.pgCount - 1) {
           this.timerRef.current.start();
         }
 
-        return ({ currPgIdx: newPgIdx });
-    });
+        return { currPgIdx: newPgIdx };
+      });
     }
   };
 
   render() {
-    let content;
+    let content = this.pages[this.state.currPgIdx];
     let questionCountText = "";
 
-    if (this.state.currPgIdx == this.state.pgCount - 1) {
-      content = <QuizResultsForm quizResults={this.quizResults} />;
-    } else if (this.state.currPgIdx > 0) {
-      content = (
-        <QuestionForm
-          key={this.state.currPgIdx - 1}
-          triviaQuestion={
-            this.state.triviaQuestionsArr[this.state.currPgIdx - 1]
-          }
-          onQuestionAnswered={this.onQuestionAnswered}
-        />
+    if (this.state.currPgIdx === 0) {
+      questionCountText = (
+        <h2>Question 1 / {this.state.triviaQuestionsArr.length}</h2>
       );
+    } else if (this.state.currPgIdx !== this.state.pgCount -1) {
       questionCountText = (
         <h2>
           Question {this.state.currPgIdx} /{" "}
           {this.state.triviaQuestionsArr.length}
         </h2>
-      );
-    } else {
-      content = (
-        <QuizStartForm
-          category={this.state.category}
-          onButtonClick={this.onStartButtonClick}
-        />
-      );
-      questionCountText = (
-        <h2>Question 1 / {this.state.triviaQuestionsArr.length}</h2>
       );
     }
 

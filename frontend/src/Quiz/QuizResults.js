@@ -7,4 +7,8 @@ export default class QuizResults {
     addAnswerInfo(userAnswerInfo) {
         this.answers.push(userAnswerInfo);
     }
+
+    getScore() {
+        return Math.floor(this.answers.reduce((acc, val) => acc + val.getScore(), 0) * 0.1);
+    }
 }
