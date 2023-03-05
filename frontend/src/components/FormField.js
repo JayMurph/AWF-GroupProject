@@ -11,7 +11,7 @@ export default function FormField(props) {
         name={props.name}
         value={props.fieldValue}
         onChange={props.onChangeCB}
-        onBlur={props.onBlueCB}
+        onBlur={props.onBlurCB}
       />
     </>
   );

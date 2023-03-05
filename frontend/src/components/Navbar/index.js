@@ -2,6 +2,9 @@ import React from "react";
 import { Nav, NavLink, NavMenu, Header, Title } from "./NavbarElements";
 
 const Navbar = () => {
+	/*
+	 * !! Change available links depending on if user is logged in
+	 */
 return (
 	<Header>
 		<Title>Trivia Mania</Title>

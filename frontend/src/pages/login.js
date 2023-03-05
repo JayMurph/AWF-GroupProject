@@ -1,13 +1,14 @@
-import React from 'react';
-import LoginForm from '../components/LoginForm.js'
+import React from "react";
+import LoginForm from "../components/LoginForm.js";
+import { PageHeader } from "../StyledElements.js";
 
 const Login = () => {
-    return (
-        <>
-            <h1 style={{textAlign:'center'}}>Login</h1>
-                <LoginForm></LoginForm>
-        </>
-    );
+  return (
+    <>
+      <PageHeader>Login</PageHeader>
+      <LoginForm></LoginForm>
+    </>
+  );
 };
 
 export default Login;
