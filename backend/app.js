@@ -2,7 +2,11 @@ const express = require("express");
 const Joi = require("joi");
 const path = require("path");
 const app = express();
+
 const port = process.env.PORT || 3000;
+
+const dbMongoClient = require("mongodb").MongoClient;
+const dbConnStr = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.7.1";
 
 //test - beyond dummy data, meant to look like mongodb entries
 const quizzes = [
@@ -28,6 +32,18 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/main.html");
 }).listen(port);
 
+app.get("/doTheThing", (req, res) => {
+  dbMongoClient.connect(dbConnStr, function(err, db) {
+    console.log("Connected");
+
+    var cursor = db.collection("quizes").find();
+    cursor.each(function(err, doc){
+      console.log(doc);
+      return doc;
+    });
+  });
+});
+
 app.get("/quiz", (req, res) => {
   if (isEmptyObject(req.query)) {
     res.contentType = res.type("json");
@@ -35,12 +51,14 @@ app.get("/quiz", (req, res) => {
   }
 
   let filtered = [];
+  let dbReturn = dbQuery();  
+  console.log("dbReturn: " + dbReturn);
 
   const filters = req.query.category;
   console.log("Filtering by: [" + req.query.category + "]");
   
   //filter by category
-  filtered = quizzes.filter((item) => {
+  filtered = dbReturn.filter((item) => {
     if (item.category === filters) {
       return true;
     }
@@ -84,6 +102,11 @@ app.get("/leaderboard", (req, res) => {
   //TODO: Match by userID (via mondodb)
 
 });
+
+function dbQuery(requestBody) {
+  //TODO: requestBody need to be added to this function 
+  
+}
 
 function validateLeaderboardEntry(requestBody) {
   //TODO: Once the project has become more fleshed out, come back and update the Joi schema to fit better.
