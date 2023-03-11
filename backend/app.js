@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const quizzes = require('./schema/quiz')
 
 const port = process.env.PORT || 3000;
 var app = express();
