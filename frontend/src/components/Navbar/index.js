@@ -19,6 +19,9 @@ return (
 			<NavLink to="/sign-up" activeStyle>
 				Sign Up
 			</NavLink>
+			<NavLink to="/quiz" activeStyle>
+				QUIZ
+			</NavLink>
 			</NavMenu>
 		</Nav>
 	</Header>
