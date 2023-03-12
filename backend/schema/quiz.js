@@ -11,4 +11,4 @@ const quizSchema = new mongoose.Schema({
     a4Txt: String
 })
 
-module.exports = mongoose.model("quizzes", quizSchema);
+module.exports = quizSchema;
