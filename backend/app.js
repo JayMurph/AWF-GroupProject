@@ -6,18 +6,20 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 var app = express();
 
+app.listen(port);
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
 //ROUTES
 var indexRouter = require('./routes/index');
 var quizRouter = require('./routes/quiz');
 var signupRouter = require('./routes/signup');
+var profileRouter = require('./routes/profile');
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.listen(port);
 app.use('/', indexRouter);
 app.use('/quiz', quizRouter);
 app.use('/signup', signupRouter);
+app.use('/profile', profileRouter);
 
 mongoose.set('strictQuery', true);
 main().catch(err => console.log(err));
