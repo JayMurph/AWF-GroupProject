@@ -1,3 +1,4 @@
+const { json } = require('express');
 var express = require('express');
 var mongoose = require("mongoose");
 var router = express.Router();
@@ -9,7 +10,7 @@ router.post('/', async(req, res) =>{
     console.log("/signup posted to");
     console.log(req.body);
     try {
-        const result = await CreateProfile();
+        const result = await CreateProfile(JSON.stringify(req.body));
         res.status(201).json(result);
     } catch(error) {
         console.log(error);
@@ -17,16 +18,17 @@ router.post('/', async(req, res) =>{
     }
 });
 
-async function CreateProfile() {
+async function CreateProfile(userContents) {
    try {
-     const result = await User.create({
-       firstName: "ExFName",
-       lastName: "exLName",
-       username: "userName",
-       email: "someemail123@gmail.com",
-       birthDate: new Date("2001-10-12"),
-       password: "abc123",
-       passwordConfirmation: "abc123"
+    const userReq = JSON.parse(userContents);
+     const result = await userModel.create({
+       firstName: userReq.firstName,
+       lastName: userReq.lastName,
+       userName: userReq.userName,
+       email: userReq.email,
+       birthDate: userReq.birthDate,
+       password: userReq.password,
+       passwordConfirmation: userReq.passwordConfirmation
      });
      console.log("User created:", result);
    } catch (error) {
