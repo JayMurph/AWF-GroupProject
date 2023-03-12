@@ -9,6 +9,7 @@ var app = express();
 //ROUTES
 var indexRouter = require('./routes/index');
 var quizRouter = require('./routes/quiz');
+var signupRouter = require('./routes/signup');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.listen(port);
 app.use('/', indexRouter);
 app.use('/quiz', quizRouter);
+app.use('/signup', signupRouter);
 
 mongoose.set('strictQuery', true);
 main().catch(err => console.log(err));
