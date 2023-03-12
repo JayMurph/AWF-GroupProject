@@ -9,7 +9,7 @@ export default class Quiz extends React.Component {
     this.state = {
       root: null,
       currCategory: "",
-      categories: ["History", "Science", "Math", "Literature"],
+      categories: [],
     };
 
     // get categories from API
@@ -19,6 +19,30 @@ export default class Quiz extends React.Component {
         onCategorySelection={this.onCategorySelection}
       />
     );
+  }
+
+  updateRoot = (categories) => {
+    console.log(categories);
+    this.setState(
+      {
+        categories:categories,
+        root: (
+          <CategorySelection
+            key={null}
+            categories={categories}
+            onCategorySelection={this.onCategorySelection}
+          />
+        )
+      }
+    );
+  }
+
+  async componentDidMount() {
+    console.log(process.env.REACT_APP_API_URL);
+    await fetch(process.env.REACT_APP_API_URL + "/quiz")
+      .then((res) => res.json())
+      .then((res) => {this.updateRoot(res)})
+      .catch((er)=>console.log(er));
   }
 
   onCategorySelection = (c) => {

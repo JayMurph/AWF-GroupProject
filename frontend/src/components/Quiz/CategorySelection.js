@@ -19,7 +19,7 @@ export default class CategorySelection extends React.Component {
 
   render() {
     const listItems = this.state.categories.map((c) => (
-      <CategoryButton category={c} onClick={this.state.onCategorySelection} />
+      <CategoryButton key={c} category={c} onClick={this.state.onCategorySelection} />
     ));
     return (
       <FlexColumnContainer>
