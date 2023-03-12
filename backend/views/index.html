@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+        <title>Quiz App Backend API</title>
+    </head>
+    <body>
+        <div class="intro">
+            <h1>Welcome to the Trivia Mania Backend API</h1>
+            <p class="intro body">
+                This document provides valuable information on how to use the API.
+            </p>
+        </div>
+        <div>
+            <h2>GET: /quiz</h2>
+            <p>Provides a JSON object of available quiz categories.</p>
+        </div>
+        <div>
+            <h2>GET: /quiz?category=__value__</h2>
+            <p>Provides a JSON object of all available quiz questions of specified category.</p>
+        </div>
+        <div>
+            <h2>POST: /quiz</h2>
+            <p>Takes a JSON in request body and validates it.</p>
+            <div class ="codeBlock">
+                <h3>Schema</h3>
+                <div class ="schemaView">
+                    <ul>
+                        <li>userID: <strong>STRING</strong>, the GUID of the current user.
+                        <li>finalScore: <strong>NUMBER</strong>, the final score achieved by the user.
+                        <li>timeStamp: <strong>TIMESTAMP</strong>, the timestamp at the time of the completion of the quiz.
+                    </ul>
+                </div>
+                <br>
+                <h3>Example following the above schema</h3>
+                <div class = "JSONView">
+                    <div class="prettyTextField">"userID"</div>: <div class="prettyTextString">"$GUID"</div>,<br>
+                    <div class="prettyTextField">"finalScore"</div>: <div class="prettyTextNum">1</div>,<br>
+                    <div class="prettyTextField">"timeStamp"</div>: <div class="prettyTextString">"2023-02-21 13:47:11"</div>
+                </div>
+            </div>
+        </div>
+   <!-- </body>
+</html>-->

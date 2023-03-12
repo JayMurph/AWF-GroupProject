@@ -1,28 +1,30 @@
-const express = require("express");
-const Joi = require("joi");
-const path = require("path");
-const app = express();
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+
 const port = process.env.PORT || 3000;
+var app = express();
 
-//test - beyond dummy data
-var quizzes = [
-  {_id: "GuId832645", category: "Science", qTxt: "The chemical symbol for Gold is:", qAns: 4, a1Txt: "Ag", a2Txt: "Gl", a3Txt: "Fe", a4Txt: "Au"},
-  {_id: "gUiD696969", category: "Literature", qTxt: "War and Peace was written by:", qAns: 2, a1Txt: "William Shakespeare", a2Txt: "Leo Tolstoy", a3Txt: "Fyodor Dostoyevsky", a4Txt: "Margaret Gilbert"},
-  {_id: "GUID797979", category: "Literature", qTxt: "The Handmaiden's Tale was written by:", qAns: 3, a1Txt: "Jane Austen", a2Txt: "Mary Shelley", a3Txt: "Margaret Atwood", a4Txt: "Margaret Thatcher"}
-];
-  
+//ROUTES
+var indexRouter = require('./routes/index');
+var quizRouter = require('./routes/quiz');
+
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/styles.css", function(req, res) {
-  res.sendFile(__dirname + "/styles.css");
-});
+app.listen(port);
+app.use('/', indexRouter);
+app.use('/quiz', quizRouter);
 
-app.get("/", (req, res) => {
-    res.contentType = res.type("html");
-    res.sendFile(__dirname + "/main.html");
-}).listen(port);
+mongoose.set('strictQuery', true);
+main().catch(err => console.log(err));
+async function main() {
+    await mongoose.connect(`mongodb://127.0.0.1/AWFdb`);
+}
 
-app.get("/quiz", (req, res) => {
-  res.contentType = res.type("json");
-  res.send(quizzes);
-});
+app.use((req, res, next) => {
+    next(createError(404));
+})
+
+module.export = app;
