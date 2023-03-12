@@ -18,14 +18,17 @@ export default class CategorySelection extends React.Component {
   }
 
   render() {
-    const listItems = this.state.categories.map((c) => (
+    const content = 
+    this.state.categories.length > 0 ?
+    this.state.categories.map((c) => (
       <CategoryButton key={c} category={c} onClick={this.state.onCategorySelection} />
-    ));
+    )) :
+    (<div><b>None Available</b></div>);
     return (
       <FlexColumnContainer>
         <PageHeader>Categories</PageHeader>
         <FlexColumnContainer>
-          <CategorySelectionScrollDiv>{listItems}</CategorySelectionScrollDiv>
+          <CategorySelectionScrollDiv>{content}</CategorySelectionScrollDiv>
         </FlexColumnContainer>
       </FlexColumnContainer>
     );

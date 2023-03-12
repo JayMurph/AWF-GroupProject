@@ -22,7 +22,6 @@ export default class Quiz extends React.Component {
   }
 
   updateRoot = (categories) => {
-    console.log(categories);
     this.setState(
       {
         categories:categories,
@@ -41,7 +40,7 @@ export default class Quiz extends React.Component {
     console.log(process.env.REACT_APP_API_URL);
     await fetch(process.env.REACT_APP_API_URL + "/quiz")
       .then((res) => res.json())
-      .then((res) => {this.updateRoot(res)})
+      .then((res) => this.updateRoot(res))
       .catch((er)=>console.log(er));
   }
 
