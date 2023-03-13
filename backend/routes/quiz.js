@@ -25,9 +25,6 @@ router.get('/', async (req, res) => {
     else if (!isEmptyObject(req.query.category)) {
        
         if (doesCategoryExist(req.query.category)) {
-            //console.log(req.query.category);
-            //const query = quizModel.find({category: {$regex: `${req.query.category}`, $options: 'i'}});
-            //const query = quizModel.aggregate([{$match: {$regex: `${req.query.category}`, $options: 'i'}}, {$sample: {size: 1} }]);
             const pipeline = [
                 {$match: {category: {$regex: `${req.query.category}`, $options: 'i'}}},
                 {$sample: {size: 2}}
@@ -35,14 +32,6 @@ router.get('/', async (req, res) => {
 
             const cursor = quizModel.aggregate(pipeline);
 
-            /*query.select("qTxt");
-            query.select("qAns");
-            query.select("a1Txt");
-            query.select("a2Txt");
-            query.select("a3Txt");
-            query.select("a4Txt");
-            query.limit(1);*/
-            
             var qRes = [];
             for await (const doc of cursor) {
                 qRes.push(doc);
@@ -50,16 +39,10 @@ router.get('/', async (req, res) => {
 
             console.log(qRes);
             res.send(qRes);
-            /*await query.exec((err, qRes) => {
-                console.log(qRes);
-                res.contentType('json').send(qRes);
-            });*/
         } else {
             res.sendStatus(400);
         }
     }
-
-    //console.log(req.query);
 });
 
 router.post('/', async (req, res) => {
@@ -79,6 +62,7 @@ router.post('/', async (req, res) => {
         leaderboardModel.create({
             userId: req.body.userId,
             finalScore: req.body.finalScore,
+            category: req.body.category,
             timeStamp: req.body.timeStamp
         });
     } catch(err) {
@@ -93,7 +77,8 @@ function validateLeaderboardEntry(requestBody) {
   const schema = Joi.object({
     userId: Joi.string().alphanum().required(),
     finalScore: Joi.number().min(0).required(),
-    timeStamp: Joi.string().required()
+    category: Joi.string().alphanum().required(),
+    timeStamp: Joi.date().required()
   });
 
   return schema.validate(requestBody);
