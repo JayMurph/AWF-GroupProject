@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 //A request to this looks like: uri:port/profile/640e6843c49f1554d5426ae0
 router.get('/:userId', async (req, res, next) => {
-    console.log(`/profile recieved request for lookup of { userId: ${req.params.userId} }`);
+    console.log(`/profile received request for lookup of { userId: ${req.params.userId} }`);
     if (isEmptyObject(req.params)) {
         res.sendStatus(400);
     }

@@ -7,38 +7,73 @@
     <body>
         <div class="intro">
             <h1>Welcome to the Trivia Mania Backend API</h1>
-            <p class="intro body">
-                This document provides valuable information on how to use the API.
-            </p>
         </div>
-        <div>
-            <h2>GET: /quiz</h2>
-            <p>Provides a JSON object of available quiz categories.</p>
+        <div class="introBody">
+            <h3>This document provides valuable information on how to use the API.</h3>
         </div>
-        <div>
-            <h2>GET: /quiz?category=__value__</h2>
-            <p>Provides a JSON object of all available quiz questions of specified category.</p>
-        </div>
-        <div>
-            <h2>POST: /quiz</h2>
-            <p>Takes a JSON in request body and validates it.</p>
-            <div class ="codeBlock">
-                <h3>Schema</h3>
-                <div class ="schemaView">
-                    <ul>
-                        <li>userID: <strong>STRING</strong>, the GUID of the current user.
-                        <li>finalScore: <strong>NUMBER</strong>, the final score achieved by the user.
-                        <li>timeStamp: <strong>TIMESTAMP</strong>, the timestamp at the time of the completion of the quiz.
-                    </ul>
-                </div>
-                <br>
-                <h3>Example following the above schema</h3>
-                <div class = "JSONView">
-                    <div class="prettyTextField">"userID"</div>: <div class="prettyTextString">"$GUID"</div>,<br>
-                    <div class="prettyTextField">"finalScore"</div>: <div class="prettyTextNum">1</div>,<br>
-                    <div class="prettyTextField">"timeStamp"</div>: <div class="prettyTextString">"2023-02-21 13:47:11"</div>
+        <div class="dividingContainer">
+            <div>
+                <h2>GET: /quiz</h2>
+                <p>Provides a JSON object of available quiz categories.</p>
+            </div>
+            <div>
+                <h2>GET: /quiz?category=__value__</h2>
+                <p>Provides a JSON object of all available quiz questions of specified category.</p>
+            </div>
+            <div>
+                <h2>POST: /quiz</h2>
+                <p>Takes a JSON in request body and validates it.</p>
+                <div class ="codeBlock">
+                    <h3>Schema</h3>
+                    <div class ="schemaView">
+                        <ul>
+                            <li>userID: <strong>STRING</strong>, the GUID of the current user.
+                            <li>finalScore: <strong>NUMBER</strong>, the final score achieved by the user.
+                            <li>timeStamp: <strong>TIMESTAMP</strong>, the timestamp at the time of the completion of the quiz.
+                        </ul>
+                    </div>
+                    <br>
+                    <h3>Example following the above schema</h3>
+                    <div class = "JSONView">
+                        <div class="prettyTextField">"userID"</div>: <div class="prettyTextString">"$GUID"</div>,<br>
+                        <div class="prettyTextField">"finalScore"</div>: <div class="prettyTextNum">1</div>,<br>
+                        <div class="prettyTextField">"timeStamp"</div>: <div class="prettyTextString">"2023-02-21 13:47:11"</div>
+                    </div>
                 </div>
             </div>
         </div>
-   <!-- </body>
-</html>-->
+        <div class="dividingContainer">
+            <h2>GET: /profile/:userId</h2>
+            <p>Takes a userId in url and returns a JSON with user profile information if user exists. <strong>404</strong> if userId doesn't exist.</p>
+            <div class ="codeBlock">
+                <h3>Example</h3>
+                <div class ="urlView">
+                    <p>localhost:3000/profile/640e6843c49f1554d5426ae0</p>
+                </div>
+                    <p>Will return a popular musician's details.</p>
+                <br>
+            </div>
+            <h2>DELETE: /profile/:userId</h2>
+            <p>Under construction</p>
+            <h2>PUT: /profile/:userId</h2>
+            <p>Under construction</p>
+        </div>   
+        <div class="dividingContainer">
+            <h2>POST: /signup</h2>
+            <p>Sending a user JSON object that conforms with the schema below will add that user's details to the database.</p>
+            <div class ="codeBlock">
+                <h3>Schema</h3>
+                    <div class ="schemaView">
+                        <ul>
+                            <li>firstName: <strong>STRING</strong>, the first name of the user.</li>
+                            <li>lastName:  <strong>STRING</strong>, the last name of the user.</li>
+                            <li>userName:  <strong>STRING</strong>, the username of the user.</li>
+                            <li>email:     <strong>STRING</strong>, the email address of the user.</li>
+                            <li>birthDate: <strong>DATE</strong>, the birth date of the user.</li>
+                            <li>password:  <strong>STRING</strong>, the user's password.</li>
+                        </ul>
+                    </div>
+            </div>
+        </div>
+    </body>
+</html>
