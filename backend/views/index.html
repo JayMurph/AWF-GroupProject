@@ -17,7 +17,7 @@
                 <p>Provides a JSON object of available quiz categories.</p>
             </div>
             <div>
-                <h2>GET: /quiz?category=__value__</h2>
+                <h2>GET: /quiz?<div class="prettyTextField">category</div>=__value__</h2>
                 <p>Provides a JSON object of all available quiz questions of specified category.</p>
             </div>
             <div>
@@ -27,9 +27,9 @@
                     <h3>Schema</h3>
                     <div class ="schemaView">
                         <ul>
-                            <li>userID: <strong>STRING</strong>, the GUID of the current user.
-                            <li>finalScore: <strong>NUMBER</strong>, the final score achieved by the user.
-                            <li>timeStamp: <strong>TIMESTAMP</strong>, the timestamp at the time of the completion of the quiz.
+                            <li><div class="prettyTextField">userId</div>: <strong>STRING</strong>, the GUID of the current user.
+                            <li><div class="prettyTextField">finalScore</div>: <strong>NUMBER</strong>, the final score achieved by the user.
+                            <li><div class="prettyTextField">timeStamp</div>: <strong>TIMESTAMP</strong>, the timestamp at the time of the completion of the quiz.
                         </ul>
                     </div>
                     <br>
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="dividingContainer">
-            <h2>GET: /profile/:userId</h2>
+            <h2>GET: /profile/:<div class="prettyTextField">userId</div></h2>
             <p>Takes a userId in url and returns a JSON with user profile information if user exists. <strong>404</strong> if userId doesn't exist.</p>
             <div class ="codeBlock">
                 <h3>Example</h3>
@@ -53,9 +53,9 @@
                     <p>Will return a popular musician's details.</p>
                 <br>
             </div>
-            <h2>DELETE: /profile/:userId</h2>
+            <h2>DELETE: /profile/:<div class="prettyTextField">userId</div></h2>
             <p>Under construction</p>
-            <h2>PUT: /profile/:userId</h2>
+            <h2>PUT: /profile/:<div class="prettyTextField">userId</div></h2>
             <p>Under construction</p>
         </div>   
         <div class="dividingContainer">
@@ -63,17 +63,23 @@
             <p>Sending a user JSON object that conforms with the schema below will add that user's details to the database.</p>
             <div class ="codeBlock">
                 <h3>Schema</h3>
-                    <div class ="schemaView">
-                        <ul>
-                            <li>firstName: <strong>STRING</strong>, the first name of the user.</li>
-                            <li>lastName:  <strong>STRING</strong>, the last name of the user.</li>
-                            <li>userName:  <strong>STRING</strong>, the username of the user.</li>
-                            <li>email:     <strong>STRING</strong>, the email address of the user.</li>
-                            <li>birthDate: <strong>DATE</strong>, the birth date of the user.</li>
-                            <li>password:  <strong>STRING</strong>, the user's password.</li>
-                        </ul>
-                    </div>
+                <div class ="schemaView">
+                    <ul>
+                        <li><div class="prettyTextField">firstName</div>: <strong>STRING</strong>, the first name of the user.</li>
+                        <li><div class="prettyTextField">lastName</div>:  <strong>STRING</strong>, the last name of the user.</li>
+                        <li><div class="prettyTextField">userName</div>:  <strong>STRING</strong>, the username of the user.</li>
+                        <li><div class="prettyTextField">email</div>:     <strong>STRING</strong>, the email address of the user.</li>
+                        <li><div class="prettyTextField">birthDay</div>: <strong>DATE</strong>, the birth date of the user.</li>
+                        <li><div class="prettyTextField">password</div>:  <strong>STRING</strong>, the user's password.</li>
+                    </ul>
+                </div>
             </div>
+        </div>
+        <div class="dividingContainer">
+            <h2>GET: /leaderboard?<div class="prettyTextField">category</div>=__value__</h2>   
+            <p>Sending a GET request with this query will return a JSON with all of the leaderboard records that correspond to the category __value__.</p>
+            <h2>GET: /leaderboard?<div class="prettyTextField">userId</div>=__value__</h2>   
+            <p>Sending a GET request with this query will return a JSON with all of the leaderboard entires from user __value__.</p>
         </div>
     </body>
 </html>
