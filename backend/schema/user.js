@@ -9,8 +9,7 @@ const userSchema = new Schema({
     userName:             { type: String,   required: true },
     email:                { type: String,   required: true },
     birthDate:            { type: Date,     required: true },
-    password:             { type: String,   required: true },
-    passwordConfirmation: { type: String,   required: false}
+    password:             { type: String,   required: true }
 });
 
 module.exports = userSchema;
