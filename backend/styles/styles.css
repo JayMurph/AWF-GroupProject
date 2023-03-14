@@ -111,6 +111,26 @@ body {
   font-weight: bold;
 }
 
+.prettyTextRoute h1 {
+  font-size: 62px;
+  padding-left: 40%;
+  margin-top: 0;
+  margin-bottom: 7.5%;
+  color:#E8D048;
+}
+
+.prettyTextRoute {
+  color:#E8D048;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: inline;
+}
+
+.prettyTextRoute h2 {
+  color:#E8D048;
+  display: inline;
+}
+
 html {
   background-color: #181a1b !important;
 }
