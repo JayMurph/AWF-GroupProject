@@ -12,16 +12,17 @@
             <h3>This document provides valuable information on how to use the API.</h3>
         </div>
         <div class="dividingContainer">
+            <div class="prettyTextRoute"><h1>/quiz</h1></div>
             <div>
-                <h2>GET: /quiz</h2>
+                <h2>GET: /<div class="prettyTextRoute">quiz</div></h2>
                 <p>Provides a JSON object of available quiz categories.</p>
             </div>
             <div>
-                <h2>GET: /quiz?<div class="prettyTextField">category</div>=__value__</h2>
+                <h2>GET: /<div class="prettyTextRoute">quiz</div>?<div class="prettyTextField">category</div>=__value__</h2>
                 <p>Provides a JSON object of all available quiz questions of specified category.</p>
             </div>
             <div>
-                <h2>POST: /quiz</h2>
+                <h2>POST: /<div class="prettyTextRoute">quiz</div></h2>
                 <p>Takes a JSON in request body and validates it.</p>
                 <div class ="codeBlock">
                     <h3>Schema</h3>
@@ -43,7 +44,8 @@
             </div>
         </div>
         <div class="dividingContainer">
-            <h2>GET: /profile/:<div class="prettyTextField">userId</div></h2>
+            <div class="prettyTextRoute"><h1>/profile</h1></div>
+            <h2>GET: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
             <p>Takes a userId in url and returns a JSON with user profile information if user exists. <strong>404</strong> if userId doesn't exist.</p>
             <div class ="codeBlock">
                 <h3>Example</h3>
@@ -53,13 +55,14 @@
                     <p>Will return a popular musician's details.</p>
                 <br>
             </div>
-            <h2>DELETE: /profile/:<div class="prettyTextField">userId</div></h2>
+            <h2>DELETE: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
             <p>Under construction</p>
-            <h2>PUT: /profile/:<div class="prettyTextField">userId</div></h2>
+            <h2>PUT: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
             <p>Under construction</p>
         </div>   
         <div class="dividingContainer">
-            <h2>POST: /signup</h2>
+            <div class="prettyTextRoute"><h1>/<div class="prettyTextRoute">signup</div></h1></div>
+            <h2>POST: /<div class="prettyTextRoute">signup</div></h2>
             <p>Sending a user JSON object that conforms with the schema below will add that user's details to the database.</p>
             <div class ="codeBlock">
                 <h3>Schema</h3>
@@ -85,9 +88,10 @@
             </div>
         </div>
         <div class="dividingContainer">
-            <h2>GET: /leaderboard?<div class="prettyTextField">category</div>=__value__</h2>   
+            <div class="prettyTextRoute"><h1 style="padding-left: 33%;">/<div class="prettyTextRoute">leaderboard</div></h1></div>
+            <h2>GET: /<div class="prettyTextRoute">leaderboard</div>?<div class="prettyTextField">category</div>=__value__</h2>   
             <p>Sending a GET request with this query will return a JSON with all of the leaderboard records that correspond to the category __value__.</p>
-            <h2>GET: /leaderboard?<div class="prettyTextField">userId</div>=__value__</h2>   
+            <h2>GET: /<div class="prettyTextRoute">leaderboard</div>?<div class="prettyTextField">userId</div>=__value__</h2>   
             <p>Sending a GET request with this query will return a JSON with all of the leaderboard entires from user __value__.</p>
         </div>
     </body>
