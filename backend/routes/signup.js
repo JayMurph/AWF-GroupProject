@@ -22,6 +22,7 @@ async function CreateProfile(userContents) {
    try {
     const userReq = JSON.parse(userContents);
      const result = await userModel.create({
+       _id: new mongoose.Types.ObjectId(),
        firstName: userReq.firstName,
        lastName: userReq.lastName,
        userName: userReq.userName,
