@@ -14,7 +14,7 @@ return (
 	<NavbarAccount />
 	<AccountContentContainer>
 		<Routes>
-			<Route path='/accountMain' element={<AccountMain/>} />
+			<Route index element={<AccountMain/>} />
 			<Route path='/accountProfile' element={<Profile/>} />
 			<Route path='/changePassword' element={<ChangePassword/>} />
 		</Routes>

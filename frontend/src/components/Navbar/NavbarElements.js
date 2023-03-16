@@ -15,6 +15,7 @@ export const Header = styled.div`
 `;
 
 export const HeaderAccount = styled.div`
+	float: left;
 	background:var(--navBackground); 
 	display: flex;
 	flex-direction:column;
@@ -61,10 +62,4 @@ export const NavMenu = styled.div`
 	@media screen and (max-width: 300px) {
 		display: none;
 	}
-`;
-
-export const NavMenuAccount = styled.div`
-	float: left;
-	flex-direction:column;
-	display: flex;
 `;
