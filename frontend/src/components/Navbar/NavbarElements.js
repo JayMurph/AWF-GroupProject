@@ -14,12 +14,26 @@ export const Header = styled.div`
 	z-index: 12;
 `;
 
+export const HeaderAccount = styled.div`
+	background:var(--navBackground); 
+	display: flex;
+	flex-direction:column;
+	height: 100%;
+	width: 20%;
+`;
+
+
 export const Title = styled.h1`
 	position:absolute;
 	padding-left:3vw;
 	@media screen and (max-width: 560px) {
 		display: none;
 	}
+`;
+
+export const TitleAccount = styled.h1`
+	position:absolute;
+	padding:10vh 20px 10vh 20px;
 `;
 
 export const Nav = styled.nav`
@@ -47,4 +61,10 @@ export const NavMenu = styled.div`
 	@media screen and (max-width: 300px) {
 		display: none;
 	}
+`;
+
+export const NavMenuAccount = styled.div`
+	float: left;
+	flex-direction:column;
+	display: flex;
 `;

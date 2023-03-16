@@ -43,6 +43,17 @@ export const AppContentContainer = styled(FlexColumnContainer)`
     width:100%;
 `;
 
+export const AccountContentContainer = styled.div`
+    float: right;
+    height:100%;
+    width:80%;
+`;
+
+export const ProfileContentContainer = styled(FlexColumnContainer)`
+    height:100%;
+    width:160vh;
+`;
+
 export const ScrollDiv = styled(CenteredDiv)`
     display:grid;
     overflow-y:scroll;

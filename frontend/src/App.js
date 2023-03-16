@@ -16,7 +16,7 @@ return (
 	<Navbar />
 	<AppContentContainer>
 		<Routes>
-			<Route exact path='/' exact element={<Home />} />
+			<Route exact path='/' element={<Home />} />
 			<Route path='/about' element={<About/>} />
 			<Route path='/login' element={<Login/>} />
 			<Route path='/sign-up' element={<SignUp/>} />

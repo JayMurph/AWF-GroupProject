@@ -20,7 +20,33 @@ export default class QuestionForm extends React.Component {
     );
   };
 
+  shuffle = (array) => {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  }
+
   render() {
+    const answers = [
+      {idx:0, answerTxt:this.state.triviaQuestion.answers[0]},
+      {idx:1, answerTxt:this.state.triviaQuestion.answers[1]},
+      {idx:2, answerTxt:this.state.triviaQuestion.answers[2]},
+      {idx:3, answerTxt:this.state.triviaQuestion.answers[3]},
+    ];
+    this.shuffle(answers);
+
     return (
       <>
         <PageHeader style={{ backgroundColor: "lightGray" }}>
@@ -28,36 +54,36 @@ export default class QuestionForm extends React.Component {
         </PageHeader>
         <CenteredDiv>
           <BigButton
-            id={0}
+            id={answers[0].idx}
             onClick={(ev) =>
               this.handleClick(ev)
             }
           >
-            {this.state.triviaQuestion.answers[0]}
+            {answers[0].answerTxt}
           </BigButton>
           <BigButton
-            id={1}
+            id={answers[1].idx}
             onClick={(ev) =>
               this.handleClick(ev)
             }
           >
-            {this.state.triviaQuestion.answers[1]}
+            {answers[1].answerTxt}
           </BigButton>
           <BigButton
-            id={2}
+            id={answers[2].idx}
             onClick={(ev) =>
               this.handleClick(ev)
             }
           >
-            {this.state.triviaQuestion.answers[2]}
+            {answers[2].answerTxt}
           </BigButton>
           <BigButton
-            id={3}
+            id={answers[3].idx}
             onClick={(ev) =>
               this.handleClick(ev)
             }
           >
-            {this.state.triviaQuestion.answers[3]}
+            {answers[3].answerTxt}
           </BigButton>
         </CenteredDiv>
       </>

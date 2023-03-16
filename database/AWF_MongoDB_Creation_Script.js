@@ -30,7 +30,7 @@ db.quizzes.insertMany([
 db.quizzes.insertMany([
     { category: "Math", qTxt: "(1 + 1)*(2 - 3) = ?:", qAns: 3, a1Txt: "1", a2Txt: "2", a3Txt: "-2", a4Txt: "3"},
     { category: "Math", qTxt: "The derivative of the function 4*x^2 = ?:", qAns: 4, a1Txt: "2*x", a2Txt: "4*x", a3Txt: "6*x", a4Txt: "8*x"},
-    { category: "Math", qTxt: "1 + 1 = ?", qAns: 1, a1txt: "2", a2Txt: "3", a3Txt: "4", a4Txt: "5"},
+    { category: "Math", qTxt: "1 + 1 = ?", qAns: 1, a1Txt: "2", a2Txt: "3", a3Txt: "4", a4Txt: "5"},
     { category: "Math", qTxt: "What is the Pythagorean theorem?", qAns: 3, a1txt: "A^2 = b^2 + c^2", a2Txt: "a^2 + b^2 + c^2", a3Txt: "A^2 + b^2 = c^2", a4Txt: "A^2 - b^2 = c^2"},  
     { category: "Math", qTxt: "What is the sum of the anles in a triangle?", qAns: 4, a1txt: "270", a2Txt: "360", a3Txt: "90", a4Txt: "180"},  
     { category: "Math", qTxt: "What is the square root of 144?", qAns: 1, a1txt: "12", a2Txt: "5", a3Txt: "8", a4Txt: "6"},  
