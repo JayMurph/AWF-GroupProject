@@ -12,7 +12,6 @@ router.post('/', async (req, res) => {
   //console.log(req.body);
   try {
     const result = await CreateProfile(JSON.stringify(req.body), res);
-    res.status(201).json(result);
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -39,7 +38,8 @@ async function CreateProfile(userContents, res) {
      password: userReq.password,
   });
 
-  console.log("User created:", result);
+  res.status(201).json(result);
+  console.log(result);
 }
 
 function validateUserEntry(requestBody) {
