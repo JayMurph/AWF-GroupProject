@@ -7,7 +7,7 @@ import {
 import CategoryButton from "./CategoryButton";
 
 /**
- * Displays buttons for quiz categories
+ * Displays buttons for quiz categories. Takes on click callback for buttons
  */
 export default class CategorySelection extends React.Component {
   constructor(props) {

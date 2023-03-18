@@ -10,8 +10,13 @@ import QuizResults from "../../Quiz/QuizResults";
 import QuizResultsForm from "./QuizResultsForm";
 import UserAnswerInfo from "../../Quiz/UserAnswerInfo";
 
-const QUESTION_DURATION = 20000;
+const QUESTION_DURATION_MILLIS = 20000;
+const TIMER_UPDATE_INTERVAL_MILLIS = 100;
 
+/**
+ * Displays a sequence of questions while timing each question and recording the
+ * users answers.
+ */
 export default class QuestionsSequence extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +32,7 @@ export default class QuestionsSequence extends React.Component {
     this.timerRef = React.createRef();
     this.pages = [];
 
+    // create all quiz pages that will be displayed to user so we can just cycle through them
     this.pages.push(
       <QuizStartForm
         category={this.state.category}
@@ -45,6 +51,10 @@ export default class QuestionsSequence extends React.Component {
     this.pages.push(<QuizResultsForm quizResults={this.state.quizResults} />);
   }
 
+  /**
+   * Handles when user answers a question. Saves the time of the answer then goes to the next page
+   * @param {UserAnswerInfo} userAnswerInfo question and answer
+   */
   onQuestionAnswered = (userAnswerInfo) => {
     const timer = this.timerRef.current;
     timer.stop();
@@ -58,10 +68,17 @@ export default class QuestionsSequence extends React.Component {
     this.goToNextPage();
   };
 
+  /**
+   * Handles when user starts the quiz
+   */
   onStartButtonClick = () => {
     this.goToNextPage();
   };
 
+  /**
+   * Handles when user runs out of time to answer question. Saves the non-answer
+   * then goes to next page
+   */
   onTimeElapsed = () => {
     this.timerRef.current.stop();
     this.timerRef.current.reset();
@@ -74,6 +91,9 @@ export default class QuestionsSequence extends React.Component {
     this.goToNextPage();
   };
 
+  /**
+   * Changes/increments the page displayed in the QuestionSequence
+   */
   goToNextPage = () => {
     if (this.state.currPgIdx < this.state.pgCount) {
       this.setState((state) => {
@@ -92,11 +112,14 @@ export default class QuestionsSequence extends React.Component {
     let content = this.pages[this.state.currPgIdx];
     let questionCountText = "";
 
+    // generate text for indicating position in quiz
     if (this.state.currPgIdx === 0) {
+      // on start page
       questionCountText = (
         <h2>Question 1 / {this.state.triviaQuestionsArr.length}</h2>
       );
     } else if (this.state.currPgIdx !== this.state.pgCount - 1) {
+      // on quiz question
       questionCountText = (
         <h2>
           Question {this.state.currPgIdx} /{" "}
@@ -120,10 +143,10 @@ export default class QuestionsSequence extends React.Component {
             {this.state.currPgIdx < this.state.pgCount - 1 && (
               <Timer
                 ref={this.timerRef}
-                initialTime={QUESTION_DURATION}
+                initialTime={QUESTION_DURATION_MILLIS}
                 lastUnit="ms"
                 direction="backward"
-                timeToUpdate={100}
+                timeToUpdate={TIMER_UPDATE_INTERVAL_MILLIS}
                 startImmediately={false}
                 checkpoints={[
                   {
