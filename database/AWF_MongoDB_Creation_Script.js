@@ -31,12 +31,12 @@ db.quizzes.insertMany([
     { category: "Math", qTxt: "(1 + 1)*(2 - 3) = ?:", qAns: 3, a1Txt: "1", a2Txt: "2", a3Txt: "-2", a4Txt: "3"},
     { category: "Math", qTxt: "The derivative of the function 4*x^2 = ?:", qAns: 4, a1Txt: "2*x", a2Txt: "4*x", a3Txt: "6*x", a4Txt: "8*x"},
     { category: "Math", qTxt: "1 + 1 = ?", qAns: 1, a1Txt: "2", a2Txt: "3", a3Txt: "4", a4Txt: "5"},
-    { category: "Math", qTxt: "What is the Pythagorean theorem?", qAns: 3, a1txt: "A^2 = b^2 + c^2", a2Txt: "a^2 + b^2 + c^2", a3Txt: "A^2 + b^2 = c^2", a4Txt: "A^2 - b^2 = c^2"},  
-    { category: "Math", qTxt: "What is the sum of the anles in a triangle?", qAns: 4, a1txt: "270", a2Txt: "360", a3Txt: "90", a4Txt: "180"},  
-    { category: "Math", qTxt: "What is the square root of 144?", qAns: 1, a1txt: "12", a2Txt: "5", a3Txt: "8", a4Txt: "6"},  
-    { category: "Math", qTxt: "What is the formula for the volume of a sphere?", qAns: 2, a1txt: "πr^2", a2Txt: "(4/3)πr^2", a3Txt: "2πr", a4Txt: "4πr^2"},  
-    { category: "Math", qTxt: "What is the name of the longest side of a right triangle?", qAns: 4, a1txt: "Width", a2Txt: "Adjacent", a3Txt: "Opposite", a4Txt: "Hypotnuse"},
-    { category: "Math", qTxt: "What is the formula used to calculate the area of a triangle?", qAns: 3, a1txt: "LxW", a2Txt: "πr^2", a3Txt: "1/2xBxH", a4Txt: "A = (a + b + c) / 2"},
+    { category: "Math", qTxt: "What is the Pythagorean theorem?", qAns: 3, a1Txt: "A^2 = b^2 + c^2", a2Txt: "a^2 + b^2 + c^2", a3Txt: "A^2 + b^2 = c^2", a4Txt: "A^2 - b^2 = c^2"},  
+    { category: "Math", qTxt: "What is the sum of the anles in a triangle?", qAns: 4, a1Txt: "270", a2Txt: "360", a3Txt: "90", a4Txt: "180"},  
+    { category: "Math", qTxt: "What is the square root of 144?", qAns: 1, a1Txt: "12", a2Txt: "5", a3Txt: "8", a4Txt: "6"},  
+    { category: "Math", qTxt: "What is the formula for the volume of a sphere?", qAns: 2, a1Txt: "πr^2", a2Txt: "(4/3)πr^2", a3Txt: "2πr", a4Txt: "4πr^2"},  
+    { category: "Math", qTxt: "What is the name of the longest side of a right triangle?", qAns: 4, a1Txt: "Width", a2Txt: "Adjacent", a3Txt: "Opposite", a4Txt: "Hypotnuse"},
+    { category: "Math", qTxt: "What is the formula used to calculate the area of a triangle?", qAns: 3, a1Txt: "LxW", a2Txt: "πr^2", a3Txt: "1/2xBxH", a4Txt: "A = (a + b + c) / 2"},
     { category: "Math", qTxt: "What is the value of pi to two decimal places", qAns:2, a1Txt: "3.14", a2Txt: "3.15", a3Txt: "3.18", a4Txt: "2.3"}/*STUB*/, 
 ]);
 
