@@ -10,6 +10,7 @@ var app = express();
 app.listen(port);
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 //ROUTES
 var indexRouter = require('./routes/index');
