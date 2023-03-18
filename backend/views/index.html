@@ -7,38 +7,94 @@
     <body>
         <div class="intro">
             <h1>Welcome to the Trivia Mania Backend API</h1>
-            <p class="intro body">
-                This document provides valuable information on how to use the API.
-            </p>
         </div>
-        <div>
-            <h2>GET: /quiz</h2>
-            <p>Provides a JSON object of available quiz categories.</p>
+        <div class="introBody">
+            <h3>This document provides valuable information on how to use the API.</h3>
         </div>
-        <div>
-            <h2>GET: /quiz?category=__value__</h2>
-            <p>Provides a JSON object of all available quiz questions of specified category.</p>
+        <div class="dividingContainer">
+            <div class="prettyTextRoute"><h1>/quiz</h1></div>
+            <div>
+                <h2>GET: /<div class="prettyTextRoute">quiz</div></h2>
+                <p>Provides a JSON object of available quiz categories.</p>
+            </div>
+            <div>
+                <h2>GET: /<div class="prettyTextRoute">quiz</div>?<div class="prettyTextField">category</div>=__value__</h2>
+                <p>Provides a JSON object of all available quiz questions of specified category.</p>
+            </div>
+            <div>
+                <h2>POST: /<div class="prettyTextRoute">quiz</div></h2>
+                <p>Takes a JSON in request body and validates it.</p>
+                <div class ="codeBlock">
+                    <h3>Schema</h3>
+                    <div class ="schemaView">
+                        <ul>
+                            <li><div class="prettyTextField">userId</div>: <strong>STRING</strong>, the GUID of the current user.
+                            <li><div class="prettyTextField">finalScore</div>: <strong>NUMBER</strong>, the final score achieved by the user.
+                            <li><div class="prettyTextField">category</div>: <strong>STRING</strong>, the quiz category the score was achieved in.
+                            <li><div class="prettyTextField">timeStamp</div>: <strong>TIMESTAMP</strong>, the timestamp at the time of the completion of the quiz.
+                        </ul>
+                    </div>
+                    <br>
+                    <h3>Example following the above schema</h3>
+                    <div class = "JSONView">
+                        <div class="prettyTextField">"userID"</div>: <div class="prettyTextString">"$GUID"</div>,<br>
+                        <div class="prettyTextField">"finalScore"</div>: <div class="prettyTextNum">1</div>,<br>
+                        <div class="prettyTextField">"category"</div>: <div class="prettyTextString">"math"</div>,<br>
+                        <div class="prettyTextField">"timeStamp"</div>: <div class="prettyTextString">"2023-02-21 13:47:11"</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <h2>POST: /quiz</h2>
-            <p>Takes a JSON in request body and validates it.</p>
+        <div class="dividingContainer">
+            <div class="prettyTextRoute"><h1>/profile</h1></div>
+            <h2>GET: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
+            <p>Takes a userId in url and returns a JSON with user profile information if user exists. <strong>404</strong> if userId doesn't exist.</p>
+            <div class ="codeBlock">
+                <h3>Example</h3>
+                <div class ="urlView">
+                    <p>localhost:3000/profile/6410b81059a013b25047049a</p>
+                </div>
+                    <p>Will return a popular musician's details.</p>
+                <br>
+            </div>
+            <h2>DELETE: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
+            <p>Under construction</p>
+            <h2>PUT: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
+            <p>Under construction</p>
+        </div>   
+        <div class="dividingContainer">
+            <div class="prettyTextRoute"><h1>/<div class="prettyTextRoute">signup</div></h1></div>
+            <h2>POST: /<div class="prettyTextRoute">signup</div></h2>
+            <p>Sending a user JSON object that conforms with the schema below will add that user's details to the database.</p>
             <div class ="codeBlock">
                 <h3>Schema</h3>
                 <div class ="schemaView">
                     <ul>
-                        <li>userID: <strong>STRING</strong>, the GUID of the current user.
-                        <li>finalScore: <strong>NUMBER</strong>, the final score achieved by the user.
-                        <li>timeStamp: <strong>TIMESTAMP</strong>, the timestamp at the time of the completion of the quiz.
+                        <li><div class="prettyTextField">firstName</div>: <strong>STRING</strong>, the first name of the user.</li>
+                        <li><div class="prettyTextField">lastName</div>:  <strong>STRING</strong>, the last name of the user.</li>
+                        <li><div class="prettyTextField">userName</div>:  <strong>STRING</strong>, the username of the user.</li>
+                        <li><div class="prettyTextField">email</div>:     <strong>STRING</strong>, the email address of the user.</li>
+                        <li><div class="prettyTextField">birthDate</div>: <strong>DATE</strong>, the birth date of the user.</li>
+                        <li><div class="prettyTextField">password</div>:  <strong>STRING</strong>, the user's password.</li>
                     </ul>
                 </div>
-                <br>
                 <h3>Example following the above schema</h3>
                 <div class = "JSONView">
-                    <div class="prettyTextField">"userID"</div>: <div class="prettyTextString">"$GUID"</div>,<br>
-                    <div class="prettyTextField">"finalScore"</div>: <div class="prettyTextNum">1</div>,<br>
-                    <div class="prettyTextField">"timeStamp"</div>: <div class="prettyTextString">"2023-02-21 13:47:11"</div>
+                    <div class="prettyTextField">"firstName"</div>: <div class="prettyTextString">"Aubrey"</div>,<br>
+                    <div class="prettyTextField">"lastName"</div>: <div class="prettyTextString">"Graham"</div>,<br>
+                    <div class="prettyTextField">"userName"</div>: <div class="prettyTextString">"Drake"</div>,<br>
+                    <div class="prettyTextField">"email"</div>: <div class="prettyTextString">"drake@ovo.com"</div>,<br>
+                    <div class="prettyTextField">"birthDate"</div>: <div class="prettyTextString">"1986-10-24T00:00:00.000Z"</div>,<br>
+                    <div class="prettyTextField">"password"</div>: <div class="prettyTextString">"secret"</div><br>
                 </div>
             </div>
         </div>
-   <!-- </body>
-</html>-->
+        <div class="dividingContainer">
+            <div class="prettyTextRoute"><h1 style="padding-left: 33%;">/<div class="prettyTextRoute">leaderboard</div></h1></div>
+            <h2>GET: /<div class="prettyTextRoute">leaderboard</div>?<div class="prettyTextField">category</div>=__value__</h2>   
+            <p>Sending a GET request with this query will return a JSON with all of the leaderboard records that correspond to the category __value__.</p>
+            <h2>GET: /<div class="prettyTextRoute">leaderboard</div>?<div class="prettyTextField">userId</div>=__value__</h2>   
+            <p>Sending a GET request with this query will return a JSON with all of the leaderboard entires from user __value__.</p>
+        </div>
+    </body>
+</html>

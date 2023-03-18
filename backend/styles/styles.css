@@ -1,30 +1,41 @@
-h1 {
-  color: #d5e4e4;
-}
-
-h3 {
-  color: #c5ab19;
-}
-
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #252525;
 }
 
 .intro {
-  background-color: #000;
+  text-align: center;
+  padding: 1px;
+  width: 50%;
+  margin-left: 25%;
+  margin-bottom: 1%;
+}
+
+.intro h1 {
+  margin-bottom: 1%;
+}
+
+.introBody {
+  width: 50%;
+  margin-top: 1%;
+  margin-left: 25%;
+  padding: 1px;
   text-align: center;
 }
 
-.intro.body {
-  color: white;
+.dividingContainer {
+  padding: 2% 0% 2% 2%;
+  width: 48%;
+  margin-left: 25%;
+  margin-bottom: 1%;
+  background-color: #3391ff;
+  border-radius: 10%;
 }
 
 .codeView {
   font-family: "Courier New", Courier, monospace;
   font-size: large;
   width: 25%;
-  border-radius: 25px;
   padding-top: 2px;
   padding-bottom: 2px;
 }
@@ -32,7 +43,7 @@ body {
 .JSONView {
   font-family: "Courier New", Courier, monospace;
   font-size: large;
-  width: 45%;
+  width: 48%;
   border-radius: 25px;
   padding-left: 15px;
   padding-top: 15px;
@@ -42,9 +53,26 @@ body {
 .schemaView {
   font-family: "Courier New", Courier, monospace;
   font-size: large;
-  width: 45%;
+  width: 93%;
   border-radius: 25px;
   padding: 5px;
+}
+
+.urlView {
+  font-family: "Courier New", Courier, monospace;
+  font-size: large;
+  width: 80%;
+  border-radius: 25px;
+  padding: 5px;
+ 
+}
+
+.urlView p {
+  font-family: "Courier New", Courier, monospace;
+  font-size: large;
+  width: 80%;
+  border-radius: 25px;
+  padding-left: 3%;
 }
 
 .codeBlock {
@@ -81,6 +109,26 @@ body {
   color: #3391ff;
   display: inline;
   font-weight: bold;
+}
+
+.prettyTextRoute h1 {
+  font-size: 62px;
+  padding-left: 40%;
+  margin-top: 0;
+  margin-bottom: 7.5%;
+  color:#E8D048;
+}
+
+.prettyTextRoute {
+  color:#E8D048;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: inline;
+}
+
+.prettyTextRoute h2 {
+  color:#E8D048;
+  display: inline;
 }
 
 html {
@@ -130,14 +178,6 @@ body {
   background-color: #1C1E1F;
 }
 
-.intro {
-  background-color: #1C1E1F;
-}
-
-.intro.body {
-  color: #e8e6e3;
-}
-
 .codeView {
   background-color: #494f52;
 }
@@ -147,6 +187,14 @@ body {
 }
 
 .schemaView {
+  background-color: #494f52;
+}
+
+.dividingContainer {
+  background-color: #252525;
+}
+
+.urlView {
   background-color: #494f52;
 }
 
