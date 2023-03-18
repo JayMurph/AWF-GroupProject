@@ -111,6 +111,10 @@ export default class QuestionsSequence extends React.Component {
   render() {
     let content = this.pages[this.state.currPgIdx];
     let questionCountText = "";
+    // capitalize category name
+    let categoryName =
+      this.state.category.substring(0, 1).toUpperCase() +
+      this.state.category.substring(1);
 
     // generate text for indicating position in quiz
     if (this.state.currPgIdx === 0) {
@@ -165,7 +169,7 @@ export default class QuestionsSequence extends React.Component {
             )}
           </div>
           <div style={{ justifySelf: "end" }}>
-            <h2>{this.state.category}</h2>
+            <h2>{categoryName}</h2>
           </div>
         </QuestionSequenceHeaderContainer>
         <FlexColumnContainer>{content}</FlexColumnContainer>
