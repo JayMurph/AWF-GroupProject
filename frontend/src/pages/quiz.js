@@ -1,4 +1,5 @@
 import React from "react";
+import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
 import QuestionsSequence from "../components/Quiz/QuestionsSequence";
 import TriviaQuestion from "../components/Quiz/TriviaQuestion.js";
@@ -45,7 +46,7 @@ export default class Quiz extends React.Component {
    * Gets quiz categories from API to display on page
    */
   async componentDidMount() {
-    await fetch(process.env.REACT_APP_API_URL + "/quiz")
+    await fetch(API_URL + "/quiz")
       .then((res) => res.json())
       .then((res) => this.updateRootWithCategories(res))
       .catch((er) => console.log(er));
@@ -58,7 +59,7 @@ export default class Quiz extends React.Component {
    */
   onCategorySelection = async (category) => {
     // get questions from API
-    await fetch(process.env.REACT_APP_API_URL + "/quiz?category=" + category)
+    await fetch(API_URL + "/quiz?category=" + category)
       .then((res) => res.json())
       .then((res) => {
         if (res.length > 0) {
