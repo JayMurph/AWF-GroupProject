@@ -8,7 +8,7 @@ import About from './pages/about';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Quiz from './pages/quiz';
-import { AppContentContainer, FlexColumnContainer } from './StyledElements';
+import { AppContentContainer } from './StyledElements';
 
 function App() {
 return (
@@ -16,7 +16,7 @@ return (
 	<Navbar />
 	<AppContentContainer>
 		<Routes>
-			<Route exact path='/' exact element={<Home />} />
+			<Route exact path='/' element={<Home />} />
 			<Route path='/about' element={<About/>} />
 			<Route path='/login' element={<Login/>} />
 			<Route path='/sign-up' element={<SignUp/>} />

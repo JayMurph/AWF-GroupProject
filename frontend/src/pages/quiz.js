@@ -12,7 +12,6 @@ export default class Quiz extends React.Component {
       categories: [],
     };
 
-    // get categories from API
     this.state.root = (
       <CategorySelection
         categories={this.state.categories}

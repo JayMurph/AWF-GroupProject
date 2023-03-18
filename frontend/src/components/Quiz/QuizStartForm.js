@@ -1,5 +1,5 @@
 import React from "react";
-import { CenteredDiv, FlexColumnContainer, PageHeader, BigButton } from "../../StyledElements";
+import { CenteredDiv, BigButton } from "../../StyledElements";
 
 export default class QuizStartForm extends React.Component {
   constructor(props) {
