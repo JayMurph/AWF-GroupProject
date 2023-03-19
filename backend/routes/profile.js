@@ -68,7 +68,7 @@ router.put('/:userId', async (req, res, next) =>{
         }
 
         if(user.password != old_password){
-            res.status(500).json({erorr:'password doesnt not match old password'})
+            res.status(500).json({error:'password doesnt not match old password'})
         }
 
         user.password = new_password
