@@ -40,6 +40,44 @@ router.get('/:userId', async (req, res, next) => {
     }
 });
 
+// a requsest to delete the profile
+router.delete('/:userId', async (req, res, next) =>{
+    console.log(req.params.userId)
+
+    if(ObjectId.isValid(req.params.userId)){
+        userModel
+        .deleteOne({_id: ObjectId(req.params.userId)})
+        .then(doc =>{
+            res.status(200).json(doc)
+        })
+        .catch(err =>{
+            res.status(500).json({error: ' Could not delete the user'})
+        })
+    }
+})
+
+router.put('/:userId', async (req, res, next) =>{
+    console.log(req.params.userId)
+    
+    if(ObjectId.isValid(req.params.userId)){
+        const {email,username, old_password, new_password} = req.body;
+
+        const user = await(userModel.findById(req.params.userId));
+        if(!user){
+            res.status(500).json({error:'Could not find user'})
+        }
+
+        if(user.password != old_password){
+            res.status(500).json({erorr:'password doesnt not match old password'})
+        }
+
+        user.password = new_password
+        await user.save();
+
+        res.status(200).json({Success:'OK'});
+    }
+})
+
 function isEmptyObject(obj) {
     return !Object.keys(obj).length;
 }
