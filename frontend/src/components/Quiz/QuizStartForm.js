@@ -1,6 +1,10 @@
 import React from "react";
-import { CenteredDiv, FlexColumnContainer, PageHeader, BigButton } from "../../StyledElements";
+import { CenteredDiv, BigButton } from "../../StyledElements";
 
+/**
+ * Starting page for a quiz. Displays a button allowing a user to start answer
+ * quiz questions.
+ */
 export default class QuizStartForm extends React.Component {
   constructor(props) {
     super(props);

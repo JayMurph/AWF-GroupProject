@@ -8,7 +8,9 @@ import About from './pages/about';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Quiz from './pages/quiz';
-import { AppContentContainer, FlexColumnContainer } from './StyledElements';
+import { AppContentContainer } from './StyledElements';
+
+export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 function App() {
 return (
