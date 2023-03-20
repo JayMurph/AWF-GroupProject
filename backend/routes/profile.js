@@ -17,7 +17,7 @@ router.get('/:userId', async (req, res, next) => {
         res.sendStatus(400);
     }
 
-    var query = userModel.find({_id: ObjectId(`${req.params.userId}`)});    
+    var query = userModel.find({_id: `${req.params.userId}`});    
 
     query.select("firstName");
     query.select("lastName");
@@ -40,7 +40,7 @@ router.get('/:userId', async (req, res, next) => {
     }
 });
 
-// a requsest to delete the profile
+// a request to delete the profile
 router.delete('/:userId', async (req, res, next) =>{
     console.log(req.params.userId)
 

@@ -15,12 +15,17 @@ router.get('/', async (req, res) =>{
     }
 
     if (req.query.category != null && req.query.userId == null) {
-      await queryLeaderboardForCategory(req.query.category, res);
+      await queryLeaderboard({category: req.query.category}, res);
       return;
     }
 
     if (req.query.category == null && req.query.userId != null) {
-      await queryLeaderboardForUserRecords(req.query.userId, res);
+      await queryLeaderboard({userId: req.query.userId}, res);
+      return;
+    }
+
+    if (req.query.category != null && req.query.userId != null) {
+      await queryLeaderboard({userId: req.query.userId, category: req.query.category}, res);
       return;
     }
 
@@ -28,8 +33,9 @@ router.get('/', async (req, res) =>{
     res.sendStatus(501);
 });
 
-async function queryLeaderboardForCategory(cat, res) {
-  var query = leaderboardModel.find({category: cat});
+//please rename this if I decide to keep it
+async function queryLeaderboard(paramObj, res) {
+  var query = leaderboardModel.find(paramObj);
 
   await query.exec((err, qRes) => {
     if (isEmptyObject(qRes)) {
@@ -40,21 +46,6 @@ async function queryLeaderboardForCategory(cat, res) {
         return;
     }
   });
-}
-
-async function queryLeaderboardForUserRecords(id, res) {
-  var query = leaderboardModel.find({userId: id});
-
-  await query.exec((err, qRes) => {
-    if (isEmptyObject(qRes)) {
-        res.sendStatus(404);    
-        return;
-    } else {
-        res.contentType('json').send(qRes);
-        return;
-    }
-  });
-
 }
 
 function isEmptyObject(obj) {
@@ -64,7 +55,5 @@ function isEmptyObject(obj) {
     return !Object.keys(obj).length;
   }
 }
-
-
 
 module.exports = router;
