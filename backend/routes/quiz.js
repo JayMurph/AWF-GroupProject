@@ -14,16 +14,15 @@ const leaderboardModel = mongoose.model("leaderboard", leaderboardSchema);
 const quizCats = ["history", "math", "literature", "science"];
 
 router.get('/', async (req, res) => {
-    console.log("/quiz requested");
+    //console.log("/quiz requested");
 
     //handles with /quiz
     if (isEmptyObject(req.query)) {
-        console.log(`req.query`);
         res.contentType('json').send(quizCats);
     } 
     //handles with /quiz?category=
     else if (!isEmptyObject(req.query.category)) {
-       
+        //console.log(`${req.query.category}`)
         if (doesCategoryExist(req.query.category)) {
             const pipeline = [
                 {$match: {category: {$regex: `${req.query.category}`, $options: 'i'}}},
@@ -37,7 +36,7 @@ router.get('/', async (req, res) => {
                 qRes.push(doc);
             }
 
-            console.log(qRes);
+            //console.log(qRes);
             res.send(qRes);
         } else {
             res.sendStatus(400);
@@ -46,8 +45,8 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    console.log(`/quiz got POST`);
-    console.log(req.body);
+    //console.log(`/quiz got POST`);
+    //console.log(req.body);
 
     //use joi to validate POST body 
     const {error} = validateLeaderboardEntry(req.body);
