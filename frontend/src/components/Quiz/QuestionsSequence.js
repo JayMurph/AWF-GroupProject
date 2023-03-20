@@ -5,7 +5,7 @@ import {
   FlexColumnContainer,
   QuestionSequenceHeaderContainer,
 } from "../../StyledElements";
-import Timer from "react-compound-timer";
+import Timer from "@amplication/react-compound-timer"
 import QuizResults from "../../Quiz/QuizResults";
 import QuizResultsForm from "./QuizResultsForm";
 import UserAnswerInfo from "../../Quiz/UserAnswerInfo";
