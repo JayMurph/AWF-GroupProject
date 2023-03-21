@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+var cors = require('cors');
 
 const port = process.env.PORT || 3000;
 var app = express();
@@ -9,6 +10,7 @@ var app = express();
 app.listen(port);
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 //ROUTES
 var indexRouter = require('./routes/index');
