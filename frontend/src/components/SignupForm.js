@@ -9,6 +9,7 @@ export default class SignupForm extends React.Component {
     super(props);
 
     this.state = {
+      onSumit:props.onSubmit,
       fields: {
         email: "",
         user_name: "",
@@ -29,6 +30,7 @@ export default class SignupForm extends React.Component {
       last_name: "required|alpha",
       birth_date:"required|date"
     });
+    this.form.onformsubmit = props.onSubmit;
   }
 
   render() {

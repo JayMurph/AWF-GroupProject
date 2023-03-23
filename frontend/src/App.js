@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route}
@@ -13,16 +13,18 @@ import { AppContentContainer } from './StyledElements';
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 function App() {
+	const [authenticated, setAuthenticated] = useState(false);
+
 return (
 	<Router>
-	<Navbar />
+	<Navbar authenticated={authenticated}/>
 	<AppContentContainer>
 		<Routes>
 			<Route exact path='/' element={<Home />} />
 			<Route path='/about' element={<About/>} />
 			<Route path='/login' element={<Login/>} />
 			<Route path='/sign-up' element={<SignUp/>} />
-			<Route path='/quiz' element={<Quiz/>} />
+			{authenticated ? <Route path='/quiz' element={<Quiz/>} /> : <></>}
 		</Routes>
 	</AppContentContainer>
 	</Router>
