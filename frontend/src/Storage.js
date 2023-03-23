@@ -19,8 +19,16 @@ export function ClearUserId() {
   localStorage.removeItem(USER_ID_KEY);
 }
 
+export function ClearUserData() {
+    ClearUserId();
+    localStorage.removeItem(USERNAME_KEY);
+    localStorage.removeItem(FIRST_NAME_KEY);
+    localStorage.removeItem(LAST_NAME_KEY);
+    localStorage.removeItem(BIRTH_DATE_KEY);
+    localStorage.removeItem(EMAIL_KEY);
+}
+
 export function SaveUserData(userData) {
-    console.log(userData);
     SetUserId(userData._id);
     localStorage.setItem(USERNAME_KEY, userData.userName);
     localStorage.setItem(FIRST_NAME_KEY, userData.firstName);

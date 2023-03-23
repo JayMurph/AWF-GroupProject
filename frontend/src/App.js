@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages";
 import About from "./pages/about";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
-import { GetUserId, SaveUserData } from "./Storage";
+import { GetUserId, SaveUserData, ClearUserData} from "./Storage";
 import { AppContentContainer } from "./StyledElements";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
@@ -26,9 +26,15 @@ function App() {
 	SaveUserData(userData);
   }
 
+  const onLogout = () => {
+	setAuthenticated(false);
+	setUserId(null);
+	ClearUserData();
+  }
+
   return (
     <Router>
-      <Navbar authenticated={authenticated} />
+      <Navbar authenticated={authenticated} onLogout={onLogout}/>
       <AppContentContainer>
         <Routes>
           <Route exact path="/" element={<Home />} />

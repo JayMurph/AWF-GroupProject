@@ -3,19 +3,18 @@ import { useNavigate } from "react-router-dom";
 import SignupForm from "../components/SignupForm.js";
 import { CenteredDiv, PageHeader } from "../StyledElements.js";
 import SignUpUser from "../ApiCalls.js";
-import { SaveUserData} from "../Storage.js";
 
 function SignUp(props) {
-    const navigate = useNavigate();
-    const [errorText, setErrorText] = useState("");
-    const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+  const [errorText, setErrorText] = useState("");
+  const [userData, setUserData] = useState(null);
 
-    useEffect(()=>{
-        if (userData) {
-            props.onSignupSuccess(userData);
-            navigate("/");
-        }
-    },[userData]);
+  useEffect(() => {
+    if (userData) {
+      props.onSignupSuccess(userData);
+      navigate("/");
+    }
+  }, [userData, props, navigate]);
 
   const formSubmit = (fields) => {
     SignUpUser(
@@ -26,9 +25,9 @@ function SignUp(props) {
       fields.last_name,
       fields.birth_date
     )
-    .then((res)=>res.json())
-    .then((data)=>setUserData(data))
-    .catch((err)=>setErrorText(err))
+      .then((res) => res.json())
+      .then((data) => setUserData(data))
+      .catch((err) => setErrorText(err));
   };
 
   return (
@@ -38,6 +37,6 @@ function SignUp(props) {
       <CenteredDiv>{errorText}</CenteredDiv>
     </>
   );
-};
+}
 
 export default SignUp;
