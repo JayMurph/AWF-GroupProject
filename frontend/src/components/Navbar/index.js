@@ -13,17 +13,22 @@ const Navbar = (props) => {
           <NavLink to="/about" activeStyle>
             About
           </NavLink>
-          <NavLink to="/login" activeStyle>
-            Login
-          </NavLink>
-          <NavLink to="/sign-up" activeStyle>
-            Sign Up
-          </NavLink>
-          {props.authenticated && (
+          {props.authenticated ? (
             <NavLink to="/quiz" activeStyle>
               {" "}
-              QUIZ
+              Quiz{" "}
             </NavLink>
+          ) : (
+            <>
+              <NavLink to="/login" activeStyle>
+                {" "}
+                Login{" "}
+              </NavLink>
+              <NavLink to="/sign-up" activeStyle>
+                {" "}
+                Sign Up{" "}
+              </NavLink>
+            </>
           )}
         </NavMenu>
       </Nav>
