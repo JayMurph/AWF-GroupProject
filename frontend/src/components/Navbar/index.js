@@ -2,9 +2,9 @@ import React from "react";
 import { Nav, NavLink, NavMenu, Header, Title } from "./NavbarElements";
 
 const Navbar = (props) => {
-	const logout = () => {
-		props.onLogout();
-	}
+  const logout = () => {
+    props.onLogout();
+  };
   /*
    * !! Change available links depending on if user is logged in
    */
@@ -17,13 +17,15 @@ const Navbar = (props) => {
             About
           </NavLink>
           {props.authenticated ? (
-			<>
-				<NavLink to="/quiz" activeStyle>
-				{" "}
-				Quiz{" "}
-				</NavLink>
-				<NavLink onClick={logout} to="/">Logout</NavLink>
-			</>
+            <>
+              <NavLink to="/quiz" activeStyle>
+                {" "}
+                Quiz{" "}
+              </NavLink>
+              <NavLink onClick={logout} to="/" activeStyle>
+                Logout
+              </NavLink>
+            </>
           ) : (
             <>
               <NavLink to="/login" activeStyle>
