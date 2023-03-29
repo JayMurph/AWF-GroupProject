@@ -36,8 +36,8 @@ describe('/quiz tests', () => {
         .get('/')
         .end((err, res) => {
             expect(res.status).to.be.equal(200);
+            done();
         });
-        done();
     });
 
     it('TestQuizRouteGET', (done) => {
@@ -45,11 +45,10 @@ describe('/quiz tests', () => {
         chai.request(server)
         .get('/quiz')
         .end((err, res) => {
-
             expect(res.status).to.be.equal(200);
             expect(res.body).to.be.a('array');
+            done();
         });
-        done();
     });
 
     it('TestQuizRouteGET?CATEGORY=HISTORY', (done) => {
@@ -58,8 +57,8 @@ describe('/quiz tests', () => {
         .query({category: 'history'})
         .end((err, res) => {
             expect(res.status).to.be.equal(200);
-            expect(res.body).to.be.a('object');
+            expect(res.body).to.be.a('array');
+            done();
         });
-        done();
     });
 });
