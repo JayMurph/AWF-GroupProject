@@ -16,6 +16,9 @@ const Navbar = (props) => {
           <NavLink to="/about" activeStyle>
             About
           </NavLink>
+          <NavLink to="/leaderboard" activeStyle>
+            Leaderboard
+          </NavLink>
           {props.authenticated ? (
             <>
               <NavLink to="/quiz" activeStyle>

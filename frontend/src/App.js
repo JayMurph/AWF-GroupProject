@@ -9,6 +9,7 @@ import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
 import { GetUserId, SaveUserData, ClearUserData} from "./Storage";
 import { AppContentContainer } from "./StyledElements";
+import Leaderboard from "./pages/leaderboard";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -39,6 +40,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/leaderboard" element={<Leaderboard />}/>
           {authenticated ? (
             <Route path="/quiz" element={<Quiz />} />
           ) : (
