@@ -1,6 +1,6 @@
 import { API_URL } from "./App";
 
-export default function SignUpUser(
+export function SignUpUser(
   email,
   username,
   password,
@@ -17,7 +17,20 @@ export default function SignUpUser(
       userName: username,
       email: email,
       birthDate: birthDate,
-      password: password
+      password: password,
+    }),
+  });
+}
+
+export function PostQuizResults(userId, quizResults, timeStamp) {
+  return fetch(API_URL + "/quiz", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      userId: userId,
+      finalScore: quizResults.getScore(),
+      category: quizResults.quizCategory,
+      timeStamp: timeStamp
     }),
   });
 }

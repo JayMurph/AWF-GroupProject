@@ -1,8 +1,7 @@
 import React from "react";
 import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
-import { Header, Title } from "../components/Navbar/NavbarElements";
-import { PageHeader } from "../StyledElements";
+import { CenteredDiv, PageHeader } from "../StyledElements";
 
 export default class Leaderboard extends React.Component {
   constructor(props) {
@@ -55,14 +54,19 @@ export default class Leaderboard extends React.Component {
   onCategorySelection = async (category) => {
     // get questions from API
     await fetch(API_URL + "/leaderboard?category=" + category)
-      .then((res) => {
+      .then(async (res) => {
         try {
-          res = res.json();
+          res = await res.json();
         } catch (err) {
           this.setState({
             root: (
               <>
-                <PageHeader>No {category.substring(0,1).toUpperCase() + category.substring(1)} High Scores</PageHeader>
+                <PageHeader>
+                  No{" "}
+                  {category.substring(0, 1).toUpperCase() +
+                    category.substring(1)}{" "}
+                  High Scores
+                </PageHeader>
                 <CategorySelection
                   key={null}
                   categories={this.state.categories}
@@ -74,26 +78,43 @@ export default class Leaderboard extends React.Component {
           return;
         }
 
+        console.log(res);
         if (res.length > 0) {
-          //const triviaQuestions = res.map(
-          //  (q) =>
-          //    new TriviaQuestion(
-          //      q.qTxt,
-          //      [q.a1Txt, q.a2Txt, q.a3Txt, q.a4Txt],
-          //      q.qAns - 1 //make index 0-based
-          //    )
-          //);
-
           // start quiz for category
           this.setState({ currCategory: category });
           this.setState({
-            root: <h1>{category}</h1>,
+            root: (
+              <>
+                <PageHeader>
+                  {category.substring(0, 1).toUpperCase() +
+                    category.substring(1)}
+                </PageHeader>
+                <CenteredDiv>
+                  <ul>
+                    {res.map((hs) => {
+                      return (
+                        <>
+                          <p>
+                            {hs.userId} {hs.finalScore} {hs.timeStamp}
+                          </p>
+                        </>
+                      );
+                    })}
+                  </ul>
+                </CenteredDiv>
+              </>
+            ),
           });
         } else {
           this.setState({
             root: (
               <>
-                <PageHeader>No {category.substring(0,1).toUpperCase() + category.substring(1)} High Scores</PageHeader>
+                <PageHeader>
+                  No{" "}
+                  {category.substring(0, 1).toUpperCase() +
+                    category.substring(1)}{" "}
+                  High Scores
+                </PageHeader>
                 <CategorySelection
                   key={null}
                   categories={this.state.categories}

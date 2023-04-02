@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignupForm from "../components/SignupForm.js";
 import { ErrorLabel, PageHeader } from "../StyledElements.js";
-import SignUpUser from "../ApiCalls.js";
+import {SignUpUser} from "../ApiCalls.js";
 
 function SignUp(props) {
   const navigate = useNavigate();
