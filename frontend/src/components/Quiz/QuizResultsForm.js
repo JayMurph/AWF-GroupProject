@@ -5,6 +5,10 @@ import {
   PageHeader,
 } from "../../StyledElements";
 
+/**
+ * Placeholder page. Displays the results of a quiz: Total score plus score and
+ * answer for each question
+ */
 export default class QuizResultsForm extends React.Component {
   constructor(props) {
     super(props);
