@@ -1,7 +1,8 @@
 import React from "react";
 import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
-import { CenteredDiv, PageHeader } from "../StyledElements";
+import { PageHeader } from "../StyledElements";
+import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 
 export default class Leaderboard extends React.Component {
   constructor(props) {
@@ -48,16 +49,19 @@ export default class Leaderboard extends React.Component {
   }
 
   /**
-   * Handles when user selects a quiz category. ........
+   * Handles when user selects a quiz category. Retrieves category leaderboard
+   * questions from API and displays them
    * @param {String} category Name of quiz category selected by user
    */
   onCategorySelection = async (category) => {
-    // get questions from API
-    await fetch(API_URL + "/leaderboard?category=" + category)
+    const leaderboardEndpoint = "/leaderboard?category=" + category;
+    // get and display leaderboard entries for quiz category
+    await fetch(API_URL + leaderboardEndpoint)
       .then(async (res) => {
         try {
           res = await res.json();
         } catch (err) {
+            // No high scores
           this.setState({
             root: (
               <>
@@ -80,32 +84,21 @@ export default class Leaderboard extends React.Component {
 
         console.log(res);
         if (res.length > 0) {
-          // start quiz for category
           this.setState({ currCategory: category });
           this.setState({
+            // display leaderboard
             root: (
               <>
                 <PageHeader>
                   {category.substring(0, 1).toUpperCase() +
                     category.substring(1)}
                 </PageHeader>
-                <CenteredDiv>
-                  <ul>
-                    {res.map((hs) => {
-                      return (
-                        <>
-                          <p>
-                            {hs.userId} {hs.finalScore} {hs.timeStamp}
-                          </p>
-                        </>
-                      );
-                    })}
-                  </ul>
-                </CenteredDiv>
+                <LeaderboardList initialItems={res} LeaderboardEndpoint={leaderboardEndpoint}/>
               </>
             ),
           });
         } else {
+            // NO HIGH SCORES
           this.setState({
             root: (
               <>

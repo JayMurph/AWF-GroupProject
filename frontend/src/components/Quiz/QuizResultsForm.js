@@ -1,5 +1,4 @@
 import React from "react";
-import { API_URL } from "../../App";
 import {
   CenteredDiv,
   FlexColumnContainer,
