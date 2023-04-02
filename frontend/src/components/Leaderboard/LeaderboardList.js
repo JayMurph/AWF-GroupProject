@@ -13,6 +13,7 @@ export default class LeaderboardList extends React.Component {
   render() {
     return (
       <>
+        <p>{this.state.leaderboardEndpoint}</p>
         <CenteredDiv>
           <table style={{"width":"70%"}}>
             <tr>

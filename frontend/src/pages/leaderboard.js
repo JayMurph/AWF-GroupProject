@@ -55,9 +55,9 @@ export default class Leaderboard extends React.Component {
    * @param {String} category Name of quiz category selected by user
    */
   onCategorySelection = async (category) => {
-    const leaderboardEndpoint = "/leaderboard?category=" + category;
+    const leaderboardEndpoint = API_URL + "/leaderboard?category=" + category;
     // get and display leaderboard entries for quiz category
-    await fetch(API_URL + leaderboardEndpoint)
+    await fetch(leaderboardEndpoint)
       .then(async (res) => {
         try {
           res = await res.json();
@@ -90,7 +90,7 @@ export default class Leaderboard extends React.Component {
             content: (
               <LeaderboardList
                 initialItems={res}
-                LeaderboardEndpoint={leaderboardEndpoint}
+                leaderboardEndpoint={leaderboardEndpoint}
               />
             ),
           });
