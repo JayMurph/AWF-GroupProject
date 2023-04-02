@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
         if (doesCategoryExist(req.query.category)) {
             const pipeline = [
                 {$match: {category: {$regex: `${req.query.category}`, $options: 'i'}}},
-                {$sample: {size: 2}}
+                {$sample: {size: 5}}
             ];
 
             const cursor = quizModel.aggregate(pipeline);
