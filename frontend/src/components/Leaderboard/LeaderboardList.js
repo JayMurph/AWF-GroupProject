@@ -14,17 +14,28 @@ export default class LeaderboardList extends React.Component {
     return (
       <>
         <CenteredDiv>
-          <ul>
+          <table style={{"width":"70%"}}>
+            <tr>
+              <th style={{"width":"20%"}}>User</th>
+              <th style={{"width":"20%"}}>Score</th>
+              <th style={{"width":"20%"}}>Time</th>
+            </tr>
             {this.state.initialItems.map((hs) => {
               return (
-                <>
-                  <p>
-                    {hs.userId} {hs.finalScore} {hs.timeStamp}
-                  </p>
-                </>
+                  <tr>
+                    <td style={{"textAlign":"center"}}>
+                      {hs.userId} 
+                    </td>
+                    <td style={{"textAlign":"center"}}>
+                      {hs.finalScore} 
+                    </td>
+                    <td style={{"textAlign":"center"}}>
+                      {hs.timeStamp}
+                    </td>
+                  </tr>
               );
             })}
-          </ul>
+          </table>
         </CenteredDiv>
       </>
     );
