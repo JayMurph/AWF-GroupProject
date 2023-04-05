@@ -28,8 +28,6 @@ server.use('/leaderboard', leaderboardRouter);
 mongoose.set('strictQuery', true);
 main().catch(err => console.log(err));
 async function main() {
-    //await mongoose.connect(`mongodb://127.0.0.1/AWFdb`);
-    //await mongoose.connect(`mongodb+srv://mDremo5093:iLnyHvHoAJjnivhF@cluster0.unkvw0a.mongodb.net/quizzes`);
     console.log(`Connecting to db@${process.env.DBHOST}`)
     await mongoose.connect(process.env.DBHOST);
 }
