@@ -3,9 +3,7 @@ var express = require('express');
 var Joi = require('joi');
 var mongoose = require("mongoose");
 var router = express.Router();
-var userSchema = require('../schema/user');
-
-const userModel = mongoose.model("users", userSchema);
+var userModel = require('../models/user');
 
 router.post('/', async (req, res) => {
   //console.log("/signup posted to");

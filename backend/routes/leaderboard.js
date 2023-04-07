@@ -1,9 +1,7 @@
 var express = require('express');
-var mongoose = require("mongoose");
 var router = express.Router();
 
-const leaderboardSchema = require('../schema/leaderboard');
-const leaderboardModel = mongoose.model("leaderboard", leaderboardSchema);
+const leaderboardModel = require('../models/leaderboard');
 
 router.get('/', async (req, res) =>{
     //console.log("/leaderboard requested");
@@ -34,7 +32,6 @@ router.get('/', async (req, res) =>{
 });
 
 async function queryLeaderboard(paramObj, res, page) {
-  //TODO: update documentation of this paging behaviour in views/index.html
   var query = page != undefined 
   ? leaderboardModel.find(paramObj).skip((page - 1) * 5).limit(5).sort({finalScore: -1})
   : leaderboardModel.find(paramObj);

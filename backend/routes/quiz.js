@@ -1,14 +1,9 @@
 var express = require('express');
-var mongoose = require("mongoose");
 var router = express.Router();
 var Joi = require('joi');
 
-const quizSchema = require('../schema/quiz');
-const quizModel = mongoose.model("quizzes", quizSchema);
-
-const leaderboardSchema = require('../schema/leaderboard');
-const leaderboardModel = mongoose.model("leaderboard", leaderboardSchema);
-
+const quizModel = require('../models/quiz');
+const leaderboardModel = require('../models/leaderboard');
 
 //TODO: make a db query that allows this list to be loaded dynamically
 const quizCats = ["history", "math", "literature", "science"];

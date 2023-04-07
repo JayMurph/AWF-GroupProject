@@ -9,15 +9,9 @@ const server = require('../server');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
-const leaderboardSchema = require('../schema/leaderboard');
-const leaderboardModel = mongoose.model("leaderboards", leaderboardSchema);
-
-const quizSchema = require('../schema/quiz');
-const quizModel = mongoose.model("quizzes", quizSchema);
-
-const userSchema = require('../schema/user');
-const userModel = mongoose.model("users", userSchema);
-
+const leaderboardModel = require('../models/leaderboard');
+const quizModel = require('../models/quiz');
+const userModel = require('../models/user');
 
 chai.use(chaiHttp);
 
@@ -27,7 +21,7 @@ after(async () => {
 });
 
 describe('/profile and /signup tests', () => {
-    it('POST\t/signup', async () => {
+    it('POST\t/signup\t{firstName: "Aubrey", lastName: "Graham", userName: "Drake", email: "drake@ovo.com", birthDate: "1986-10-24T00:00:00.000Z", password: "secret"}', async () => {
         const res = await chai.request(server)
         .post('/signup')
         .send({
@@ -137,6 +131,16 @@ describe('/leaderboard tests', () => {
     });
 
     //TODO: develop a test for paging behaviour
+    it('GET\t/leaderboard?category=HISTORY&page=1', async () => {
+        
+        await addRandomLeaderboardEntries(new ObjectId());
+
+        const res = await chai.request(server).get(`/leaderboard?category=history&page=1`);
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('array');
+        expect(res.body.length).to.be.equal(5);
+    });
 });
 
 describe('Destructive tests', () => {
@@ -150,3 +154,26 @@ describe('Destructive tests', () => {
         expect(res.body.deletedCount).to.be.equal(1);
     });
 });
+
+async function addRandomLeaderboardEntries(id) {
+    const quizCats = ["history", "math", "literature", "science"];
+    
+    const res = await leaderboardModel.insertMany([
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: quizCats[Math.floor(Math.random() * 4)], timeStamp: new Date()}
+    ]);
+}

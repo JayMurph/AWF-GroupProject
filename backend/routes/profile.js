@@ -1,9 +1,7 @@
 var express = require('express');
-var mongoose = require("mongoose");
 var router = express.Router();
 
-const userSchema = require('../schema/user');
-const userModel = mongoose.model('Users', userSchema);
+const userModel = require('../models/user');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/', (req, res) => {
