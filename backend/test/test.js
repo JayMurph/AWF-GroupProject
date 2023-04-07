@@ -22,43 +22,129 @@ const userModel = mongoose.model("users", userSchema);
 chai.use(chaiHttp);
 
 //clean up test database
-after((done) => {
-    leaderboardModel.deleteMany({});
-    quizModel.deleteMany({});
-    userModel.deleteMany({});
-    done();
+after(async () => {
+    await leaderboardModel.deleteMany({});
+});
+
+describe('/profile and /signup tests', () => {
+    it('POST\t/signup', async () => {
+        const res = await chai.request(server)
+        .post('/signup')
+        .send({
+            firstName: "Aubrey",
+            lastName: "Graham",
+            userName: "Drake",
+            email: "drake@ovo.com",
+            birthDate: "1986-10-24T00:00:00.000Z",
+            password: "secret"
+        })
+        expect(res.status).to.be.equal(201);
+        expect(res.body).to.be.an('object');
+    });
+
+    it('GET\t/profile/:userId', async () => {
+        var lastID = await userModel.findOne({}, {sort: {_id: -1}});
+        lastID = JSON.parse(JSON.stringify(lastID))._id;
+
+        const res = await chai.request(server).get(`/profile/${lastID}`);
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('object');
+    });
+
+    it('PUT\t/profile/:userId', async () => {
+        var lastID = await userModel.findOne({}, {sort: {_id: -1}});
+        lastID = JSON.parse(JSON.stringify(lastID))._id;
+        
+        const res = await chai.request(server)
+        .put(`/profile/${lastID}`)
+        .send({
+            userName: "ChampagnePapi",
+            email: "drake@ovo.com",
+            old_password: "secret",
+            new_password: "secret"
+        })
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body.modifiedCount).to.be.equal(1);
+    });
 });
 
 describe('/quiz tests', () => {
-    it('TestIndexRoute', (done) => {
-
-        chai.request(server)
-        .get('/')
-        .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            done();
-        });
+    it('GET\t/', async () => {
+        const res = await chai.request(server).get('/')
+        expect(res.status).to.be.equal(200);
     });
 
-    it('TestQuizRouteGET', (done) => {
+    it('GET\t/quiz', async () => {
+        const res = await chai.request(server).get('/quiz')
 
-        chai.request(server)
-        .get('/quiz')
-        .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body).to.be.a('array');
-            done();
-        });
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.a('array');
     });
 
-    it('TestQuizRouteGET?CATEGORY=HISTORY', (done) => {
-        chai.request(server)
-        .get('/quiz')
-        .query({category: 'history'})
-        .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body).to.be.a('array');
-            done();
-        });
+    it('GET\t/quiz?category=HISTORY', async () => {
+        const res = await chai.request(server).get('/quiz').query({category: 'history'})
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.a('array');
+    });
+
+    it('POST\t/quiz\t{userID: ObjectId(lastID), finalScore: rnd, category: "history", timeStamp: new Date()}', async () => {
+        var lastID = await userModel.findOne({}, {sort: {_id: -1}});
+        lastID = JSON.parse(JSON.stringify(lastID))._id; 
+
+        const res = await chai.request(server)
+        .post('/quiz')
+        .send({
+            userId: ObjectId(lastID),
+            finalScore: Math.floor(Math.random() * 999),
+            category: "history",
+            timeStamp: new Date()
+        })
+
+        expect(res.status).to.be.equal(200);
+    });
+});
+
+describe('/leaderboard tests', () => {
+    it('GET\t/leaderboard?category=HISTORY', async () => {
+        const res = await chai.request(server).get(`/leaderboard?category=history`);
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('array');
+    });
+
+    it('GET\t/leaderboard?userId=:userId', async () => {
+        var lastID = await userModel.findOne({}, {sort: {_id: -1}});
+        lastID = JSON.parse(JSON.stringify(lastID))._id;
+
+        const res = await chai.request(server).get(`/leaderboard?userId=${lastID}`);
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('array');
+    });
+
+    it('GET\t/leaderboard?category=HISTORY&userId=:userId', async () => {
+        var lastID = await userModel.findOne({}, {sort: {_id: -1}});
+        lastID = JSON.parse(JSON.stringify(lastID))._id;
+
+        const res = await chai.request(server).get(`/leaderboard?category=history&userId=${lastID}`);
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('array');
+    });
+});
+
+
+describe('Destructive tests', () => {
+    it('DELETE\t/profile/:userId', async () => {
+        var lastID = await userModel.findOne({}, {sort: {_id: -1}});
+        lastID = JSON.parse(JSON.stringify(lastID))._id;
+
+        const res = await chai.request(server).delete(`/profile/${lastID}`);
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body.deletedCount).to.be.equal(1);
     });
 });

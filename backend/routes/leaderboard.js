@@ -6,8 +6,8 @@ const leaderboardSchema = require('../schema/leaderboard');
 const leaderboardModel = mongoose.model("leaderboard", leaderboardSchema);
 
 router.get('/', async (req, res) =>{
-    console.log("/leaderboard requested");
-    console.log(req.query);
+    //console.log("/leaderboard requested");
+    //console.log(req.query);
 
     if (isEmptyObject(req.query)) {
       res.sendStatus(400);
