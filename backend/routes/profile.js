@@ -31,9 +31,13 @@ router.get('/:userId', async (req, res, next) => {
             if (isEmptyObject(qRes)) {
                 res.sendStatus(404);    
             } else {
+                if (qRes.length === 1) {
+                    res.contentType('json').send(qRes[0]);
+                    return;
+                }
+
                 res.contentType('json').send(qRes);
             }
-        
         });
     } catch (err) {
         console.error(err);
@@ -42,7 +46,7 @@ router.get('/:userId', async (req, res, next) => {
 
 // a request to delete the profile
 router.delete('/:userId', async (req, res, next) =>{
-    console.log(req.params.userId)
+    //console.log(req.params.userId)
 
     if (ObjectId.isValid(req.params.userId)) {
         userModel
