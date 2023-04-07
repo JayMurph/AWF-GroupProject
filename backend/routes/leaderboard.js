@@ -15,17 +15,17 @@ router.get('/', async (req, res) =>{
     }
 
     if (req.query.category != null && req.query.userId == null) {
-      await queryLeaderboard({category: req.query.category}, res);
+      await queryLeaderboard({category: req.query.category}, res, req.query.page);
       return;
     }
 
     if (req.query.category == null && req.query.userId != null) {
-      await queryLeaderboard({userId: req.query.userId}, res);
+      await queryLeaderboard({userId: req.query.userId}, res, req.query.page);
       return;
     }
 
     if (req.query.category != null && req.query.userId != null) {
-      await queryLeaderboard({userId: req.query.userId, category: req.query.category}, res);
+      await queryLeaderboard({userId: req.query.userId, category: req.query.category}, res, req.query.page);
       return;
     }
 
@@ -33,9 +33,11 @@ router.get('/', async (req, res) =>{
     res.sendStatus(501);
 });
 
-//please rename this if I decide to keep it
-async function queryLeaderboard(paramObj, res) {
-  var query = leaderboardModel.find(paramObj);
+async function queryLeaderboard(paramObj, res, page) {
+  //TODO: update documentation of this paging behaviour in views/index.html
+  var query = page != undefined 
+  ? leaderboardModel.find(paramObj).skip((page - 1) * 5).limit(5).sort({finalScore: -1})
+  : leaderboardModel.find(paramObj);
 
   await query.exec((err, qRes) => {
     if (isEmptyObject(qRes)) {

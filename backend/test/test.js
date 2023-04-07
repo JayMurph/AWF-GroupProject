@@ -38,6 +38,7 @@ describe('/profile and /signup tests', () => {
             birthDate: "1986-10-24T00:00:00.000Z",
             password: "secret"
         })
+
         expect(res.status).to.be.equal(201);
         expect(res.body).to.be.an('object');
     });
@@ -80,14 +81,14 @@ describe('/quiz tests', () => {
         const res = await chai.request(server).get('/quiz')
 
         expect(res.status).to.be.equal(200);
-        expect(res.body).to.be.a('array');
+        expect(res.body).to.be.an('array');
     });
 
     it('GET\t/quiz?category=HISTORY', async () => {
         const res = await chai.request(server).get('/quiz').query({category: 'history'})
 
         expect(res.status).to.be.equal(200);
-        expect(res.body).to.be.a('array');
+        expect(res.body).to.be.an('array');
     });
 
     it('POST\t/quiz\t{userID: ObjectId(lastID), finalScore: rnd, category: "history", timeStamp: new Date()}', async () => {
@@ -134,8 +135,9 @@ describe('/leaderboard tests', () => {
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
     });
-});
 
+    //TODO: develop a test for paging behaviour
+});
 
 describe('Destructive tests', () => {
     it('DELETE\t/profile/:userId', async () => {
