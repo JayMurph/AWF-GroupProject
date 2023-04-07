@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 const leaderboardModel = require('../models/leaderboard');
-const quizModel = require('../models/quiz');
+const authModel = require('../models/auth');
 const userModel = require('../models/user');
 
 chai.use(chaiHttp);
@@ -21,7 +21,7 @@ after(async () => {
 });
 
 describe('/profile and /signup tests', () => {
-    it('POST\t/signup\t{firstName: "Aubrey", lastName: "Graham", userName: "Drake", email: "drake@ovo.com", birthDate: "1986-10-24T00:00:00.000Z", password: "secret"}', async () => {
+    it('POST\t/signup\t{firstName: "Aubrey", lastName: "Graham", userName: "Drake", email: "drake@ovo.com", birthDate: "1986-10-24T", password: ... }', async () => {
         const res = await chai.request(server)
         .post('/signup')
         .send({
@@ -37,7 +37,7 @@ describe('/profile and /signup tests', () => {
         expect(res.body).to.be.an('object');
     });
 
-    it('GET\t/profile/:userId', async () => {
+    it('GET\t/profile/:userId "Test fetch user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
@@ -47,7 +47,7 @@ describe('/profile and /signup tests', () => {
         expect(res.body).to.be.an('object');
     });
 
-    it('PUT\t/profile/:userId', async () => {
+    it('PUT\t/profile/:userId {userName: "ChampagnePapi", ... } "Test update user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
         
@@ -66,26 +66,26 @@ describe('/profile and /signup tests', () => {
 });
 
 describe('/quiz tests', () => {
-    it('GET\t/', async () => {
+    it('GET\t/\t"Test get API docs"', async () => {
         const res = await chai.request(server).get('/')
         expect(res.status).to.be.equal(200);
     });
 
-    it('GET\t/quiz', async () => {
+    it('GET\t/quiz\t"Test get quiz categories."', async () => {
         const res = await chai.request(server).get('/quiz')
 
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
     });
 
-    it('GET\t/quiz?category=HISTORY', async () => {
+    it('GET\t/quiz?category=HISTORY\t"Test get history quiz."', async () => {
         const res = await chai.request(server).get('/quiz').query({category: 'history'})
 
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
     });
 
-    it('POST\t/quiz\t{userID: ObjectId(lastID), finalScore: rnd, category: "history", timeStamp: new Date()}', async () => {
+    it('POST\t/quiz\t{userID: ObjectId(lastID), finalScore: rnd, category: "history", timeStamp: new Date()} "Test post new score"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id; 
 
@@ -103,14 +103,14 @@ describe('/quiz tests', () => {
 });
 
 describe('/leaderboard tests', () => {
-    it('GET\t/leaderboard?category=HISTORY', async () => {
+    it('GET\t/leaderboard?category=HISTORY\t"Test get all posted scores from history category"', async () => {
         const res = await chai.request(server).get(`/leaderboard?category=history`);
 
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
     });
 
-    it('GET\t/leaderboard?userId=:userId', async () => {
+    it('GET\t/leaderboard?userId=:userId\t"Test get all posted scores by $userId"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
@@ -120,7 +120,7 @@ describe('/leaderboard tests', () => {
         expect(res.body).to.be.an('array');
     });
 
-    it('GET\t/leaderboard?category=HISTORY&userId=:userId', async () => {
+    it('GET\t/leaderboard?category=HISTORY&userId=:userId\t"Test filtering $userId scores by category"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
@@ -131,7 +131,7 @@ describe('/leaderboard tests', () => {
     });
 
     //TODO: develop a test for paging behaviour
-    it('GET\t/leaderboard?category=HISTORY&page=1', async () => {
+    it('GET\t/leaderboard?category=HISTORY&page=1\t"Test pagination with history leaderboard category"',async () => {
         
         await addRandomLeaderboardEntries(new ObjectId());
 
@@ -143,8 +143,84 @@ describe('/leaderboard tests', () => {
     });
 });
 
+describe('Auth tests', () => {
+    it('POST\t/login\t{sub: "64308a94db3ac6fc0fc0adab", userName: "SemiDoge"} "Login and get issued tokens"', async () => {
+        
+        const res = await chai.request(server)
+        .post('/login')
+        .send({
+            sub: "64308a94db3ac6fc0fc0adab",
+            userName: "SemiDoge"
+        })
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.refreshToken).to.exist;
+        expect(res.body.accessToken).to.exist;
+    });
+
+    it('POST\t/token\t{refreshToken: $token} "Get reissued a new access token"', async () => {
+        const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
+        const refreshToken = result.refreshToken;
+
+        const res = await chai.request(server)
+        .post('/token')
+        .send({
+            refreshToken: refreshToken
+        })
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.accessToken).to.exist;
+    });
+
+    it('GET\t/data\tHeader: {Authorization: Bearer $accessToken} "Test if middleware authToken() can grant access"', async () => {
+        const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
+        const refreshToken = result.refreshToken;
+
+        const getTokenRes = await chai.request(server)
+        .post('/token')
+        .send({
+            refreshToken: refreshToken
+        })
+        
+        const accessToken = getTokenRes.body.accessToken;
+        
+        const res = await chai.request(server)
+        .get('/data')
+        .set('Authorization', `Bearer ${accessToken}`)
+
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.data).to.exist;
+    });
+
+    it('GET\t/data\tHeader: {Authorization: Bearer junkToken} "Test if middleware authToken() can restrict access"', async () => {
+        const accessToken = "junkToken";
+        
+        const res = await chai.request(server)
+        .get('/data')
+        .set('Authorization', `Bearer ${accessToken}`)
+
+        expect(res.status).to.be.equal(403);
+    });
+
+    it('DELETE\t/logout\t{refreshToken: $token} "Test if refresh token is invalidated"', async () => {
+        const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
+        const refreshToken = result.refreshToken;
+
+        const res = await chai.request(server)
+        .delete('/logout')
+        .send({
+            refreshToken: refreshToken
+        })
+
+        expect(res.status).to.be.equal(204);
+    });
+});
+
 describe('Destructive tests', () => {
-    it('DELETE\t/profile/:userId', async () => {
+    it('DELETE\t/profile/:userId\t"Test delete user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 

@@ -36,7 +36,6 @@ async function insertRefreshToken(token) {
 
 async function removeRefreshToken(token) {
     let result;
-    console.log("trying to remove rfshTkn: " + token);
 
     try {
         result = await authModel.deleteOne({refreshToken: token.refreshToken});
