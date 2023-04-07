@@ -8,7 +8,7 @@ var userSchema = require('../schema/user');
 const userModel = mongoose.model("users", userSchema);
 
 router.post('/', async (req, res) => {
-  console.log("/signup posted to");
+  //console.log("/signup posted to");
   //console.log(req.body);
   try {
     const result = await CreateProfile(JSON.stringify(req.body), res);
@@ -39,7 +39,7 @@ async function CreateProfile(userContents, res) {
   });
 
   res.status(201).json(result);
-  console.log(result);
+  //console.log(result);
 }
 
 function validateUserEntry(requestBody) {

@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 //A request to this looks like: uri:port/profile/640e6843c49f1554d5426ae0
 router.get('/:userId', async (req, res, next) => {
-    console.log(`/profile received request for lookup of { userId: ${req.params.userId} }`);
+    //console.log(`/profile received request for lookup of { userId: ${req.params.userId} }`);
     if (isEmptyObject(req.params)) {
         res.sendStatus(400);
     }
@@ -44,37 +44,50 @@ router.get('/:userId', async (req, res, next) => {
 router.delete('/:userId', async (req, res, next) =>{
     console.log(req.params.userId)
 
-    if(ObjectId.isValid(req.params.userId)){
+    if (ObjectId.isValid(req.params.userId)) {
         userModel
         .deleteOne({_id: ObjectId(req.params.userId)})
-        .then(doc =>{
+        .then(doc => {
             res.status(200).json(doc)
         })
-        .catch(err =>{
+        .catch(err => {
             res.status(500).json({error: ' Could not delete the user'})
         })
     }
 })
 
-router.put('/:userId', async (req, res, next) =>{
-    console.log(req.params.userId)
+router.put('/:userId', async (req, res, next) => {
+    //console.log(req.params.userId)
     
-    if(ObjectId.isValid(req.params.userId)){
-        const {email,username, old_password, new_password} = req.body;
-
+    if (ObjectId.isValid(req.params.userId)) {
+        const {email, userName, old_password, new_password} = req.body;
         const user = await(userModel.findById(req.params.userId));
-        if(!user){
+
+        if (!user) {
             res.status(500).json({error:'Could not find user'})
+            return;
         }
 
-        if(user.password != old_password){
-            res.status(500).json({error:'password doesnt not match old password'})
+        if (user.password != old_password) {
+            res.status(500).json({error:"Password does not not match old password"})
+            return;
         }
 
-        user.password = new_password
-        await user.save();
+        try {
 
-        res.status(200).json({Success:'OK'});
+            const result =  await userModel.updateOne(
+                {_id: ObjectId(req.params.userId)},
+                {$set: {
+                    userName: userName, 
+                    email: email,
+                    password: new_password
+                }}
+            );
+
+           res.send(result);
+        } catch (err) {
+            console.error(err);
+        }
     }
 })
 
