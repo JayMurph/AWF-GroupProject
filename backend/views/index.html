@@ -58,9 +58,38 @@
                 <br>
             </div>
             <h2>DELETE: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
-            <p>Under construction</p>
+            <p>Takes a userId in url and delete the user at with that userId if user exists. <strong>500</strong> if userId doesn't exist.</p>
+            <div class ="codeBlock">
+                <h3>Example</h3>
+                <div class ="urlView">
+                    <p>localhost:3000/profile/6410b81059a013b25047049a</p>
+                </div>
+                    <p>Will delete the profile of a popular musician.</p>
+                <br>
+            </div>
             <h2>PUT: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
-            <p>Under construction</p>
+            <p>Takes a userId in url and will update the user based on the information in the request body, if that user exists. <strong>500</strong> if userId doesn't exist.</p>
+            <div class ="codeBlock">
+                    <h3>Schema</h3>
+                    <div class ="schemaView">
+                        <ul>
+                            <li><div class="prettyTextField">userName</div>: <strong>STRING</strong>, the new/old username of the user.</li>
+                            <li><div class="prettyTextField">email</div>: <strong>STRING</strong>, the new/old email address of the user.</li>
+                            <li><div class="prettyTextField">password</div>: <strong>STRING</strong>, the new/old user's password.</li>
+                            <li><div class="prettyTextField">old_password</div>: <strong>STRING</strong>, the user's old password.</li>
+                            <li><div class="prettyTextField">new_password</div>: <strong>STRING</strong>, the user's new password.</li>
+                        </ul>
+                    </div>
+                    <br>
+                    <h3>Example following the above schema</h3>
+                    <div class = "JSONView">
+                        <div class="prettyTextField">"userName"</div>: <div class="prettyTextString">"ChampagnePapi"</div>,<br>
+                        <div class="prettyTextField">"email"</div>: <div class="prettyTextString">"drake@ovo.com"</div>,<br>
+                        <div class="prettyTextField">"old_password"</div>: <div class="prettyTextString">"secret"</div>,<br>
+                        <div class="prettyTextField">"new_password"</div>: <div class="prettyTextString">"secret"</div><br>
+                    </div>
+                    <p>The above example will change the profile's username.</p>
+                </div>
         </div>   
         <div class="dividingContainer">
             <div class="prettyTextRoute"><h1>/<div class="prettyTextRoute">signup</div></h1></div>
@@ -94,7 +123,10 @@
             <h2>GET: /<div class="prettyTextRoute">leaderboard</div>?<div class="prettyTextField">category</div>=__value__</h2>   
             <p>Sending a GET request with this query will return a JSON with all of the leaderboard records that correspond to the category __value__.</p>
             <h2>GET: /<div class="prettyTextRoute">leaderboard</div>?<div class="prettyTextField">userId</div>=__value__</h2>   
-            <p>Sending a GET request with this query will return a JSON with all of the leaderboard entires from user __value__.</p>
+            <p>Sending a GET request with this query will return a JSON with all of the leaderboard entries from user __value__.</p>
+            <h2>GET: /<div class="prettyTextRoute">leaderboard</div>?<div class="prettyTextField">userId</div>=__value__&<div class="prettyTextField">page</div>=__value__</h2>
+            <p>Sending a GET request with this query will return a JSON with all of the leaderboard entries from user __value__. Paginated via the page query field. NOTE: "page" can be used with either userId or category.</p>
+            <p><strong>NOTE: The above queries can be combined, to get a category filtered view of a users quiz performances.</strong></p>
         </div>
     </body>
 </html>
