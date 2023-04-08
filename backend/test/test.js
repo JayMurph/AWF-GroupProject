@@ -1,7 +1,3 @@
-require('dotenv-flow').config();
-console.log(`Environment\nPORT: ${process.env.PORT}`);
-console.log(`DBHOST: ${process.env.DBHOST}`);
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
@@ -14,6 +10,10 @@ const authModel = require('../models/auth');
 const userModel = require('../models/user');
 
 chai.use(chaiHttp);
+
+console.log(`Environment\nPORT: ${process.env.PORT}`);
+console.log(`DBHOST: ${process.env.DBHOST}`);
+console.log(`ACCESS_TOKEN_LIFETIME: ${process.env.ACCESS_TOKEN_LIFETIME}`);
 
 //clean up test database
 after(async () => {
@@ -159,12 +159,12 @@ describe('Auth tests', () => {
         expect(res.body.accessToken).to.exist;
     });
 
-    it('POST\t/token\t{refreshToken: $token} "Get reissued a new access token"', async () => {
+    it('POST\t/renew\t{refreshToken: $token} "Get reissued a new access token"', async () => {
         const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
         const refreshToken = result.refreshToken;
 
         const res = await chai.request(server)
-        .post('/token')
+        .post('/renew')
         .send({
             refreshToken: refreshToken
         })
@@ -179,7 +179,7 @@ describe('Auth tests', () => {
         const refreshToken = result.refreshToken;
 
         const getTokenRes = await chai.request(server)
-        .post('/token')
+        .post('/renew')
         .send({
             refreshToken: refreshToken
         })
