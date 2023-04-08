@@ -5,6 +5,7 @@ var jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
 const { generateAccessToken, authToken, insertRefreshToken, removeRefreshToken, findRefreshToken } = require('../util/auth');
 const { validateUserLogin } = require('../util/validation');
+const { isEmptyObject } = require('../util/isEmptyObject');
 
 //test endpoint used in test suite
 router.get('/data', authToken, (req, res, next) => {
@@ -13,6 +14,10 @@ router.get('/data', authToken, (req, res, next) => {
 });
 
 router.post('/login', async (req, res, next) => {
+    if(isEmptyObject(req.body)) {
+        res.sendStatus(400);
+        return;
+    }
 
     const login = await tryLogin(req.body);
     if(login.success === false) {
@@ -36,6 +41,11 @@ router.post('/login', async (req, res, next) => {
 });
 
 router.delete('/logout', async (req, res) => {
+    if(isEmptyObject(req.body)) {
+        res.sendStatus(400);
+        return;
+    }
+
     const refreshToken = req.body.refreshToken;
     const result = await removeRefreshToken({refreshToken: refreshToken});
 
@@ -43,6 +53,11 @@ router.delete('/logout', async (req, res) => {
 });
 
 router.post('/renew', async (req, res) => {
+    if(isEmptyObject(req.body)) {
+        res.sendStatus(400);
+        return;
+    }
+
     const refreshToken = req.body.refreshToken;
     if (refreshToken == null) return res.sendStatus(401);
     if (!await findRefreshToken({refreshToken: refreshToken})) return res.sendStatus(403);
