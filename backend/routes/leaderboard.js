@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const leaderboardModel = require('../models/leaderboard');
+const PAGE_SIZE = 10;
 
 router.get('/', async (req, res) =>{
     //console.log("/leaderboard requested");
@@ -33,7 +34,7 @@ router.get('/', async (req, res) =>{
 
 async function queryLeaderboard(paramObj, res, page) {
   var query = page != undefined 
-  ? leaderboardModel.find(paramObj).skip((page - 1) * 5).limit(5).sort({finalScore: -1})
+  ? leaderboardModel.find(paramObj).skip((page - 1) * 10).limit(10).sort({finalScore: -1})
   : leaderboardModel.find(paramObj);
 
   await query.exec((err, qRes) => {

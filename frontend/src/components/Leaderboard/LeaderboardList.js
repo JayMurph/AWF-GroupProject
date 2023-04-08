@@ -1,6 +1,6 @@
 import React from "react";
 import InfiniteScroll from 'react-infinite-scroller';
-import { CenteredDiv, ScrollDiv } from "../../StyledElements";
+import {LeaderboardContainer} from "../../StyledElements";
 import { GetCategoryQuizResultsPage } from "../../ApiCalls";
 import { FlexColumnContainer } from "../../StyledElements";
 import LeaderboardItem from "./LeaderboardItem";
@@ -62,20 +62,20 @@ export default class LeaderboardList extends React.Component {
 
   render() {
     return (
-        <FlexColumnContainer style={{"overflow":"auto"}}>
+        <FlexColumnContainer style={{"overflow":"auto", "width":"90%", "alignSelf":"center"}}>
             <InfiniteScroll 
               pageStart={this.state.page}
               loader={this.loader}
               loadMore={this.fetchItems}
               hasMore={this.state.hasMoreItems}
-              threshold="50"
+              threshold="5"
               useWindow={false}
             >
-              <CenteredDiv>
+              <LeaderboardContainer>
                 {this.state.items.map((hs, idx) => {
                   return <LeaderboardItem userId={hs.userId} score={hs.finalScore} timeStamp={hs.timeStamp} idx={idx + 1}/>
                 })}
-              </CenteredDiv>
+              </LeaderboardContainer>
             </InfiniteScroll>
         </FlexColumnContainer>
     );

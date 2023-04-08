@@ -98,11 +98,27 @@ export const ErrorLabel = styled(CenteredDiv)`
     color:#df0000;
 `;
 
-export const LeaderboardItemContainer = styled(CenteredDiv)`
-    height:200px;
+export const LeaderboardContainer = styled(CenteredDiv)`
+    row-gap:24px;
+`
+
+export const LeaderboardItemContainer = styled.div`
+    height:80px;
     width:90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
     border:3px solid black;
 `
 
-export const LeaderboardIndex = styled(Paragraph)`
+export const LeaderboardIndex = styled.div`
+    font-size:48px;
+    margin:32px;
+`
+
+export const LeaderboardScore = styled.div`
+    margin:32px;
+    margin-left:auto;
+    font-size:48px;
 `
