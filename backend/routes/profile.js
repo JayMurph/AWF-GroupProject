@@ -4,6 +4,7 @@ var router = express.Router();
 const userModel = require('../models/user');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { isEmptyObject } = require('../util/isEmptyObject');
+const { authToken } = require('../util/auth');
 
 router.get('/', (req, res) => {
     res.sendStatus(400);
@@ -59,7 +60,7 @@ router.delete('/:userId', async (req, res, next) =>{
     }
 })
 
-router.put('/:userId', async (req, res, next) => {
+router.put('/:userId', authToken, async (req, res, next) => {
     //console.log(req.params.userId)
     
     if (ObjectId.isValid(req.params.userId)) {

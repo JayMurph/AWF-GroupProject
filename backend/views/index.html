@@ -96,6 +96,14 @@
                     <li><div class="prettyTextField">refreshToken</div>:  <strong>STRING</strong>, the semi-permanent token to be invalidated/deleted.</li>
                 </ul>
             </div>
+            <br>
+            <h3>Note</h3>
+            <p>Endpoints bearing this label:</p>
+            <h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - accessToken</h2>
+            <p>Require the Authorization Header to be set accordingly</p>
+            <div class="urlView">
+                <p><div class="prettyTextField" style="padding-left: 3%;">Header</div>: <div class="prettyTextField">Authorization</div>: Bearer $accessToken</p>
+            </div>
         </div>
         <div class="dividingContainer">
             <div class="prettyTextRoute"><h1>/profile</h1></div>
@@ -120,6 +128,7 @@
                 <br>
             </div>
             <h2>PUT: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
+            <h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - accessToken</h2>
             <p>Takes a userId in url and will update the user based on the information in the request body, if that user exists. <strong>500</strong> if userId doesn't exist.</p>
             <div class ="codeBlock">
                     <h3>Schema</h3>

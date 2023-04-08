@@ -9,6 +9,7 @@ const leaderboardModel = require('../models/leaderboard');
 const authModel = require('../models/auth');
 const userModel = require('../models/user');
 
+var jwt = require('jsonwebtoken');
 chai.use(chaiHttp);
 
 console.log(`Environment\nPORT: ${process.env.PORT}`);
@@ -49,12 +50,23 @@ describe('/profile and /signup tests', () => {
         expect(res.body).to.be.an('object');
     });
 
-    it('PUT\t/profile/:userId {userName: "ChampagnePapi", ... } "Test update user profile"', async () => {
+    it('PUT\t/profile/:userId Header: {Authorization: Bearer $accessToken} {userName: "ChampagnePapi", ... } "Test update user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
         
+        //console.log(lastID);
+        const getTokenRes = await chai.request(server)
+        .post('/login')
+        .send({
+            userName: "Drake",
+            password: "secret",
+        })           
+
+        const accessToken = getTokenRes.body.accessToken;                   
+
         const res = await chai.request(server)
         .put(`/profile/${lastID}`)
+        .set('Authorization', `Bearer ${accessToken}`)
         .send({
             userName: "ChampagnePapi",
             email: "drake@ovo.com",
@@ -91,7 +103,7 @@ describe('/quiz tests', () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id; 
 
-        console.log(lastID);
+        //console.log(lastID);
         const getTokenRes = await chai.request(server)
         .post('/login')
         .send({
@@ -233,7 +245,7 @@ describe('Auth tests', () => {
 });
 
 describe('Destructive tests', () => {
-    /*it('DELETE\t/profile/:userId\t"Test delete user profile"', async () => {
+    it('DELETE\t/profile/:userId\t"Test delete user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
@@ -241,7 +253,7 @@ describe('Destructive tests', () => {
 
         expect(res.status).to.be.equal(200);
         expect(res.body.deletedCount).to.be.equal(1);
-    });*/
+    });
 });
 
 async function addRandomLeaderboardEntries(id) {
