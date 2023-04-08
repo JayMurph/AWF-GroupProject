@@ -4,6 +4,7 @@ import {
   LeaderboardItemContainer,
   LeaderboardScore,
 } from "../../StyledElements";
+import { GetProfile } from "../../ApiCalls";
 
 const MAX_SCORE = 8000;
 const MIN_WIDTH_PERCENTAGE = 30;
@@ -23,6 +24,13 @@ export default class LeaderboardItem extends React.Component {
       idx: props.idx,
       username: "",
     };
+  }
+
+  componentDidMount() {
+    GetProfile(this.state.userId)
+    .then((res)=>res.json())
+    .then((profile)=>this.setState({username:profile.userName}))
+    .catch((err)=>console.log(err));
   }
 
   render() {
@@ -48,6 +56,7 @@ export default class LeaderboardItem extends React.Component {
         <LeaderboardIndex style={{ fontSize: `${fontSize}px` }}>
           {this.state.idx}
         </LeaderboardIndex>
+        <div>{this.state.username}</div>
         <LeaderboardScore style={{ fontSize: `${fontSize}px` }}>
           {this.state.score}
         </LeaderboardScore>

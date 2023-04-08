@@ -39,3 +39,7 @@ export function GetCategoryQuizResultsPage(category, pageNum) {
   const leaderboardEndpoint = API_URL + "/leaderboard?category=" + category + "&page=" + pageNum;
   return fetch(leaderboardEndpoint);
 }
+
+export function GetProfile(userId) {
+  return fetch(API_URL + "/profile/" + userId);
+}
