@@ -47,7 +47,6 @@ async function queryLeaderboard(paramObj, res, page) {
     }
   });
 }
-
 function isEmptyObject(obj) {
   if (obj === null || obj === undefined) {
     return false;
