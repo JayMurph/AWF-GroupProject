@@ -87,7 +87,7 @@ describe('/quiz tests', () => {
         expect(res.body).to.be.an('array');
     });
 
-    it('POST\t/quiz\t{userID: ObjectId(lastID), finalScore: rnd, category: "history", timeStamp: new Date()} "Test post new score"', async () => {
+    it('POST\t/quiz\tHeader: {Authorization: Bearer $accessToken} {userID: ObjectId(lastID), finalScore: rnd, category: "history", timeStamp: new Date()} "Test post new score"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id; 
 
