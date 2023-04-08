@@ -97,3 +97,12 @@ export const ErrorLabel = styled(CenteredDiv)`
     className:'error';
     color:#df0000;
 `;
+
+export const LeaderboardItemContainer = styled(CenteredDiv)`
+    height:200px;
+    width:90%;
+    border:3px solid black;
+`
+
+export const LeaderboardIndex = styled(Paragraph)`
+`

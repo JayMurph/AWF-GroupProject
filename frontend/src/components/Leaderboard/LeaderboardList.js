@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { CenteredDiv, ScrollDiv } from "../../StyledElements";
 import { GetCategoryQuizResultsPage } from "../../ApiCalls";
 import { FlexColumnContainer } from "../../StyledElements";
+import LeaderboardItem from "./LeaderboardItem";
 
 export default class LeaderboardList extends React.Component {
   constructor(props) {
@@ -61,26 +62,22 @@ export default class LeaderboardList extends React.Component {
 
   render() {
     return (
-      <FlexColumnContainer>
-        <CenteredDiv
-          style={{"display":"grid", "height":"90%", "width":"90%", "alignSelf":"center"}}
-          >
-          <InfiniteScroll 
-            pageStart={this.state.page}
-            loader={this.loader}
-            loadMore={this.fetchItems}
-            hasMore={this.state.hasMoreItems}
-            threshold="50"
-            useWindow="false"
-          >
-            <div>
-              {this.state.items.map((hs) => {
-                return <div style={{"height":"200px"}}> {hs.userId} {hs.finalScore} {hs.timeStamp} </div>
-              })}
-            </div>
-          </InfiniteScroll>
-        </CenteredDiv>
-      </FlexColumnContainer>
+        <FlexColumnContainer style={{"overflow":"auto"}}>
+            <InfiniteScroll 
+              pageStart={this.state.page}
+              loader={this.loader}
+              loadMore={this.fetchItems}
+              hasMore={this.state.hasMoreItems}
+              threshold="50"
+              useWindow={false}
+            >
+              <CenteredDiv>
+                {this.state.items.map((hs, idx) => {
+                  return <LeaderboardItem userId={hs.userId} score={hs.finalScore} timeStamp={hs.timeStamp} idx={idx + 1}/>
+                })}
+              </CenteredDiv>
+            </InfiniteScroll>
+        </FlexColumnContainer>
     );
   }
 }
