@@ -6,6 +6,7 @@ const quizModel = require('../models/quiz');
 const leaderboardModel = require('../models/leaderboard');
 const { isEmptyObject } = require('../util/isEmptyObject');
 const { validateLeaderboardEntry } = require('../util/validation');
+const { authToken } = require('../util/auth');
 
 //TODO: make a db query that allows this list to be loaded dynamically
 const quizCats = ["history", "math", "literature", "science"];
@@ -41,9 +42,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authToken, async (req, res) => {
     //console.log(`/quiz got POST`);
-    //console.log(req.body);
+    //console.log(req.tokenPayload);
 
     //use joi to validate POST body 
     const {error} = validateLeaderboardEntry(req.body);
@@ -56,7 +57,7 @@ router.post('/', async (req, res) => {
     //once validated move on to the mongoose insertion
     try {
         leaderboardModel.create({
-            userId: req.body.userId,
+            userId: req.tokenPayload.sub,
             finalScore: req.body.finalScore,
             category: req.body.category,
             timeStamp: req.body.timeStamp

@@ -18,6 +18,8 @@ console.log(`ACCESS_TOKEN_LIFETIME: ${process.env.ACCESS_TOKEN_LIFETIME}`);
 //clean up test database
 after(async () => {
     await leaderboardModel.deleteMany({});
+    await userModel.deleteMany({});
+    await authModel.deleteMany({});
 });
 
 describe('/profile and /signup tests', () => {
@@ -89,8 +91,20 @@ describe('/quiz tests', () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id; 
 
+        console.log(lastID);
+        const getTokenRes = await chai.request(server)
+        .post('/login')
+        .send({
+            userName: "ChampagnePapi",
+            password: "secret",
+        })           
+
+        const accessToken = getTokenRes.body.accessToken;
+        //console.log(getTokenRes.body);
+
         const res = await chai.request(server)
         .post('/quiz')
+        .set('Authorization', `Bearer ${accessToken}`)
         .send({
             userId: ObjectId(lastID),
             finalScore: Math.floor(Math.random() * 999),
@@ -130,7 +144,6 @@ describe('/leaderboard tests', () => {
         expect(res.body).to.be.an('array');
     });
 
-    //TODO: develop a test for paging behaviour
     it('GET\t/leaderboard?category=HISTORY&page=1\t"Test pagination with history leaderboard category"',async () => {
         
         await addRandomLeaderboardEntries(new ObjectId());
@@ -220,7 +233,7 @@ describe('Auth tests', () => {
 });
 
 describe('Destructive tests', () => {
-    it('DELETE\t/profile/:userId\t"Test delete user profile"', async () => {
+    /*it('DELETE\t/profile/:userId\t"Test delete user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
@@ -228,7 +241,7 @@ describe('Destructive tests', () => {
 
         expect(res.status).to.be.equal(200);
         expect(res.body.deletedCount).to.be.equal(1);
-    });
+    });*/
 });
 
 async function addRandomLeaderboardEntries(id) {

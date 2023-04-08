@@ -131,6 +131,14 @@ body {
   display: inline;
 }
 
+.prettyTextAuth {
+  font-size: 24px;
+  color:#de1b1b;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: inline;
+}
+
 html {
   background-color: #181a1b !important;
 }

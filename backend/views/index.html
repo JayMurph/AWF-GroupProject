@@ -23,6 +23,7 @@
             </div>
             <div>
                 <h2>POST: /<div class="prettyTextRoute">quiz</div></h2>
+                <h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - accessToken</h2>
                 <p>Takes a JSON in request body and validates it.</p>
                 <div class ="codeBlock">
                     <h3>Schema</h3>
@@ -48,6 +49,7 @@
         <div class="dividingContainer">
             <div class="prettyTextRoute"><h1>auth</h1></div>
             <h2>POST: /<div class="prettyTextRoute">login</div></h2>
+            <!--<h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - refreshToken</h2>-->
             <p>Takes an object containing username and password. Returns <strong>200</strong> if login succeeds, and two tokens (explained below). <strong>404</strong> if login failed.</p>
             <div class ="codeBlock">
                 <h3>Schema</h3>
