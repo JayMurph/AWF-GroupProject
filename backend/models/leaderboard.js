@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose');
+const mongoose = require('mongoose');
 const ObjectId = Schema.Types.ObjectId;
 
 const leaderboardSchema = new Schema({
@@ -6,6 +7,6 @@ const leaderboardSchema = new Schema({
     finalScore:  { type: Number,   required: true },
     category:    { type: String,   required: true },
     timeStamp:   { type: Date,     required: true }
-})
+});
 
-module.exports = leaderboardSchema;
+module.exports = mongoose.model("leaderboards", leaderboardSchema);

@@ -1,33 +1,27 @@
 var express = require('express');
-var mongoose = require("mongoose");
 var router = express.Router();
 var Joi = require('joi');
 
-const quizSchema = require('../schema/quiz');
-const quizModel = mongoose.model("quizzes", quizSchema);
-
-const leaderboardSchema = require('../schema/leaderboard');
-const leaderboardModel = mongoose.model("leaderboard", leaderboardSchema);
-
+const quizModel = require('../models/quiz');
+const leaderboardModel = require('../models/leaderboard');
 
 //TODO: make a db query that allows this list to be loaded dynamically
 const quizCats = ["history", "math", "literature", "science"];
 
 router.get('/', async (req, res) => {
-    console.log("/quiz requested");
+    //console.log("/quiz requested");
 
     //handles with /quiz
     if (isEmptyObject(req.query)) {
-        console.log(`req.query`);
         res.contentType('json').send(quizCats);
     } 
     //handles with /quiz?category=
     else if (!isEmptyObject(req.query.category)) {
-       
+        //console.log(`${req.query.category}`)
         if (doesCategoryExist(req.query.category)) {
             const pipeline = [
                 {$match: {category: {$regex: `${req.query.category}`, $options: 'i'}}},
-                {$sample: {size: 2}}
+                {$sample: {size: 5}}
             ];
 
             const cursor = quizModel.aggregate(pipeline);
@@ -37,7 +31,7 @@ router.get('/', async (req, res) => {
                 qRes.push(doc);
             }
 
-            console.log(qRes);
+            //console.log(qRes);
             res.send(qRes);
         } else {
             res.sendStatus(400);
@@ -46,8 +40,8 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    console.log(`/quiz got POST`);
-    console.log(req.body);
+    //console.log(`/quiz got POST`);
+    //console.log(req.body);
 
     //use joi to validate POST body 
     const {error} = validateLeaderboardEntry(req.body);

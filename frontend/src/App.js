@@ -7,8 +7,9 @@ import About from "./pages/about";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
-import { GetUserId, SaveUserData, ClearUserData} from "./Storage";
+import { GetUserId, SaveUserData, ClearUserData } from "./Storage";
 import { AppContentContainer } from "./StyledElements";
+import Leaderboard from "./pages/leaderboard";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -21,30 +22,34 @@ function App() {
   const [userId, setUserId] = useState(GetUserId);
 
   const onSignupSuccess = (userData) => {
-	setAuthenticated(true);
-	setUserId(userData._id);
-	SaveUserData(userData);
-  }
+    setAuthenticated(true);
+    setUserId(userData._id);
+    SaveUserData(userData);
+  };
 
   const onLogout = () => {
-	setAuthenticated(false);
-	setUserId(null);
-	ClearUserData();
-  }
+    setAuthenticated(false);
+    setUserId(null);
+    ClearUserData();
+  };
 
   return (
     <Router>
-      <Navbar authenticated={authenticated} onLogout={onLogout}/>
+      <Navbar authenticated={authenticated} onLogout={onLogout} />
       <AppContentContainer>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
           {authenticated ? (
-            <Route path="/quiz" element={<Quiz />} />
+            <Route path="/quiz" element={<Quiz userId={userId} />} />
           ) : (
             <>
               <Route path="/login" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp onSignupSuccess={onSignupSuccess}/>} />
+              <Route
+                path="/sign-up"
+                element={<SignUp onSignupSuccess={onSignupSuccess} />}
+              />
             </>
           )}
         </Routes>

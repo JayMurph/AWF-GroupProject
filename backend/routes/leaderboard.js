@@ -1,13 +1,12 @@
 var express = require('express');
-var mongoose = require("mongoose");
 var router = express.Router();
 
-const leaderboardSchema = require('../schema/leaderboard');
-const leaderboardModel = mongoose.model("leaderboard", leaderboardSchema);
+const leaderboardModel = require('../models/leaderboard');
+const PAGE_SIZE = 10;
 
 router.get('/', async (req, res) =>{
-    console.log("/leaderboard requested");
-    console.log(req.query);
+    //console.log("/leaderboard requested");
+    //console.log(req.query);
 
     if (isEmptyObject(req.query)) {
       res.sendStatus(400);
@@ -15,17 +14,17 @@ router.get('/', async (req, res) =>{
     }
 
     if (req.query.category != null && req.query.userId == null) {
-      await queryLeaderboard({category: req.query.category}, res);
+      await queryLeaderboard({category: req.query.category}, res, req.query.page);
       return;
     }
 
     if (req.query.category == null && req.query.userId != null) {
-      await queryLeaderboard({userId: req.query.userId}, res);
+      await queryLeaderboard({userId: req.query.userId}, res, req.query.page);
       return;
     }
 
     if (req.query.category != null && req.query.userId != null) {
-      await queryLeaderboard({userId: req.query.userId, category: req.query.category}, res);
+      await queryLeaderboard({userId: req.query.userId, category: req.query.category}, res, req.query.page);
       return;
     }
 
@@ -33,9 +32,10 @@ router.get('/', async (req, res) =>{
     res.sendStatus(501);
 });
 
-//please rename this if I decide to keep it
-async function queryLeaderboard(paramObj, res) {
-  var query = leaderboardModel.find(paramObj);
+async function queryLeaderboard(paramObj, res, page) {
+  var query = page != undefined 
+  ? leaderboardModel.find(paramObj).skip((page - 1) * 10).limit(10).sort({finalScore: -1})
+  : leaderboardModel.find(paramObj);
 
   await query.exec((err, qRes) => {
     if (isEmptyObject(qRes)) {
@@ -47,7 +47,6 @@ async function queryLeaderboard(paramObj, res) {
     }
   });
 }
-
 function isEmptyObject(obj) {
   if (obj === null || obj === undefined) {
     return false;

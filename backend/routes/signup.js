@@ -3,12 +3,10 @@ var express = require('express');
 var Joi = require('joi');
 var mongoose = require("mongoose");
 var router = express.Router();
-var userSchema = require('../schema/user');
-
-const userModel = mongoose.model("users", userSchema);
+var userModel = require('../models/user');
 
 router.post('/', async (req, res) => {
-  console.log("/signup posted to");
+  //console.log("/signup posted to");
   //console.log(req.body);
   try {
     const result = await CreateProfile(JSON.stringify(req.body), res);
@@ -39,7 +37,7 @@ async function CreateProfile(userContents, res) {
   });
 
   res.status(201).json(result);
-  console.log(result);
+  //console.log(result);
 }
 
 function validateUserEntry(requestBody) {
