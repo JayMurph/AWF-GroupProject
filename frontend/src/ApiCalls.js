@@ -34,3 +34,8 @@ export function PostQuizResults(userId, quizResults, timeStamp) {
     }),
   });
 }
+
+export function GetCategoryQuizResultsPage(category, pageNum) {
+  const leaderboardEndpoint = API_URL + "/leaderboard?category=" + category + "&page=" + pageNum;
+  return fetch(leaderboardEndpoint);
+}

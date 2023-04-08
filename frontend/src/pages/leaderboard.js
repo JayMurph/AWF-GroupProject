@@ -3,6 +3,7 @@ import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
 import { PageHeader } from "../StyledElements";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
+import { GetCategoryQuizResultsPage } from "../ApiCalls";
 
 export default class Leaderboard extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class Leaderboard extends React.Component {
       content: null,
       headerText: "",
       currCategory: "",
-      categories: [],
+      categories: []
     };
 
     this.state.content = (
@@ -55,9 +56,8 @@ export default class Leaderboard extends React.Component {
    * @param {String} category Name of quiz category selected by user
    */
   onCategorySelection = async (category) => {
-    const leaderboardEndpoint = API_URL + "/leaderboard?category=" + category;
     // get and display leaderboard entries for quiz category
-    await fetch(leaderboardEndpoint)
+    await GetCategoryQuizResultsPage(category, 1)
       .then(async (res) => {
         try {
           res = await res.json();
@@ -89,8 +89,8 @@ export default class Leaderboard extends React.Component {
               category.substring(0, 1).toUpperCase() + category.substring(1),
             content: (
               <LeaderboardList
+                category={category}
                 initialItems={res}
-                leaderboardEndpoint={leaderboardEndpoint}
               />
             ),
           });
