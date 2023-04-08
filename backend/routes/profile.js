@@ -3,6 +3,7 @@ var router = express.Router();
 
 const userModel = require('../models/user');
 const ObjectId = require('mongoose').Types.ObjectId;
+const { isEmptyObject } = require('../util/isEmptyObject');
 
 router.get('/', (req, res) => {
     res.sendStatus(400);
@@ -92,9 +93,5 @@ router.put('/:userId', async (req, res, next) => {
         }
     }
 })
-
-function isEmptyObject(obj) {
-    return !Object.keys(obj).length;
-}
 
 module.exports = router;

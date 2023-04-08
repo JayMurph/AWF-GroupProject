@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const leaderboardModel = require('../models/leaderboard');
+const { isEmptyObject } = require('../util/isEmptyObject');
 
 router.get('/', async (req, res) =>{
     //console.log("/leaderboard requested");
@@ -45,14 +46,6 @@ async function queryLeaderboard(paramObj, res, page) {
         return;
     }
   });
-}
-
-function isEmptyObject(obj) {
-  if (obj === null || obj === undefined) {
-    return false;
-  } else {
-    return !Object.keys(obj).length;
-  }
 }
 
 module.exports = router;

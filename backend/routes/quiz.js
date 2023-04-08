@@ -4,6 +4,8 @@ var Joi = require('joi');
 
 const quizModel = require('../models/quiz');
 const leaderboardModel = require('../models/leaderboard');
+const { isEmptyObject } = require('../util/isEmptyObject');
+const { validateLeaderboardEntry } = require('../util/validation');
 
 //TODO: make a db query that allows this list to be loaded dynamically
 const quizCats = ["history", "math", "literature", "science"];
@@ -66,18 +68,6 @@ router.post('/', async (req, res) => {
     res.sendStatus(200);
 });
 
-function validateLeaderboardEntry(requestBody) {
-  //TODO: Once the project has become more fleshed out, come back and update the Joi schema to fit better.
-  const schema = Joi.object({
-    userId: Joi.string().alphanum().required(),
-    finalScore: Joi.number().min(0).required(),
-    category: Joi.string().alphanum().required(),
-    timeStamp: Joi.date().required()
-  });
-
-  return schema.validate(requestBody);
-}
-
 function doesCategoryExist(cat) {
     var index = quizCats.indexOf(cat.toLowerCase());
     if (index === -1) {
@@ -85,11 +75,6 @@ function doesCategoryExist(cat) {
     }
     
     return true;
-}
-
-function isEmptyObject(obj) {
-    return !Object.keys(obj).length;
-
 }
 
 module.exports = router;
