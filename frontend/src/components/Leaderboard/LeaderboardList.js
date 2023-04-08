@@ -31,8 +31,6 @@ export default class LeaderboardList extends React.Component {
       .then(async (res) => {
         if (res.length > 0) {
           this.setState({
-            // set items
-            // increment page numer
             page:this.state.page+1,
             items:[...this.state.items, ...res]
           });

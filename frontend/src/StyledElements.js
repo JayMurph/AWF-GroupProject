@@ -109,16 +109,19 @@ export const LeaderboardItemContainer = styled.div`
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    border:3px solid black;
+    background:lightGray;
+    border-radius:20px;
 `
 
 export const LeaderboardIndex = styled.div`
     font-size:48px;
     margin:32px;
+    font-weight:bold;
 `
 
 export const LeaderboardScore = styled.div`
     margin:32px;
     margin-left:auto;
     font-size:48px;
+    font-weight:bold;
 `

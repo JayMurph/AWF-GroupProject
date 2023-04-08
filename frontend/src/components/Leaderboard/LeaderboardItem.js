@@ -1,8 +1,17 @@
 import React from "react";
-import { LeaderboardIndex, LeaderboardItemContainer, LeaderboardScore } from "../../StyledElements";
+import {
+  LeaderboardIndex,
+  LeaderboardItemContainer,
+  LeaderboardScore,
+} from "../../StyledElements";
 
 const MAX_SCORE = 8000;
-const MIN_WIDTH_PERCENTAGE = 10;
+const MIN_WIDTH_PERCENTAGE = 30;
+const MIN_HEIGHT = 80;
+const MIN_FONT_SIZE = 32;
+
+const TOP_HEIGHT_INC = 15;
+const TOP_FONT_SIZE_INC = 8;
 
 export default class LeaderboardItem extends React.Component {
   constructor(props) {
@@ -12,19 +21,38 @@ export default class LeaderboardItem extends React.Component {
       timeStamp: props.timeStamp,
       score: props.score,
       idx: props.idx,
+      username: "",
     };
   }
 
   render() {
     let width = (this.state.score / MAX_SCORE) * 100;
     width = width < MIN_WIDTH_PERCENTAGE ? MIN_WIDTH_PERCENTAGE : width;
+    let height =
+      this.state.idx >= 5
+        ? MIN_HEIGHT
+        : MIN_HEIGHT + TOP_HEIGHT_INC * (5 - this.state.idx);
+    let fontSize =
+      this.state.idx >= 5
+        ? MIN_FONT_SIZE
+        : MIN_FONT_SIZE + TOP_FONT_SIZE_INC * (5 - this.state.idx);
     return (
-      <LeaderboardItemContainer style={{"width":`${width}%`, "alignSelf":"start"}}>
-        <LeaderboardIndex>
-            {this.state.idx}
+        <>
+      <LeaderboardItemContainer
+        style={{
+          width: `${width}%`,
+          alignSelf: "start",
+          height: `${height}px`,
+        }}
+      >
+        <LeaderboardIndex style={{ fontSize: `${fontSize}px` }}>
+          {this.state.idx}
         </LeaderboardIndex>
-          <LeaderboardScore>{this.state.score}</LeaderboardScore> 
+        <LeaderboardScore style={{ fontSize: `${fontSize}px` }}>
+          {this.state.score}
+        </LeaderboardScore>
       </LeaderboardItemContainer>
+        </>
     );
   }
 }
