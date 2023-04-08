@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose');
+const mongoose = require('mongoose');
 
 const quizSchema = new Schema({
     category: { type: String,   required: true },
@@ -10,4 +11,4 @@ const quizSchema = new Schema({
     a4Txt:    { type: String,   required: true }
 })
 
-module.exports = quizSchema;
+module.exports = mongoose.model("quizzes", quizSchema);
