@@ -1,16 +1,17 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 require('dotenv-flow').config();
 var port = process.env.PORT || 3000;
 var server = express();
 
-
 server.listen(port);
 server.use(express.json());
 server.use(express.static(path.join(__dirname, 'public')));
+server.use(cors({ origin:"*" }));
 
 //ROUTES
 var indexRouter = require('./routes/index');

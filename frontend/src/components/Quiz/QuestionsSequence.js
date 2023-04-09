@@ -5,7 +5,7 @@ import {
   FlexColumnContainer,
   QuestionSequenceHeaderContainer,
 } from "../../StyledElements";
-import Timer from "@amplication/react-compound-timer"
+import Timer from "@amplication/react-compound-timer";
 import QuizResults from "../../Quiz/QuizResults";
 import QuizResultsForm from "./QuizResultsForm";
 import UserAnswerInfo from "../../Quiz/UserAnswerInfo";
@@ -27,6 +27,7 @@ export default class QuestionsSequence extends React.Component {
       category: props.category,
       triviaQuestionsArr: props.triviaQuestions,
       quizResults: new QuizResults(props.category),
+      userId: props.userId,
     };
 
     this.timerRef = React.createRef();
@@ -48,7 +49,12 @@ export default class QuestionsSequence extends React.Component {
         />
       );
     });
-    this.pages.push(<QuizResultsForm quizResults={this.state.quizResults} />);
+    this.pages.push(
+      <QuizResultsForm
+        quizResults={this.state.quizResults}
+        userId={this.state.userId}
+      />
+    );
   }
 
   /**

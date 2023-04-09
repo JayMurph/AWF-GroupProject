@@ -15,6 +15,7 @@ export default class Quiz extends React.Component {
       root: null,
       currCategory: "",
       categories: [],
+      userId: props.userId,
     };
 
     this.state.root = (
@@ -55,7 +56,7 @@ export default class Quiz extends React.Component {
   /**
    * Handles when user selects a quiz category. Gets quiz questions from API
    * then displays content to show quiz
-  * @param {String} category Name of quiz category selected by user
+   * @param {String} category Name of quiz category selected by user
    */
   onCategorySelection = async (category) => {
     // get questions from API
@@ -79,6 +80,7 @@ export default class Quiz extends React.Component {
               <QuestionsSequence
                 category={category}
                 triviaQuestions={triviaQuestions}
+                userId={this.state.userId}
               />
             ),
           });

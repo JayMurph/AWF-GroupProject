@@ -164,7 +164,7 @@ describe('/leaderboard tests', () => {
 
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body.length).to.be.equal(5);
+        expect(res.body.length).to.be.equal(10);
     });
 });
 
@@ -260,6 +260,11 @@ async function addRandomLeaderboardEntries(id) {
     const quizCats = ["history", "math", "literature", "science"];
     
     const res = await leaderboardModel.insertMany([
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
+        { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
         { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
         { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
         { userId: id, finalScore: Math.floor(Math.random() * 4999), category: 'history', timeStamp: new Date()},
