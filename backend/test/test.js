@@ -185,6 +185,20 @@ describe('Auth tests', () => {
         expect(res.body.accessToken).to.exist;
     });
 
+    it('POST\t/login\t{userName: "ChampagnePapi", password: "incorrect-password"} "Test that incorrect password does not issue tokens"', async () => {
+        
+        const res = await chai.request(server)
+        .post('/login')
+        .send({
+            userName: "ChampagnePapi",
+            password: "incorrect-password"
+        })
+
+        expect(res.status).to.be.equal(404);
+        expect(res.body.refreshToken).to.not.exist;
+        expect(res.body.accessToken).to.not.exist;
+    });
+
     it('POST\t/renew\t{refreshToken: $token} "Get reissued a new access token"', async () => {
         const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
         const refreshToken = result.refreshToken;
