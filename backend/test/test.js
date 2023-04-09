@@ -260,11 +260,25 @@ describe('Auth tests', () => {
 });
 
 describe('Destructive tests', () => {
-    it('DELETE\t/profile/:userId\t\t\t\t"Test delete user profile"', async () => {
+    it('DELETE\t/profile/:userId\tHeader: {Authorization: Bearer $accessToken}\t\t\t"Test delete user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
-        const res = await chai.request(server).delete(`/profile/${lastID}`);
+        const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
+        const refreshToken = result.refreshToken;
+
+        const getTokenRes = await chai.request(server)
+        .post('/renew')
+        .send({
+            refreshToken: refreshToken
+        })
+        
+        const accessToken = getTokenRes.body.accessToken;
+
+
+        const res = await chai.request(server)
+        .delete(`/profile/${lastID}`)
+        .set('Authorization', `Bearer ${accessToken}`)
 
         expect(res.status).to.be.equal(200);
         expect(res.body.deletedCount).to.be.equal(1);

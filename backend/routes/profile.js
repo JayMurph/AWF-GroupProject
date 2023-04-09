@@ -45,7 +45,7 @@ router.get('/:userId', async (req, res, next) => {
 });
 
 // a request to delete the profile
-router.delete('/:userId', async (req, res, next) =>{
+router.delete('/:userId', authToken, async (req, res, next) =>{
     //console.log(req.params.userId)
 
     if (ObjectId.isValid(req.params.userId)) {
