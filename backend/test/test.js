@@ -169,13 +169,13 @@ describe('/leaderboard tests', () => {
 });
 
 describe('Auth tests', () => {
-    it('POST\t/login\t{sub: "64308a94db3ac6fc0fc0adab", userName: "SemiDoge"} "Login and get issued tokens"', async () => {
+    it('POST\t/login\t{userName: "SemiDoge", password: "secret"} "Login and get issued tokens"', async () => {
         
         const res = await chai.request(server)
         .post('/login')
         .send({
-            sub: "64308a94db3ac6fc0fc0adab",
-            userName: "SemiDoge"
+            userName: "SemiDoge",
+            password: "secret"
         })
 
         expect(res.status).to.be.equal(200);

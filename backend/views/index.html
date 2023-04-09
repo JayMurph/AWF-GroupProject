@@ -73,28 +73,32 @@
             <p>The 'accessToken' is temporary (expires in a few minutes), the 'refreshToken' exists on the database until the user logs out. Once the 'accessToken' expires the /token endpoint can renew (explained later). The userId, username, and password are encoded within both tokens.</p>
             <h2>POST: /<div class="prettyTextRoute">renew</div></h2>
             <p>Takes an object containing the refreshToken issued earlier. Returns <strong>200</strong> if refreshToken valid, and a new renewed accessToken. <strong>403</strong> if refreshToken expired or missing from database.</p>
-            <h3>Schema</h3>
-            <div class ="schemaView">
-                <ul>
-                    <li><div class="prettyTextField">refreshToken</div>:  <strong>STRING</strong>, the semi-permanent token.</li>
-                </ul>
+            <div class ="codeBlock">
+                <h3>Schema</h3>
+                <div class ="schemaView">
+                    <ul>
+                        <li><div class="prettyTextField">refreshToken</div>:  <strong>STRING</strong>, the semi-permanent token.</li>
+                    </ul>
+                </div>
+                <h3>Example following the above schema</h3>
+                <div class = "JSONView">
+                    <div class="prettyTextField">"refreshToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div>,<br>
+                </div>
+                <h3>Returns on success</h3>
+                <div class = "JSONView">
+                    <div class="prettyTextField">"accessToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div>,<br>
+                </div>
+                <p>Assuming a valid 'refreshToken', returns a newly renewed 'accessToken'.</p>
             </div>
-            <h3>Example following the above schema</h3>
-            <div class = "JSONView">
-                <div class="prettyTextField">"refreshToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div>,<br>
-            </div>
-            <h3>Returns on success</h3>
-            <div class = "JSONView">
-                <div class="prettyTextField">"accessToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div>,<br>
-            </div>
-            <p>Assuming a valid 'refreshToken', returns a newly renewed 'accessToken'.</p>
             <h2>POST: /<div class="prettyTextRoute">logout</div></h2>
             <p>Takes an object containing the refreshToken. Returns <strong>204</strong> if refreshToken valid, then the refreshToken is deleted form the database. <strong>500</strong> if refreshToken could not be deleted from the database.</p>
-            <h3>Schema</h3>
-            <div class ="schemaView">
-                <ul>
-                    <li><div class="prettyTextField">refreshToken</div>:  <strong>STRING</strong>, the semi-permanent token to be invalidated/deleted.</li>
-                </ul>
+            <div class ="codeBlock">
+                <h3>Schema</h3>
+                <div class ="schemaView">
+                    <ul>
+                        <li><div class="prettyTextField">refreshToken</div>:  <strong>STRING</strong>, the semi-permanent token to be invalidated/deleted.</li>
+                    </ul>
+                </div>
             </div>
             <br>
             <h3>Note</h3>
