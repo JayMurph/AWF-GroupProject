@@ -3,7 +3,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 const userModel = require('../models/user');
-const { generateAccessToken, authToken, insertRefreshToken, removeRefreshToken, findRefreshToken } = require('../util/auth');
+const { generateToken, authToken, insertRefreshToken, removeRefreshToken, findRefreshToken } = require('../util/auth');
 const { validateUserLogin } = require('../util/validation');
 const { isEmptyObject } = require('../util/isEmptyObject');
 
@@ -18,9 +18,9 @@ router.post('/login', async (req, res, next) => {
         res.status(400).send("Empty request body");
         return;
     }
-
     const login = await tryLogin(req.body);
     if(login.success === "false") {
+        //console.log('hi')
         res.status(404).send(login.message);
         return;    
     }
@@ -32,8 +32,9 @@ router.post('/login', async (req, res, next) => {
         password: login.password
     };
 
-    const accessToken = generateAccessToken(payload, process.env.ACCESS_TOKEN_LIFETIME);
-    const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+    const accessToken = generateToken(payload, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_LIFETIME);
+    const refreshToken = generateToken(payload, process.env.REFRESH_TOKEN_SECRET);
+    //console.log(refreshToken);
     const result = await insertRefreshToken({refreshToken: refreshToken});
 
     return (result === true) ? res.json({accessToken: accessToken, refreshToken: refreshToken}) : res.sendStatus(500);
@@ -60,11 +61,15 @@ router.post('/renew', async (req, res) => {
 
     const refreshToken = req.body.refreshToken;
     if (refreshToken == null) return res.sendStatus(401);
-    if (!await findRefreshToken({refreshToken: refreshToken})) return res.sendStatus(403);
+    if (!await findRefreshToken({refreshToken: refreshToken})) return res.setStatus(403);
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
-        const accessToken = generateAccessToken({sub: user.sub, userName: user.userName}, process.env.ACCESS_TOKEN_LIFETIME);
+        const accessToken = generateToken(
+            {sub: user.sub, userName: user.userName}, 
+            process.env.ACCESS_TOKEN_SECRET,
+            process.env.ACCESS_TOKEN_LIFETIME
+        );
         res.json({accessToken: accessToken});
     });
 });

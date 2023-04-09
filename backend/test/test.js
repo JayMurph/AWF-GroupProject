@@ -170,7 +170,7 @@ describe('/leaderboard tests', () => {
 });
 
 describe('Auth tests', () => {
-    it('POST\t/login\t{userName: "ChampagnePapi", password: "secret"} "Login and get issued tokens"', async () => {
+    it('POST\t/login\t{userName: "ChampagnePapi", password: "secret"}\t\t\t"Login and get issued tokens"', async () => {
         
         const res = await chai.request(server)
         .post('/login')
@@ -185,7 +185,7 @@ describe('Auth tests', () => {
         expect(res.body.accessToken).to.exist;
     });
 
-    it('POST\t/login\t{userName: "ChampagnePapi", password: "incorrect-password"} "Test that incorrect password does not issue tokens"', async () => {
+    it('POST\t/login\t{userName: "ChampagnePapi", password: "incorrect-password"}\t"Test that incorrect password does not issue tokens"', async () => {
         
         const res = await chai.request(server)
         .post('/login')
@@ -199,7 +199,7 @@ describe('Auth tests', () => {
         expect(res.body.accessToken).to.not.exist;
     });
 
-    it('POST\t/renew\t{refreshToken: $token} "Get reissued a new access token"', async () => {
+    it('POST\t/renew\t{refreshToken: $token}\t\t\t\t\t\t"Get reissued a new access token"', async () => {
         const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
         const refreshToken = result.refreshToken;
 
@@ -214,7 +214,7 @@ describe('Auth tests', () => {
         expect(res.body.accessToken).to.exist;
     });
 
-    it('GET\t/data\tHeader: {Authorization: Bearer $accessToken} "Test if middleware authToken() can grant access"', async () => {
+    it('GET\t/data\tHeader: {Authorization: Bearer $accessToken}\t\t\t"Test if middleware authToken() can grant access"', async () => {
         const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
         const refreshToken = result.refreshToken;
 
@@ -235,7 +235,7 @@ describe('Auth tests', () => {
         expect(res.body.data).to.exist;
     });
 
-    it('GET\t/data\tHeader: {Authorization: Bearer junkToken} "Test if middleware authToken() can restrict access"', async () => {
+    it('GET\t/data\tHeader: {Authorization: Bearer junkToken}\t\t\t"Test if middleware authToken() can restrict access"', async () => {
         const accessToken = "junkToken";
         
         const res = await chai.request(server)
@@ -245,7 +245,7 @@ describe('Auth tests', () => {
         expect(res.status).to.be.equal(403);
     });
 
-    it('DELETE\t/logout\t{refreshToken: $token} "Test if refresh token is invalidated"', async () => {
+    it('DELETE\t/logout\t{refreshToken: $token}\t\t\t\t\t\t"Test if refresh token is invalidated"', async () => {
         const result = await authModel.findOne({}, {sort: {_id: -1}}).select('refreshToken');
         const refreshToken = result.refreshToken;
 
@@ -260,7 +260,7 @@ describe('Auth tests', () => {
 });
 
 describe('Destructive tests', () => {
-    it('DELETE\t/profile/:userId\t"Test delete user profile"', async () => {
+    it('DELETE\t/profile/:userId\t\t\t\t"Test delete user profile"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 

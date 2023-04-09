@@ -16,8 +16,8 @@ function authToken(req, res, next) {
     });
 }
 
-function generateAccessToken(user, expiresIn) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: expiresIn});
+function generateToken(payload, tokenSecret, expiresIn) {
+    return expiresIn === undefined ? jwt.sign(payload, tokenSecret) : jwt.sign(payload, tokenSecret, {expiresIn: expiresIn});
 }
 
 async function insertRefreshToken(token) {
@@ -60,6 +60,6 @@ async function findRefreshToken(token) {
 }
 
 module.exports = {
-    generateAccessToken, authToken, 
+    generateToken: generateToken, authToken, 
     insertRefreshToken, removeRefreshToken, findRefreshToken
 }
