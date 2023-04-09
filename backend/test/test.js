@@ -170,7 +170,7 @@ describe('/leaderboard tests', () => {
 });
 
 describe('Auth tests', () => {
-    it('POST\t/login\t{userName: "SemiDoge", password: "secret"} "Login and get issued tokens"', async () => {
+    it('POST\t/login\t{userName: "ChampagnePapi", password: "secret"} "Login and get issued tokens"', async () => {
         
         const res = await chai.request(server)
         .post('/login')

@@ -15,13 +15,13 @@ router.get('/data', authToken, (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
     if(isEmptyObject(req.body)) {
-        res.sendStatus(400);
+        res.status(400).send("Empty request body");
         return;
     }
 
     const login = await tryLogin(req.body);
-    if(login.success === false) {
-        res.sendStatus(404);
+    if(login.success === "false") {
+        res.status(404).send(login.message);
         return;    
     }
 
@@ -72,19 +72,17 @@ router.post('/renew', async (req, res) => {
 async function tryLogin(requestBody) {
     const {error} = validateUserLogin(requestBody);
     if (error) {
-        return { success: "false" };
+        return { success: "false", message: error.message };
     }
 
     const user = await(userModel.findOne({userName: requestBody.userName}));
     if (!user) {
-        console.log("Couldn't find user")
-        return { success: "false" };
+        return { success: "false", message: "User not found" };
     }
 
     if (user.password !== requestBody.password) {
         console.log(`${user.password} vs ${requestBody.password}`);
-        console.log("Passwords do not match")
-        return { success: "false" };
+        return { success: "false", message: "Passwords do not match" };
     }
 
     //console.log("Login user lookup successful");
