@@ -28,7 +28,7 @@ export default class QuizResultsForm extends React.Component {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
-      hour12:false,
+      hour12: false,
     });
     PostQuizResults(this.state.userId, this.state.quizResults, timestamp);
   }
