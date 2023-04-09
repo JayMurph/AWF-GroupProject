@@ -48,7 +48,7 @@ router.delete('/logout', async (req, res) => {
     const refreshToken = req.body.refreshToken;
     const result = await removeRefreshToken({refreshToken: refreshToken});
 
-    return (result === true) ? res.sendStatus(204) : res.sendStatus(500);
+    return (result.success === "true") ? res.status(204).send(result.message) : res.status(500).send(result.message);
 });
 
 router.post('/renew', async (req, res) => {

@@ -39,12 +39,16 @@ async function removeRefreshToken(token) {
 
     try {
         result = await authModel.deleteOne({refreshToken: token.refreshToken});
+        if (result.deletedCount === 0) {
+            return { success: "false", message: "There was no token to delete" };
+        }
     } catch(err) {
         console.log("Couldn't delete " + err + " token: " + token.refreshToken);
-        return false;
+        return { success: "false", message: err};
     }
 
-    return true;
+    return { success: "true" };
+
 }
 
 async function findRefreshToken(token) {
