@@ -20,25 +20,23 @@ router.post('/login', async (req, res, next) => {
     }
     const login = await tryLogin(req.body);
     if(login.success === "false") {
-        //console.log('hi')
         res.status(404).send(login.message);
         return;    
     }
 
-    //TODO: After consultation with Frontend team, alter what gets encoded into the JWT 
     const payload = {
         sub: login._id,
+        firstName: login.firstName,
         userName: login.userName,
+        email: login.email,
         password: login.password
     };
 
     const accessToken = generateToken(payload, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_LIFETIME);
     const refreshToken = generateToken(payload, process.env.REFRESH_TOKEN_SECRET);
-    //console.log(refreshToken);
     const result = await insertRefreshToken({refreshToken: refreshToken});
 
     return (result === true) ? res.json({accessToken: accessToken, refreshToken: refreshToken}) : res.sendStatus(500);
-    //TODO: Explore saving JWT tokens to Cookie storage.
 });
 
 router.delete('/logout', async (req, res) => {
