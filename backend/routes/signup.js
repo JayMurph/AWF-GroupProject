@@ -5,6 +5,8 @@ var mongoose = require("mongoose");
 var router = express.Router();
 var userModel = require('../models/user');
 
+var { validateUserEntry } = require('../util/validation');
+
 router.post('/', async (req, res) => {
   //console.log("/signup posted to");
   //console.log(req.body);
@@ -38,19 +40,6 @@ async function CreateProfile(userContents, res) {
 
   res.status(201).json(result);
   //console.log(result);
-}
-
-function validateUserEntry(requestBody) {
-  const schema = Joi.object({
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
-    userName: Joi.string().required(),
-    email: Joi.string().email().required(),
-    birthDate: Joi.string().required(),
-    password: Joi.string().alphanum().required(),
-  });
-
-  return schema.validate(requestBody);
 }
 
 module.exports = {

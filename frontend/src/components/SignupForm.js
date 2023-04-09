@@ -2,18 +2,21 @@ import React from "react";
 import FormField from "./FormField";
 import { FormButton, CenteredDiv, ButtonDiv, ErrorLabel} from "../StyledElements";
 import ReactFormInputValidation from "react-form-input-validation";
+import SignUp from "../ApiCalls";
 
 export default class SignupForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      onSumit:props.onSubmit,
       fields: {
         email: "",
         user_name: "",
         password: "",
         first_name: "",
         last_name: "",
+        birth_date: "",
       },
       errors: {},
     };
@@ -25,10 +28,9 @@ export default class SignupForm extends React.Component {
       password: "required|alpha_dash",
       first_name: "required|alpha",
       last_name: "required|alpha",
+      birth_date:"required|date"
     });
-    this.form.onformsubmit = (fields) => {
-      console.log(fields);
-    };
+    this.form.onformsubmit = props.onSubmit;
   }
 
   render() {
@@ -89,6 +91,17 @@ export default class SignupForm extends React.Component {
           />
           <ErrorLabel>
             {this.state.errors.last_name ? this.state.errors.last_name : ""}
+          </ErrorLabel>
+          <FormField
+            name="birth_date"
+            fieldName="Birth Day"
+            type="date"
+            fieldValue={this.state.fields.birth_date}
+            onChangeCB={this.form.handleChangeEvent}
+            onBlurCB={this.form.handleBlurEvent}
+          />
+          <ErrorLabel>
+            {this.state.errors.birth_date ? this.state.errors.birth_date : ""}
           </ErrorLabel>
           <ButtonDiv>
             <FormButton type="submit">Create</FormButton>

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const leaderboardModel = require('../models/leaderboard');
+const { isEmptyObject } = require('../util/isEmptyObject');
+const PAGE_SIZE = process.env.LEADERBOARD_PAGING_SIZE;
 
 router.get('/', async (req, res) =>{
     //console.log("/leaderboard requested");
@@ -33,7 +35,7 @@ router.get('/', async (req, res) =>{
 
 async function queryLeaderboard(paramObj, res, page) {
   var query = page != undefined 
-  ? leaderboardModel.find(paramObj).skip((page - 1) * 5).limit(5).sort({finalScore: -1})
+  ? leaderboardModel.find(paramObj).skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE).sort({finalScore: -1})
   : leaderboardModel.find(paramObj);
 
   await query.exec((err, qRes) => {
@@ -45,14 +47,6 @@ async function queryLeaderboard(paramObj, res, page) {
         return;
     }
   });
-}
-
-function isEmptyObject(obj) {
-  if (obj === null || obj === undefined) {
-    return false;
-  } else {
-    return !Object.keys(obj).length;
-  }
 }
 
 module.exports = router;

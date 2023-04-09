@@ -1,16 +1,17 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 require('dotenv-flow').config();
 var port = process.env.PORT || 3000;
 var server = express();
 
-
 server.listen(port);
 server.use(express.json());
 server.use(express.static(path.join(__dirname, 'public')));
+server.use(cors({ origin:"*" }));
 
 //ROUTES
 var indexRouter = require('./routes/index');
@@ -18,7 +19,9 @@ var quizRouter = require('./routes/quiz');
 var signupRouter = require('./routes/signup');
 var profileRouter = require('./routes/profile');
 var leaderboardRouter = require('./routes/leaderboard');
+var authRouter = require('./routes/auth');
 
+server.use('/', authRouter);
 server.use('/', indexRouter);
 server.use('/quiz', quizRouter);
 server.use('/signup', signupRouter);
