@@ -15,6 +15,7 @@ chai.use(chaiHttp);
 console.log(`Environment\nPORT: ${process.env.PORT}`);
 console.log(`DBHOST: ${process.env.DBHOST}`);
 console.log(`ACCESS_TOKEN_LIFETIME: ${process.env.ACCESS_TOKEN_LIFETIME}`);
+console.log(`LEADERBOARD_PAGING_SIZE: ${process.env.LEADERBOARD_PAGING_SIZE}`);
 
 //clean up test database
 after(async () => {
@@ -80,12 +81,12 @@ describe('/profile and /signup tests', () => {
 });
 
 describe('/quiz tests', () => {
-    it('GET\t/\t"Test get API docs"', async () => {
+    it('GET\t/\t\t\t"Test get API docs"', async () => {
         const res = await chai.request(server).get('/')
         expect(res.status).to.be.equal(200);
     });
 
-    it('GET\t/quiz\t"Test get quiz categories."', async () => {
+    it('GET\t/quiz\t\t\t"Test get quiz categories."', async () => {
         const res = await chai.request(server).get('/quiz')
 
         expect(res.status).to.be.equal(200);
@@ -129,14 +130,14 @@ describe('/quiz tests', () => {
 });
 
 describe('/leaderboard tests', () => {
-    it('GET\t/leaderboard?category=HISTORY\t"Test get all posted scores from history category"', async () => {
+    it('GET\t/leaderboard?category=HISTORY\t\t\t"Test get all posted scores from history category"', async () => {
         const res = await chai.request(server).get(`/leaderboard?category=history`);
 
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
     });
 
-    it('GET\t/leaderboard?userId=:userId\t"Test get all posted scores by $userId"', async () => {
+    it('GET\t/leaderboard?userId=:userId\t\t\t"Test get all posted scores by $userId"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
@@ -146,7 +147,7 @@ describe('/leaderboard tests', () => {
         expect(res.body).to.be.an('array');
     });
 
-    it('GET\t/leaderboard?category=HISTORY&userId=:userId\t"Test filtering $userId scores by category"', async () => {
+    it('GET\t/leaderboard?category=HISTORY&userId=$userId\t"Test filtering $userId scores by category"', async () => {
         var lastID = await userModel.findOne({}, {sort: {_id: -1}});
         lastID = JSON.parse(JSON.stringify(lastID))._id;
 
@@ -156,7 +157,7 @@ describe('/leaderboard tests', () => {
         expect(res.body).to.be.an('array');
     });
 
-    it('GET\t/leaderboard?category=HISTORY&page=1\t"Test pagination with history leaderboard category"',async () => {
+    it('GET\t/leaderboard?category=HISTORY&page=1\t\t"Test pagination with history leaderboard category"',async () => {
         
         await addRandomLeaderboardEntries(new ObjectId());
 
@@ -174,7 +175,7 @@ describe('Auth tests', () => {
         const res = await chai.request(server)
         .post('/login')
         .send({
-            userName: "SemiDoge",
+            userName: "ChampagnePapi",
             password: "secret"
         })
 
