@@ -59,7 +59,7 @@ router.post('/renew', async (req, res) => {
 
     const refreshToken = req.body.refreshToken;
     if (refreshToken == null) return res.sendStatus(401);
-    if (!await findRefreshToken({refreshToken: refreshToken})) return res.setStatus(403);
+    if (!await findRefreshToken({refreshToken: refreshToken})) return res.sendStatus(403);
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
