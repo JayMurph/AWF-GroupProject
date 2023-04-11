@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const userModel = require('../models/user');
+const leaderboardModel = require('../models/leaderboard');
+
 const ObjectId = require('mongoose').Types.ObjectId;
 const { isEmptyObject } = require('../util/isEmptyObject');
 const { authToken } = require('../util/auth');
@@ -51,8 +53,14 @@ router.delete('/:userId', authToken, async (req, res, next) =>{
     if (ObjectId.isValid(req.params.userId)) {
         userModel
         .deleteOne({_id: ObjectId(req.params.userId)})
-        .then(doc => {
+        .then(async doc => {
             res.status(200).json(doc)
+
+            const deleteLeaderboardRes = await leaderboardModel.deleteMany({userId: ObjectId(req.params.userId)});
+            if(deleteLeaderboardRes.deletedCount < 1) {
+                console.log(`Could not delete leaderboard entries for user: ${req.params.userId}`);
+                console.log(`Maybe user did not have any entries?`);
+            }
         })
         .catch(err => {
             res.status(500).json({error: ' Could not delete the user'})
