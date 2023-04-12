@@ -9,7 +9,7 @@ function validateUserEntry(requestBody) {
     userName: Joi.string().required(),
     email: Joi.string().email().required(),
     birthDate: Joi.string().required(),
-    password: Joi.string().alphanum().required(),
+    password: Joi.string().required(),
   });
 
     return schema.validate(requestBody);
@@ -18,7 +18,7 @@ function validateUserEntry(requestBody) {
 function validateUserLogin(requestBody) {
     const schema = Joi.object({
         userName: Joi.string().required(),
-        password: Joi.string().alphanum().required()
+        password: Joi.string().required()
     });
 
     return schema.validate(requestBody);
