@@ -15,20 +15,21 @@ import random
 from pyFrontend.base import userClass
 from pyFrontend.base import Log, log
 
-from pyFrontend.util import testConnection, login, logout
+from pyFrontend.util import testConnection, login, logout, getToken, validateToken
 from pyFrontend.util import postScore, signUp, deleteProfile, updateProfile
 
 @click.group()
 def cli():
     pass
 
-@click.command()
+@click.command(help='Signup new user.')
 @click.option('-u', '--username', prompt=True, help='Username: ')
 @click.option('-p', '--password', prompt=True, hide_input=True, confirmation_prompt=True, help='Password: ')
 @click.option('-fn', '--first_name', prompt=True, help='First name: ')
 @click.option('-ln', '--last_name', prompt=True, help='Last name: ')
 @click.option('-em', '--email', prompt=True, help='Email: ')
 @click.option('-bd', '--birth_date', prompt=True, help='Password: ')
+#@click.option('-t', '--token', is_flag=True)
 def sign_up(username: str, password: str, first_name: str, last_name: str, email: str, birth_date: str):
     log(Log.TRACE, f'Calling: sign_()')
 
@@ -49,7 +50,7 @@ def sign_up(username: str, password: str, first_name: str, last_name: str, email
     log(Log.INFO, f'Successfully signed up {pyl}')
     return
 
-@click.command()
+@click.command(help='Send $count number of random leaderboard entires with account you sign in to.')
 @click.option('-u', '--username', prompt=True, help='Username: ')
 @click.option('-p', '--password', prompt=True, hide_input=True, confirmation_prompt=True, help='Password: ')
 @click.option('-c', '--count', help='Amount of randomized hiscores to be created. Max = 1000', default=1)
@@ -85,8 +86,26 @@ def new_score(username: str, password: str, count: str):
     logout(user)
     return
 
+@click.command(help='Alternate version of new-score using a token.')
+@click.option('-t', '--token', help='A valid access token')
+@click.option('-c', '--count', help='Amount of randomized hiscores to be created. Max = 1000', default=1)
+def new_score_token(token: str, count):
+    cats = ["math", "history", "science", "literature"]
+    log(Log.INFO, f'Called: new_score_token()')
+    ret = validateToken(token)
+    if ret == False:
+        return
 
-@click.command()
+    user = userClass(None, None, token=token)
+    for i in range(count):
+        sc = postScore(user, random.randint(1000, 5000), cats[random.randint(0, 3)])
+        if sc != 200:
+                log(Log.ERROR, f'Something went wrong, status code {sc}')
+                return
+
+    log(Log.INFO, f'Successfully posted randomized {count} hiscore(s)') 
+
+@click.command(help='Delete profile that you log in to.')
 @click.option('-u', '--username', prompt=True, help='Username: ')
 @click.option('-p', '--password', prompt=True, hide_input=True, confirmation_prompt=True, help='Password: ')
 def delete_profile(username: str, password: str):
@@ -114,7 +133,7 @@ def delete_profile(username: str, password: str):
     log(Log.INFO, f'Successfully deleted profile, logging out {user.userName}')
     logout(user)
 
-@click.command()
+@click.command(help='Send new credentials to update stuff.')
 @click.option('-u', '--username', prompt=True, help='username: ')
 @click.option('-p', '--password', prompt=True, hide_input=True, confirmation_prompt=True, help='password: ')
 @click.option('-nu', '--new_username', prompt=True, help='new username: ')
@@ -167,10 +186,28 @@ def update_profile(username: str, password: str, new_username: str, new_password
     #log(Log.INFO, f'New profile: {user.userName}/{user.}')
     logout(updatedUser)
 
+@click.command(help='Returns a access jwt token, valid for 10 minutes.')
+@click.option('-u', '--username', prompt=True, help='Username: ')
+@click.option('-p', '--password', prompt=True, hide_input=True, confirmation_prompt=True, help='Password: ')
+def get_token(username: str, password: str):
+    #log(Log.INFO, f'Calling: get_token()')
+
+    ret = getToken(username, password) 
+    if ret == False:
+        log(Log.ERROR, f'Failed to get token')
+        return
+
+    #log(Log.INFO, f'Issued accessToken valid for the next ~10 minutes')
+    print(ret)
+    return
+    
+
 cli.add_command(sign_up)
 cli.add_command(new_score)
+cli.add_command(new_score_token)
 cli.add_command(delete_profile)
 cli.add_command(update_profile)
+cli.add_command(get_token)
 
 def main():  # pragma: no cover
     cli()

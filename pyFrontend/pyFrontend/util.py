@@ -1,9 +1,10 @@
 import requests as req
 import json
 import datetime as dt
+import jwt
 
 from pyFrontend.base import userClass
-from pyFrontend.base import API_BASE_URL
+from pyFrontend.base import API_BASE_URL, ACCESS_TOKEN_SECRET
 from pyFrontend.base import Log, log
 
 def testConnection():
@@ -106,3 +107,31 @@ def logout(user: userClass):
     user.logout()
     return res.status_code
  
+def getToken(username: str, password: str): 
+    if testConnection() == False:
+        log(Log.ERROR, f'Connection test failed. Aborting.')
+        return False
+
+    user = userClass(username, password)
+    ret = login(user)
+
+    if ret == False:
+        user.logout()
+        return False
+
+    user.ingestTokens(ret)
+    accessToken = user.accessToken
+
+    logout(user)
+
+    return accessToken
+
+def validateToken(token: str):
+    try:
+        decoded_token = jwt.decode(token, ACCESS_TOKEN_SECRET, algorithms=['HS256'], verify=True)
+    except jwt.exceptions.InvalidSignatureError:
+        # Handle invalid token signature
+        log(Log.ERROR, f'Invalid token')
+        return False
+ 
+    return decoded_token 

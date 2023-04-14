@@ -38,16 +38,23 @@ class Log(Enum):
         
 
 class userClass:
-    def __init__(self, userName: str, password: str):
-        self.sub = ""
-        self.firstName = ""
-        self.userName = userName
-        self.email = ""
-        self.password = password
-        self.refreshToken = ""
-        self.accessToken  = ""
-        self.accessTokenExpiry = ""
-        self.loggedIn = False
+    def __init__(self, userName: str, password: str, token: str=None):
+        if token is None:
+            self.sub = ""
+            self.firstName = ""
+            self.userName = userName
+            self.email = ""
+            self.password = password
+            self.refreshToken = ""
+            self.accessToken  = ""
+            self.accessTokenExpiry = ""
+            self.loggedIn = False
+        else:
+            #log(Log.TRACE, f'in alternate ctor')
+            self.accessToken = token
+            self.decodeToken()
+            self.loggedIn = True
+        
 
     def ingestTokens(self, responseObject):
         decodedResObj = json.loads(responseObject)
@@ -61,6 +68,8 @@ class userClass:
         decoded_access_tkn = jwt.decode(self.accessToken, ACCESS_TOKEN_SECRET, algorithms=['HS256'])
         self.sub = decoded_access_tkn['sub']
         self.firstName = decoded_access_tkn['firstName']
+        self.userName = decoded_access_tkn['userName']
+        self.password = decoded_access_tkn['password']
         self.email = decoded_access_tkn['email']
         self.accessTokenExpiry = dt.datetime.fromtimestamp(decoded_access_tkn['exp'])
 

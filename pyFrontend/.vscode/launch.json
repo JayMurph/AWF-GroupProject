@@ -8,8 +8,9 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "module": "tmTest",
-            "args": "sign-up -u Destiny -p secret -fn Steven -ln \"Bonnell II\" -em destiny@gmail.com -bd 1991-08-01T00:00:00Z",
+            "module": "pyFrontend",
+            "args": "get-token -u SemiDoge -p secret",
+            //"args": "sign-up -u Destiny -p secret -fn Steven -ln \"Bonnell II\" -em destiny@gmail.com -bd 1991-08-01T00:00:00Z",
             //"args": "delete-profile -u SemiDoge -p secret",
             //"args": "update-profile -u SemiDoge -p \"secret\" -nu FullDoge -ne fulldoge@yahoo.com -np nusecret ",
             "justMyCode": true
