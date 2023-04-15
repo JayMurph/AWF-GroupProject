@@ -62,7 +62,7 @@ export default class SignupForm extends React.Component {
           <FormField
             name="password"
             fieldName="Password"
-            type="text"
+            type="password"
             fieldValue={this.state.fields.password}
             onChangeCB={this.form.handleChangeEvent}
             onBlurCB={this.form.handleBlurEvent}
