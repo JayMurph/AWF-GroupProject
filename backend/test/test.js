@@ -126,6 +126,10 @@ describe('/quiz tests', () => {
         })
 
         expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.globalPosition).to.exist;
+        expect(res.body.page).to.exist;
+        expect(res.body.pagePosition).to.exist;
     });
 });
 

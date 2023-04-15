@@ -84,7 +84,6 @@ async function tryLogin(requestBody) {
     }
 
     if (user.password !== requestBody.password) {
-        console.log(`${user.password} vs ${requestBody.password}`);
         return { success: "false", message: "Passwords do not match" };
     }
 

@@ -4,6 +4,7 @@ var Joi = require('joi');
 
 const quizModel = require('../models/quiz');
 const leaderboardModel = require('../models/leaderboard');
+const { findPageInLeaderboard } = require('../util/leaderboard');
 const { isEmptyObject } = require('../util/isEmptyObject');
 const { validateLeaderboardEntry } = require('../util/validation');
 const { authToken } = require('../util/auth');
@@ -43,8 +44,6 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', authToken, async (req, res) => {
-    //console.log(`/quiz got POST`);
-    //console.log(req.tokenPayload);
 
     //use joi to validate POST body 
     const {error} = validateLeaderboardEntry(req.body);
@@ -66,7 +65,9 @@ router.post('/', authToken, async (req, res) => {
         console.error(err);
     }
 
-    res.status(200).send(dbRes);
+    await findPageInLeaderboard({_id: dbRes._id, score: req.body.finalScore, category: req.body.category}, res);
+
+    return;
 });
 
 function doesCategoryExist(cat) {
