@@ -56,7 +56,7 @@ router.post('/', authToken, async (req, res) => {
 
     //once validated move on to the mongoose insertion
     try {
-        leaderboardModel.create({
+        dbRes = await leaderboardModel.create({
             userId: req.tokenPayload.sub,
             finalScore: req.body.finalScore,
             category: req.body.category,
@@ -66,7 +66,7 @@ router.post('/', authToken, async (req, res) => {
         console.error(err);
     }
 
-    res.sendStatus(200);
+    res.status(200).send(dbRes);
 });
 
 function doesCategoryExist(cat) {
