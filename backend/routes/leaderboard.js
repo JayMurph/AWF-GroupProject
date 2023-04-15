@@ -36,7 +36,7 @@ router.get('/', async (req, res) =>{
 async function queryLeaderboard(paramObj, res, page) {
   var query = page != undefined 
   ? leaderboardModel.find(paramObj).skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE).sort({finalScore: -1})
-  : leaderboardModel.find(paramObj);
+  : leaderboardModel.find(paramObj).sort({finalScore: -1});
 
   await query.exec((err, qRes) => {
     if (isEmptyObject(qRes)) {
