@@ -1,10 +1,22 @@
 import "local-storage";
-const USER_ID_KEY = "user_id";
-const USERNAME_KEY = "username";
-//const PASSWORD_KEY = "password";
-const FIRST_NAME_KEY = "firstname";
+import "react-cookie";
+export const ACCESS_TOKEN_KEY = "access_token";
+export const REFRESH_TOKEN_KEY = "refresh_token";
+export const USER_ID_KEY = "user_id";
+export const USERNAME_KEY = "username";
+export const PASSWORD_KEY = "password";
+export const FIRST_NAME_KEY = "firstname";
+export const EMAIL_KEY = "email";
+export const COOKIE_KEYS = [
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  USER_ID_KEY,
+  USERNAME_KEY,
+  FIRST_NAME_KEY,
+  EMAIL_KEY
+];
+
 const LAST_NAME_KEY = "lastname";
-const EMAIL_KEY = "email";
 const BIRTH_DATE_KEY = "birthdate";
 
 export function GetUserId() {
