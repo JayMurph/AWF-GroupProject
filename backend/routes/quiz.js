@@ -4,6 +4,10 @@ var Joi = require('joi');
 
 const quizModel = require('../models/quiz');
 const leaderboardModel = require('../models/leaderboard');
+const { findPageInLeaderboard } = require('../util/leaderboard');
+const { isEmptyObject } = require('../util/isEmptyObject');
+const { validateLeaderboardEntry } = require('../util/validation');
+const { authToken } = require('../util/auth');
 
 //TODO: make a db query that allows this list to be loaded dynamically
 const quizCats = ["history", "math", "literature", "science"];
@@ -39,9 +43,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    //console.log(`/quiz got POST`);
-    //console.log(req.body);
+router.post('/', authToken, async (req, res) => {
 
     //use joi to validate POST body 
     const {error} = validateLeaderboardEntry(req.body);
@@ -53,8 +55,8 @@ router.post('/', async (req, res) => {
 
     //once validated move on to the mongoose insertion
     try {
-        leaderboardModel.create({
-            userId: req.body.userId,
+        dbRes = await leaderboardModel.create({
+            userId: req.tokenPayload.sub,
             finalScore: req.body.finalScore,
             category: req.body.category,
             timeStamp: req.body.timeStamp
@@ -63,20 +65,10 @@ router.post('/', async (req, res) => {
         console.error(err);
     }
 
-    res.sendStatus(200);
+    await findPageInLeaderboard({_id: dbRes._id, score: req.body.finalScore, category: req.body.category}, res);
+
+    return;
 });
-
-function validateLeaderboardEntry(requestBody) {
-  //TODO: Once the project has become more fleshed out, come back and update the Joi schema to fit better.
-  const schema = Joi.object({
-    userId: Joi.string().alphanum().required(),
-    finalScore: Joi.number().min(0).required(),
-    category: Joi.string().alphanum().required(),
-    timeStamp: Joi.date().required()
-  });
-
-  return schema.validate(requestBody);
-}
 
 function doesCategoryExist(cat) {
     var index = quizCats.indexOf(cat.toLowerCase());
@@ -85,11 +77,6 @@ function doesCategoryExist(cat) {
     }
     
     return true;
-}
-
-function isEmptyObject(obj) {
-    return !Object.keys(obj).length;
-
 }
 
 module.exports = router;

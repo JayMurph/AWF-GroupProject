@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Module",
+            "type": "python",
+            "request": "launch",
+            "module": "pyFrontend",
+            "args": "get-token -u SemiDoge -p secret",
+            //"args": "sign-up -u Destiny -p secret -fn Steven -ln \"Bonnell II\" -em destiny@gmail.com -bd 1991-08-01T00:00:00Z",
+            //"args": "delete-profile -u SemiDoge -p secret",
+            //"args": "update-profile -u SemiDoge -p \"secret\" -nu FullDoge -ne fulldoge@yahoo.com -np nusecret ",
+            "justMyCode": true
+        }
+    ]
+}

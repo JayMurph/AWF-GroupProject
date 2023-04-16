@@ -1,12 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-const leaderboardModel = require('../models/leaderboard');
-const PAGE_SIZE = 10;
+const { isEmptyObject } = require('../util/isEmptyObject');
+const { queryLeaderboard } = require('../util/leaderboard');
 
 router.get('/', async (req, res) =>{
-    //console.log("/leaderboard requested");
-    //console.log(req.query);
 
     if (isEmptyObject(req.query)) {
       res.sendStatus(400);
@@ -28,31 +26,8 @@ router.get('/', async (req, res) =>{
       return;
     }
 
-    //when category and userId both exist handle and make this unreachable
+    //this should be unreachable
     res.sendStatus(501);
 });
-
-async function queryLeaderboard(paramObj, res, page) {
-  var query = page != undefined 
-  ? leaderboardModel.find(paramObj).skip((page - 1) * 10).limit(10).sort({finalScore: -1})
-  : leaderboardModel.find(paramObj);
-
-  await query.exec((err, qRes) => {
-    if (isEmptyObject(qRes)) {
-        res.sendStatus(404);    
-        return;
-    } else {
-        res.contentType('json').send(qRes);
-        return;
-    }
-  });
-}
-function isEmptyObject(obj) {
-  if (obj === null || obj === undefined) {
-    return false;
-  } else {
-    return !Object.keys(obj).length;
-  }
-}
 
 module.exports = router;

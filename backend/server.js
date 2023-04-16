@@ -19,7 +19,9 @@ var quizRouter = require('./routes/quiz');
 var signupRouter = require('./routes/signup');
 var profileRouter = require('./routes/profile');
 var leaderboardRouter = require('./routes/leaderboard');
+var authRouter = require('./routes/auth');
 
+server.use('/', authRouter);
 server.use('/', indexRouter);
 server.use('/quiz', quizRouter);
 server.use('/signup', signupRouter);
