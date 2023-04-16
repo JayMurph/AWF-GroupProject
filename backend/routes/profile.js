@@ -19,30 +19,22 @@ router.get('/:userId', async (req, res, next) => {
         res.sendStatus(400);
     }
 
-    var query = userModel.find({_id: `${req.params.userId}`});    
+    var query = await userModel.aggregate([
+        { $match: { _id: ObjectId(req.params.userId) } },
+        { $project: { firstName: 1, lastName: 1, userName: 1, email: 1 } }
+    ]);
+ 
+    if (isEmptyObject(query)) {
+        res.sendStatus(404);    
+        return;
+    } else {
+        if (query.length === 1) {
+            res.contentType('json').send(query[0]);
+            return;
+        }
 
-    query.select("firstName");
-    query.select("lastName");
-    query.select("userName");
-    query.select("email");
-    query.limit(1);
-
-    try {
-        await query.exec((err, qRes) => {
-
-            if (isEmptyObject(qRes)) {
-                res.sendStatus(404);    
-            } else {
-                if (qRes.length === 1) {
-                    res.contentType('json').send(qRes[0]);
-                    return;
-                }
-
-                res.contentType('json').send(qRes);
-            }
-        });
-    } catch (err) {
-        console.error(err);
+        res.contentType('json').send(query);
+        return;
     }
 });
 
