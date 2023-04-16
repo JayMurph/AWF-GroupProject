@@ -49,6 +49,11 @@ describe('/profile and /signup tests', () => {
 
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('object');
+        expect(res.body.firstName).to.exist;
+        expect(res.body.lastName).to.exist;
+        expect(res.body.userName).to.exist;
+        expect(res.body.email).to.exist;
+        expect(res.body.recentScores).to.be.an('array');
     });
 
     it('PUT\t/profile/:userId Header: {Authorization: Bearer $accessToken} {userName: "ChampagnePapi", ... } "Test update user profile"', async () => {

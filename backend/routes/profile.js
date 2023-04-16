@@ -7,6 +7,7 @@ const leaderboardModel = require('../models/leaderboard');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { isEmptyObject } = require('../util/isEmptyObject');
 const { authToken } = require('../util/auth');
+const { calcStats } = require('../util/profile')
 
 router.get('/', (req, res) => {
     res.sendStatus(400);
@@ -19,23 +20,43 @@ router.get('/:userId', async (req, res, next) => {
         res.sendStatus(400);
     }
 
-    var query = await userModel.aggregate([
+    const userQuery = await userModel.aggregate([
         { $match: { _id: ObjectId(req.params.userId) } },
         { $project: { firstName: 1, lastName: 1, userName: 1, email: 1 } }
     ]);
- 
-    if (isEmptyObject(query)) {
+
+    const userLBQuery = await leaderboardModel.aggregate([
+        { $match: { userId: ObjectId(req.params.userId) } },
+        { $sort: { _id: -1 } },
+        { $limit: 10 }
+    ]);
+
+    const statQuery = await leaderboardModel.aggregate([
+        { $match: {userId: ObjectId(req.params.userId)} },
+        { $sort: { finalScore: -1 } }
+    ]);
+
+    const [ highestScore, scoreAverage, totalScore, quizzesCompleted ] = calcStats(statQuery);
+
+    if (isEmptyObject(userQuery)) {
         res.sendStatus(404);    
         return;
-    } else {
-        if (query.length === 1) {
-            res.contentType('json').send(query[0]);
-            return;
-        }
-
-        res.contentType('json').send(query);
-        return;
     }
+
+    res.contentType('json').send({
+        _id: req.params.userId,
+        firstName: userQuery[0].firstName,
+        lastName: userQuery[0].lastName,
+        userName: userQuery[0].userName,
+        email: userQuery[0].email,
+        highestScore: highestScore,
+        scoreAverage: scoreAverage,
+        totalScore: totalScore,
+        quizzesCompleted: quizzesCompleted,
+        recentScores: userLBQuery
+    });
+
+    return;
 });
 
 // a request to delete the profile
