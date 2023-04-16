@@ -14,22 +14,25 @@ export default class SignupForm extends React.Component {
         email: "",
         user_name: "",
         password: "",
+        password_confirm: "",
         first_name: "",
         last_name: "",
         birth_date: "",
       },
       errors: {},
     };
-
+    
     this.form = new ReactFormInputValidation(this);
     this.form.useRules({
       email: "required|email",
       user_name: "required|alpha_dash",
       password: "required|alpha_dash",
+      password_confirm: "required|alpha_dash",
       first_name: "required|alpha",
       last_name: "required|alpha",
       birth_date:"required|date"
     });
+
     this.form.onformsubmit = props.onSubmit;
   }
 
@@ -69,6 +72,17 @@ export default class SignupForm extends React.Component {
           />
           <ErrorLabel>
             {this.state.errors.password ? this.state.errors.password : ""}
+          </ErrorLabel>
+          <FormField
+            name="password_confirm"
+            fieldName="Confirm Password"
+            type="password"
+            fieldValue={this.state.fields.password_confirm}
+            onChangeCB={this.form.handleChangeEvent}
+            onBlurCB={this.form.handleBlurEvent}
+          />
+          <ErrorLabel>
+          {this.state.errors.password_confirm? this.state.errors.password_confirm: ""}
           </ErrorLabel>
           <FormField
             name="first_name"
