@@ -91,7 +91,7 @@ db.quizzes.insertMany([
     { category: "Literature", qTxt: "What is the title of J.D. Salinger's novella about a young man who spends three days in New York City?", qAns: 1, a1Txt: "The Catcher in the Rye", a2Txt: "The Great Gatsby", a3Txt: "A Separate Peace", a4Txt: "The Stranger" },
     { category: "Literature", qTxt: "Which of the following is a poem by Langston Hughes?", qAns: 3, a1Txt: "The Love Song of J. Alfred Prufrock", a2Txt: "The Waste Land", a3Txt: "Harlem", a4Txt: "The Road Not Taken" },
     { category: "Literature", qTxt: "'The Adventures of Huckleberry Finn' was written by:", qAns: 1, a1Txt: "Mark Twain", a2Txt: "Edgar Allen Poe", a3Txt: "Herman Melville", a4Txt: "Nathaniel Hawthorne" },
-    { category: "Literature", qTxt: "What is What is the solution to the equation 2x + 3 = 11?hat is the title of John Steinbeck's novel about migrant workers in California during the Great Depression?", qAns: 2, a1Txt: "The Grapes of Wrath", a2Txt: "Of Mice and Men", a3Txt: "The Glass Menagerie", a4Txt: "Long Day's Journey Into Night" },
+    { category: "Literature", qTxt: "What is the title of John Steinbeck's novel about migrant workers in California during the Great Depression?", qAns: 2, a1Txt: "The Grapes of Wrath", a2Txt: "Of Mice and Men", a3Txt: "The Glass Menagerie", a4Txt: "Long Day's Journey Into Night" },
     { category: "Literature", qTxt: "'The Sound and the Fury' was written by:", qAns: 1, a1Txt: "William Faulkner", a2Txt: "Ernest Hemingway", a3Txt: "John Steinbeck", a4Txt: "Truman Capote" },
 ]);
 
