@@ -1,37 +1,117 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import Home from "./pages";
 import About from "./pages/about";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
-import { GetUserId, SaveUserData, ClearUserData } from "./Storage";
+import {
+  USER_ID_KEY,
+  USERNAME_KEY,
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  COOKIE_KEYS,
+  PASSWORD_KEY,
+  FIRST_NAME_KEY,
+  EMAIL_KEY,
+} from "./Storage";
 import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
+import { decodeToken, isExpired } from "react-jwt";
+import { LogoutUser } from "./ApiCalls";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
-function IsAuthenticated() {
-  return GetUserId() != null;
+function isAuthenticated(cookies) {
+  return cookies.accessToken && !isExpired(cookies.accessToken);
 }
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(IsAuthenticated);
-  const [userId, setUserId] = useState(GetUserId);
+  const [cookies, setCookie, removeCookie] = useCookies(COOKIE_KEYS);
+  const [authenticated, setAuthenticated] = useState(() =>
+    isAuthenticated(cookies)
+  );
+  const [userId, setUserId] = useState(cookies.userId);
 
-  const onSignupSuccess = (userData) => {
-    setAuthenticated(true);
-    setUserId(userData._id);
-    SaveUserData(userData);
+  const onLogin = async (tokens) => {
+    if (tokens) {
+      const dt = decodeToken(tokens.accessToken);
+      setCookies(
+        tokens.accessToken,
+        tokens.refreshToken,
+        dt.sub,
+        dt.userName,
+        dt.password,
+        dt.firstName,
+        dt.email
+      );
+      setUserId(dt.sub);
+      setAuthenticated(true);
+    }
   };
 
-  const onLogout = () => {
-    setAuthenticated(false);
-    setUserId(null);
-    ClearUserData();
+  const onLogout = async () => {
+    try {
+      if (cookies.refreshToken) {
+        await LogoutUser(cookies.refreshToken);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setAuthenticated(false);
+      setUserId(null);
+      clearCookies();
+    }
   };
+
+  const setCookies = (
+    accessToken,
+    refreshToken,
+    userId,
+    username,
+    password,
+    firstName,
+    email
+  ) => {
+    const options = { path: "/" };
+    setCookie(ACCESS_TOKEN_KEY, accessToken, options);
+    setCookie(REFRESH_TOKEN_KEY, refreshToken, options);
+    setCookie(USER_ID_KEY, userId, options);
+    setCookie(USERNAME_KEY, username, options);
+    setCookie(PASSWORD_KEY, password, options);
+    setCookie(FIRST_NAME_KEY, firstName, options);
+    setCookie(EMAIL_KEY, email, options);
+  };
+
+  const clearCookies = useCallback(() => {
+    const options = { path: "/" };
+    removeCookie(ACCESS_TOKEN_KEY, options);
+    removeCookie(REFRESH_TOKEN_KEY, options);
+    removeCookie(USER_ID_KEY, options);
+    removeCookie(USERNAME_KEY, options);
+    removeCookie(PASSWORD_KEY, options);
+    removeCookie(FIRST_NAME_KEY, options);
+    removeCookie(EMAIL_KEY, options);
+  }, [removeCookie]);
+
+  useEffect(() => {
+    if (authenticated) {
+      // set callback to refresh token
+      let authExpirySecs = decodeToken(cookies.accessToken).exp;
+      console.log(authExpirySecs);
+      let millisToExpiry = authExpirySecs * 1000 - Date.now();
+      const timer = setTimeout(() => {
+        // refresh token
+      }, millisToExpiry);
+      return () => clearTimeout(timer);
+    } else {
+      clearCookies();
+      return () => {};
+    }
+  }, [clearCookies, cookies.accessToken, authenticated]);
 
   return (
     <Router>
@@ -42,14 +122,16 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           {authenticated ? (
-            <Route path="/quiz" element={<Quiz userId={userId} />} />
+            <Route
+              path="/quiz"
+              element={
+                <Quiz userId={userId} accessToken={cookies.accessToken} />
+              }
+            />
           ) : (
             <>
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/sign-up"
-                element={<SignUp onSignupSuccess={onSignupSuccess} />}
-              />
+              <Route path="/login" element={<Login onLogin={onLogin} />} />
+              <Route path="/sign-up" element={<SignUp />} />
             </>
           )}
         </Routes>

@@ -2,7 +2,6 @@ import React from "react";
 import FormField from "./FormField";
 import { FormButton, CenteredDiv, ButtonDiv, ErrorLabel} from "../StyledElements";
 import ReactFormInputValidation from "react-form-input-validation";
-import SignUp from "../ApiCalls";
 
 export default class SignupForm extends React.Component {
   constructor(props) {

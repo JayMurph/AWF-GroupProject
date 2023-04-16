@@ -11,8 +11,7 @@ function SignUp(props) {
 
   useEffect(() => {
     if (userData) {
-      props.onSignupSuccess(userData);
-      navigate("/");
+      navigate("/login", {state: {username: userData.userName}});
     }
   }, [userData, props, navigate]);
 

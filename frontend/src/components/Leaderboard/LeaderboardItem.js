@@ -26,11 +26,11 @@ export default class LeaderboardItem extends React.Component {
     };
   }
 
-  componentDidMount() {
-    GetProfile(this.state.userId)
-    .then((res)=>res.json())
-    .then((profile)=>this.setState({username:profile.userName}))
-    .catch((err)=>console.log(err));
+  async componentDidMount() {
+    await GetProfile(this.state.userId)
+      .then((res) => res.json())
+      .then((profile) => this.setState({ username: profile.userName }))
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -45,23 +45,23 @@ export default class LeaderboardItem extends React.Component {
         ? MIN_FONT_SIZE
         : MIN_FONT_SIZE + TOP_FONT_SIZE_INC * (5 - this.state.idx);
     return (
-        <>
-      <LeaderboardItemContainer
-        style={{
-          width: `${width}%`,
-          alignSelf: "start",
-          height: `${height}px`,
-        }}
-      >
-        <LeaderboardIndex style={{ fontSize: `${fontSize}px` }}>
-          {this.state.idx}
-        </LeaderboardIndex>
-        <div>{this.state.username}</div>
-        <LeaderboardScore style={{ fontSize: `${fontSize}px` }}>
-          {this.state.score}
-        </LeaderboardScore>
-      </LeaderboardItemContainer>
-        </>
+      <>
+        <LeaderboardItemContainer
+          style={{
+            width: `${width}%`,
+            alignSelf: "start",
+            height: `${height}px`,
+          }}
+        >
+          <LeaderboardIndex style={{ fontSize: `${fontSize}px` }}>
+            {this.state.idx}
+          </LeaderboardIndex>
+          <div>{this.state.username}</div>
+          <LeaderboardScore style={{ fontSize: `${fontSize}px` }}>
+            {this.state.score}
+          </LeaderboardScore>
+        </LeaderboardItemContainer>
+      </>
     );
   }
 }

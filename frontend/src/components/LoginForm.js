@@ -9,21 +9,21 @@ export default class LoginForm extends React.Component {
 
     this.state = {
       fields: {
-        user_name: "",
+        username: props.username,
         password: "",
       },
       errors: {},
+      onSubmit:props.onSubmit
+
     };
 
     //this.handleSubmit = this.handleSubmit.bind(this);
     this.form = new ReactFormInputValidation(this);
     this.form.useRules({
-      user_name: "required",
+      username: "required",
       password: "required",
     });
-    this.form.onformsubmit = (fields) => {
-      console.log(fields);
-    };
+    this.form.onformsubmit = props.onSubmit;
   }
 
   render() {
@@ -33,13 +33,13 @@ export default class LoginForm extends React.Component {
           <FormField
             fieldName="User Name"
             type="text"
-            name="user_name"
-            fieldValue={this.state.fields.user_name}
+            name="username"
+            fieldValue={this.state.fields.username}
             onChangeCB={this.form.handleChangeEvent}
             onBlurCB={this.form.handleBlurEvent}
           />
           <ErrorLabel>
-            {this.state.errors.user_name ? this.state.errors.user_name : ""}
+            {this.state.errors.username ? this.state.errors.username : ""}
           </ErrorLabel>
           <FormField
             fieldName="Password"
