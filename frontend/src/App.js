@@ -7,6 +7,7 @@ import About from "./pages/about";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
+import AccountHome from "./pages/accountHome";
 import { GetUserId, SaveUserData, ClearUserData } from "./Storage";
 import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
@@ -35,7 +36,7 @@ function App() {
 
   return (
     <Router>
-      <Navbar authenticated={authenticated} onLogout={onLogout} />
+      {/* <Navbar authenticated={authenticated} onLogout={onLogout} /> */}
       <AppContentContainer>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -46,6 +47,8 @@ function App() {
           ) : (
             <>
               <Route path="/login" element={<Login />} />
+              <Route path="/profile/*" element={<AccountHome />} />
+
               <Route
                 path="/sign-up"
                 element={<SignUp onSignupSuccess={onSignupSuccess} />}

@@ -4,7 +4,7 @@ function AccountMain(props) {
 
     return (
       <>
-        <img src={props.avatar} style={"width:200px; border-radius: 50%"}></img>
+        {/* <img src={props.avatar} style={"width:200px; border-radius: 50%"}></img>
         
         <div id="changeAvatar"></div>         
         
@@ -16,7 +16,7 @@ function AccountMain(props) {
         
         <h2>Total: {props.Height}</h2>
 
-        <h2>Recent scores</h2>
+        <h2>Recent scores</h2> */}
         
       </>
     );

@@ -1,40 +1,61 @@
 import { useState } from 'react';
+import { FormTextbox, PadLabel, ErrorLabel, Button, ChangePasswordDiv, ButtonDiv } from "../StyledElements.js";
+import { GetUserId } from '../Storage.js';
+
 
 function ChangePassword() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [errorText, setErrorText] = useState("");
 
   const handleSubmit = () => {
-    if (password1.length <= 6 || password2.length <= 6) {
-        document.getElementById("error").value="Invalid input!"
+    if (password1.length < 6 || password2.length < 6) {
+      setErrorText("Invalid input!");
     }
-    else if(password1 == password2){
-        
-    }
-    else{
-        document.getElementById("error").value="Inconsistent inputs!"
-    }   
+    else if(password1 === password2){
+        try {
+          let res = fetch("https://localhost/profile/"+ GetUserId, {
+            method: "PUT",
+            body: JSON.stringify({
+              new_password: {password1}
+            })
+          });
+          if (res.status === 200) {
+            setErrorText("Updated successfully");
+          } else {
+            setErrorText("Some error occured");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+    }else{
+      setErrorText("Passwords are inconsistent");
+    } 
   };
 
   return (
     <>
-      <label>New password:</label>
-      <input
-          type="text" 
+      <ChangePasswordDiv>
+      <PadLabel>New password:</PadLabel>
+      <FormTextbox
+          type = "password"
           value={password1}
           onChange={(event) => setPassword1(event.target.value)}
       />
       
-      <label>Confirm:</label>
-      <input
-          type="text" 
+      <PadLabel>Confirm:</PadLabel>
+      <FormTextbox
+          type = "password"
           value={password2}
           onChange={(event) => setPassword2(event.target.value)}
       />
+      
+      <ButtonDiv>
+            <Button onClick={handleSubmit}>Change</Button>
+      </ButtonDiv>         
 
-      <button type="button" onClick={handleSubmit}>Change</button>            
-
-      <p id="error"></p>
+      <ErrorLabel>{errorText}</ErrorLabel>
+      </ChangePasswordDiv>
     </>
   );
 }

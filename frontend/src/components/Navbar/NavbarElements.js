@@ -14,13 +14,13 @@ export const Header = styled.div`
 	z-index: 12;
 `;
 
-export const HeaderAccount = styled.div`
+export const ProfileMenu = styled.div`
 	float: left;
 	background:var(--navBackground); 
 	display: flex;
 	flex-direction:column;
-	height: 100%;
-	width: 20%;
+	height: 100vh;
+	width: 20vw;
 `;
 
 
@@ -34,7 +34,28 @@ export const Title = styled.h1`
 
 export const TitleAccount = styled.h1`
 	position:absolute;
-	padding:10vh 20px 10vh 20px;
+	padding:5vh 80px 5vh 80px;
+`;
+
+export const MenuAccount = styled.div`
+	position:absolute;
+	left: 5%;
+    top: 30%;
+`;
+
+export const ButtonAccount = styled(Link)`
+	color: var(--navText);
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	padding-top:2vh;
+	padding-bottom:2vh;
+	height: 90%;
+	font-size: 120%;
+	cursor: pointer;
+	&.active {
+		color: var(--navTextActive)
+	}
 `;
 
 export const Nav = styled.nav`

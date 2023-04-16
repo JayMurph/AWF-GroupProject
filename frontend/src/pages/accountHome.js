@@ -1,25 +1,23 @@
 import React from 'react';
-import './App.css';
-import NavbarAccount from './components/Navbar/account';
-import { BrowserRouter as Router, Routes, Route}
-	from 'react-router-dom';
-import AccountMain from './pages/accountMain';
-import Profile from './pages/accountProfile';
-import ChangePassword from './pages/changePassword';
-import { AccountContentContainer } from './StyledElements';
+import '../App.css';
+import ProfileLayout from '../components/Navbar/profileLayout';
+import { Routes, Route } from 'react-router-dom';
+import AccountMain from './accountMain';
+import Profile from './accountProfile';
+import ChangePassword from './changePassword';
+import { AccountContentContainer } from '../StyledElements';
 
 function AccountHome() {
-return (
-	<Router>
-	<NavbarAccount />
+return (	
 	<AccountContentContainer>
 		<Routes>
+		  <Route path="/" element={<ProfileLayout/>} >
 			<Route index element={<AccountMain/>} />
-			<Route path='/accountProfile' element={<Profile/>} />
+			<Route path='/details' element={<Profile/>} />
 			<Route path='/changePassword' element={<ChangePassword/>} />
+		  </Route>
 		</Routes>
 	</AccountContentContainer>
-	</Router>
 );
 }
 

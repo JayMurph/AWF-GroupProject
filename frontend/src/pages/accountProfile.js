@@ -4,8 +4,9 @@ function Profile(props) {
 
   return (
     <>
-      <h2>Avatar</h2>
-      <img src={props.avatar} style="width:200px; border-radius: 50%"></img>
+        <h2>Avatar</h2>
+      {/* style="width:200px; border-radius: 50%" */}
+      {/* <img src={props.avatar} ></img>
       <button type="button" onClick={handleAvatar}>Change</button>
       <div id="changeAvatar"></div>         
       
@@ -19,7 +20,7 @@ function Profile(props) {
 
       <h2>Phone: {props.phone}</h2>
       <button type="button" onClick={handlePhone}>Change</button> 
-      <div id="changePhone"></div>   
+      <div id="changePhone"></div>  */}
     </>
   );
 }

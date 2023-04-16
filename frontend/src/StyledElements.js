@@ -9,6 +9,25 @@ export const CenteredDiv = styled.div`
     align-items: center;
 `;
 
+
+export const PadLabel = styled.label`
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+`;
+
+export const ChangePasswordDiv = styled.div`
+    position:absolute;
+    left: 40%;
+    top: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+`;
+
+
 export const PageHeader = styled.h1`
     text-align: center;
     min-width:0px;
@@ -39,14 +58,14 @@ export const QuestionSequenceHeaderContainer = styled.div`
 `
 
 export const AppContentContainer = styled(FlexColumnContainer)`
-    height:88vh;
+    height:80vh;
     width:100%;
 `;
 
 export const AccountContentContainer = styled.div`
     float: right;
-    height:100%;
-    width:80%;
+    height:100vh;
+    width:80vw;
 `;
 
 export const ProfileContentContainer = styled(FlexColumnContainer)`
