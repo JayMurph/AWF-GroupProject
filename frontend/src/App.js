@@ -8,10 +8,11 @@ import About from "./pages/about";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
-import { ClearUserData, USER_ID_KEY, USERNAME_KEY, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, COOKIE_KEYS, PASSWORD_KEY, FIRST_NAME_KEY, EMAIL_KEY} from "./Storage";
+import { USER_ID_KEY, USERNAME_KEY, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, COOKIE_KEYS, PASSWORD_KEY, FIRST_NAME_KEY, EMAIL_KEY} from "./Storage";
 import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
 import { decodeToken, isExpired } from 'react-jwt';
+import { LogoutUser } from "./ApiCalls";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -25,14 +26,23 @@ function App() {
   const [authenticated, setAuthenticated] = useState(()=>isAuthenticated(cookies));
   const [userId, setUserId] = useState(cookies.userId);
 
-  const onLogout = () => {
-    setAuthenticated(false);
-    setUserId(null);
-    ClearUserData();
-    clearCookies();
+  const onLogout = async () => {
+    try {
+      if (cookies.refreshToken) {
+        await LogoutUser(cookies.refreshToken);
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+    finally {
+      setAuthenticated(false);
+      setUserId(null);
+      clearCookies();
+    }
   };
 
-  const onLogin = (tokens) => {
+  const onLogin = async (tokens) => {
     if (tokens) {
       const dt = decodeToken(tokens.accessToken);
       setCookies(tokens.accessToken, tokens.refreshToken, dt.sub, dt.userName, dt.password, dt.firstName, dt.email);

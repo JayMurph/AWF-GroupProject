@@ -54,3 +54,13 @@ export function LoginUser(username, password) {
     }),
   });
 }
+
+export function LogoutUser(refreshToken) {
+  return fetch(API_URL + "/logout", {
+    method:"DELETE",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      refreshToken:refreshToken
+    }),
+  });
+}
