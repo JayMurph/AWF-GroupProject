@@ -43,3 +43,14 @@ export function GetCategoryQuizResultsPage(category, pageNum) {
 export function GetProfile(userId) {
   return fetch(API_URL + "/profile/" + userId);
 }
+
+export function LoginUser(username, password) {
+  return fetch(API_URL + "/login", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      userName: username,
+      password: password
+    }),
+  });
+}

@@ -21,17 +21,16 @@ function App() {
   const [authenticated, setAuthenticated] = useState(IsAuthenticated);
   const [userId, setUserId] = useState(GetUserId);
 
-  const onSignupSuccess = (userData) => {
-    setAuthenticated(true);
-    setUserId(userData._id);
-    SaveUserData(userData);
-  };
-
   const onLogout = () => {
     setAuthenticated(false);
     setUserId(null);
     ClearUserData();
   };
+
+  const onLogin = (userData) => {
+    console.log("login");
+    console.log(userData);
+  }
 
   return (
     <Router>
@@ -45,10 +44,10 @@ function App() {
             <Route path="/quiz" element={<Quiz userId={userId} />} />
           ) : (
             <>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login onLogin={onLogin}/>} />
               <Route
                 path="/sign-up"
-                element={<SignUp onSignupSuccess={onSignupSuccess} />}
+                element={<SignUp />}
               />
             </>
           )}
