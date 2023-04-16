@@ -28,6 +28,7 @@ export default class QuestionsSequence extends React.Component {
       triviaQuestionsArr: props.triviaQuestions,
       quizResults: new QuizResults(props.category),
       userId: props.userId,
+      accessToken:props.accessToken,
     };
 
     this.timerRef = React.createRef();
@@ -53,6 +54,7 @@ export default class QuestionsSequence extends React.Component {
       <QuizResultsForm
         quizResults={this.state.quizResults}
         userId={this.state.userId}
+        accessToken={this.state.accessToken}
       />
     );
   }

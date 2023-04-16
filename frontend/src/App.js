@@ -26,6 +26,11 @@ function App() {
   const [authenticated, setAuthenticated] = useState(()=>isAuthenticated(cookies));
   const [userId, setUserId] = useState(cookies.userId);
 
+  console.log(cookies);
+  console.log(cookies.accessToken);
+  console.log(decodeToken(cookies.accessToken));
+  console.log(isExpired(cookies.accessToken));
+
   const onLogout = async () => {
     try {
       if (cookies.refreshToken) {
@@ -82,7 +87,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           {authenticated ? (
-            <Route path="/quiz" element={<Quiz userId={userId} />} />
+            <Route path="/quiz" element={<Quiz userId={userId} accessToken={cookies.accessToken}/>} />
           ) : (
             <>
               <Route path="/login" element={<Login onLogin={onLogin}/>} />

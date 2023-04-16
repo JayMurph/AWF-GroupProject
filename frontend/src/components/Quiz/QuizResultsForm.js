@@ -16,6 +16,7 @@ export default class QuizResultsForm extends React.Component {
     this.state = {
       quizResults: props.quizResults,
       userId: props.userId,
+      accessToken: props.accessToken,
     };
   }
 
@@ -30,7 +31,8 @@ export default class QuizResultsForm extends React.Component {
       second: "2-digit",
       hour12: false,
     });
-    PostQuizResults(this.state.userId, this.state.quizResults, timestamp);
+    console.log(this.state.accessToken);
+    PostQuizResults(this.state.userId, this.state.quizResults, timestamp, this.state.accessToken);
   }
 
   render() {

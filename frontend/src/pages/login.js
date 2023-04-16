@@ -9,7 +9,6 @@ const Login = (props) => {
   const [errorText, setErrorText] = useState("");
   const [tokens, setTokens] = useState(null);
   const location = useLocation();
-  console.log(location);
   const username = location.state?.username ?? "";
 
   useEffect(() => {

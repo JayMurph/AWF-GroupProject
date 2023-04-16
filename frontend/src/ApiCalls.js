@@ -22,10 +22,14 @@ export function SignUpUser(
   });
 }
 
-export function PostQuizResults(userId, quizResults, timeStamp) {
+export function PostQuizResults(userId, quizResults, timeStamp, accessToken) {
+  console.log(accessToken);
   return fetch(API_URL + "/quiz", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json", 
+      "Authorization": "Bearer " + accessToken
+    },
     body: JSON.stringify({
       userId: userId,
       finalScore: quizResults.getScore(),

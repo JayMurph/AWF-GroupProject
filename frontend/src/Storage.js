@@ -1,11 +1,11 @@
 import "local-storage";
 import "react-cookie";
-export const ACCESS_TOKEN_KEY = "access_token";
-export const REFRESH_TOKEN_KEY = "refresh_token";
-export const USER_ID_KEY = "user_id";
-export const USERNAME_KEY = "username";
+export const ACCESS_TOKEN_KEY = "accessToken";
+export const REFRESH_TOKEN_KEY = "refreshToken";
+export const USER_ID_KEY = "userId";
+export const USERNAME_KEY = "userName";
 export const PASSWORD_KEY = "password";
-export const FIRST_NAME_KEY = "firstname";
+export const FIRST_NAME_KEY = "firstName";
 export const EMAIL_KEY = "email";
 export const COOKIE_KEYS = [
   ACCESS_TOKEN_KEY,
@@ -16,8 +16,8 @@ export const COOKIE_KEYS = [
   EMAIL_KEY
 ];
 
-const LAST_NAME_KEY = "lastname";
-const BIRTH_DATE_KEY = "birthdate";
+const LAST_NAME_KEY = "lastName";
+const BIRTH_DATE_KEY = "birthDate";
 
 export function GetUserId() {
   return localStorage.getItem(USER_ID_KEY);
