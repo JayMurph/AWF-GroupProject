@@ -30,6 +30,7 @@ export default class Quiz extends React.Component {
         />
       </>
     );
+    this.updateRootWithCategories.bind(this);
   }
 
   /**
@@ -91,6 +92,7 @@ export default class Quiz extends React.Component {
                 triviaQuestions={triviaQuestions}
                 userId={this.state.userId}
                 renewAccessToken={this.state.renewAccessToken}
+                onBackButtonPressed={()=>this.updateRootWithCategories(this.state.categories)}
               />
             ),
           });

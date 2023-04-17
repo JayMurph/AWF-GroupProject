@@ -2,6 +2,7 @@ import React from "react";
 import QuizStartForm from "./QuizStartForm";
 import QuestionForm from "./QuestionForm";
 import {
+  Button,
   FlexColumnContainer,
   QuestionSequenceHeaderContainer,
 } from "../../StyledElements";
@@ -29,6 +30,7 @@ export default class QuestionsSequence extends React.Component {
       quizResults: new QuizResults(props.category),
       userId: props.userId,
       renewAccessToken: props.renewAccessToken,
+      onBackButtonPressed: props.onBackButtonPressed
     };
 
     this.timerRef = React.createRef();
@@ -147,7 +149,13 @@ export default class QuestionsSequence extends React.Component {
     return (
       <FlexColumnContainer>
         <QuestionSequenceHeaderContainer>
-          <div style={{ justifySelf: "start" }}>{questionCountText}</div>
+          {this.state.currPgIdx < this.state.pgCount - 1 ? (
+            <div style={{ justifySelf: "start" }}>{questionCountText}</div>
+          ) :
+          (<Button onClick={this.state.onBackButtonPressed}>
+            Play Again
+          </Button>)
+        }
           <div
             style={{
               justifySelf: "center",
