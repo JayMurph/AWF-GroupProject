@@ -1,9 +1,10 @@
 import React from "react";
 import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
-import { PageHeader } from "../StyledElements";
+import { Button, PageHeader } from "../StyledElements";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import { GetCategoryQuizResultsPage } from "../ApiCalls";
+import { CenteredDiv } from "../StyledElements";
 
 export default class Leaderboard extends React.Component {
   constructor(props) {
@@ -22,7 +23,9 @@ export default class Leaderboard extends React.Component {
         onCategorySelection={this.onCategorySelection}
       />
     );
+
     this.state.headerContent = <PageHeader>Categories</PageHeader>;
+    this.onBackButtonPressed = this.onBackButtonPressed.bind(this);
   }
 
   /**
@@ -41,6 +44,11 @@ export default class Leaderboard extends React.Component {
       ),
     });
   };
+
+  onBackButtonPressed() {
+    this.setState({ headerContent: <PageHeader>Categories</PageHeader> });
+    this.updateRootWithCategories(this.state.categories);
+  }
 
   /**
    * Gets quiz categories from API to display on page
@@ -64,24 +72,7 @@ export default class Leaderboard extends React.Component {
         try {
           res = await res.json();
         } catch (err) {
-          // No high scores
-          this.setState({
-            headerContent: (
-              <PageHeader>
-                {"No " +
-                  category.substring(0, 1).toUpperCase() +
-                  category.substring(1) +
-                  " High Scores"}
-              </PageHeader>
-            ),
-            content: (
-              <CategorySelection
-                key={"populatedCategorySelection"}
-                categories={this.state.categories}
-                onCategorySelection={this.onCategorySelection}
-              />
-            ),
-          });
+          this.setNoHighScoresAvailableContent(category);
           return;
         }
 
@@ -90,36 +81,44 @@ export default class Leaderboard extends React.Component {
           this.setState({
             // display leaderboard
             headerContent: (
-              <PageHeader>
-                {category.substring(0, 1).toUpperCase() + category.substring(1)}
-              </PageHeader>
+              <div style={{ display: "flex" }}>
+                <Button onClick={this.onBackButtonPressed}>Back</Button>
+                <PageHeader style={{ width: "min-content" }}>
+                  {category.substring(0, 1).toUpperCase() +
+                    category.substring(1)}
+                </PageHeader>
+              </div>
             ),
             content: <LeaderboardList category={category} initialItems={res} />,
           });
         } else {
-          // NO HIGH SCORES
-          this.setState({
-            headerContent: (
-              <PageHeader>
-                {"No " +
-                  category.substring(0, 1).toUpperCase() +
-                  category.substring(1) +
-                  " High Scores"}
-              </PageHeader>
-            ),
-            content: (
-              <CategorySelection
-                key={"populatedCategorySelection"}
-                categories={this.state.categories}
-                onCategorySelection={this.onCategorySelection}
-              />
-            ),
-          });
+          this.setNoHighScoresAvailableContent(category);
           return;
         }
       })
       .catch((er) => console.log(er));
   };
+
+  setNoHighScoresAvailableContent(category) {
+    // NO HIGH SCORES
+    this.setState({
+      headerContent: (
+        <PageHeader>
+          {"No " +
+            category.substring(0, 1).toUpperCase() +
+            category.substring(1) +
+            " High Scores"}
+        </PageHeader>
+      ),
+      content: (
+        <CategorySelection
+          key={"populatedCategorySelection"}
+          categories={this.state.categories}
+          onCategorySelection={this.onCategorySelection}
+        />
+      ),
+    });
+  }
 
   render() {
     return (
