@@ -45,6 +45,10 @@ export default class Leaderboard extends React.Component {
     });
   };
 
+  /**
+   * Callback for when back button is pressed on a leaderboard sub page, returns
+   * to main category selection
+   */
   onBackButtonPressed() {
     this.updateRootWithCategories(this.state.categories);
   }
@@ -78,7 +82,7 @@ export default class Leaderboard extends React.Component {
         if (res.length > 0) {
           this.setState({
             // display leaderboard
-            currCategory:category,
+            currCategory: category,
             headerContent: (
               <div style={{ display: "flex" }}>
                 <Button onClick={this.onBackButtonPressed}>Back</Button>
@@ -98,8 +102,12 @@ export default class Leaderboard extends React.Component {
       .catch((er) => console.log(er));
   };
 
+  /**
+   * Sets content to show category selection and indicate that the given
+   * category did not have high score available
+   * @param {string} category
+   */
   setNoHighScoresAvailableContent(category) {
-    // NO HIGH SCORES
     this.setState({
       headerContent: (
         <PageHeader>

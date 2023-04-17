@@ -25,9 +25,13 @@ export default class LeaderboardList extends React.Component {
     this.focusItemRef = React.createRef();
   }
 
-  fetchItems = async () => {
+  /**
+   * Retrieves next page of leaderboard items from backend and adds to itsm to
+   * display
+   */
+  fetchNextPage = async () => {
     if (this.state.fetching === true) {
-      return false;
+      return;
     }
 
     this.setState({ fetching: true });
@@ -54,16 +58,18 @@ export default class LeaderboardList extends React.Component {
       console.log(err.message);
     } finally {
       this.setState({ fetching: false });
-      return true;
     }
   };
 
   loader() {
-    return (<div key="loader" className="loader">
-      Loading ...
-    </div>);
+    return (
+      <div key="loader" className="loader">
+        Loading ...
+      </div>
+    );
   }
 
+  // scroll focused item to top
   async componentDidMount() {
     if (this.state.focusItemIdx !== -1 && this.focusItemRef.current) {
       this.focusItemRef.current.scrollItemToTop();
@@ -72,47 +78,54 @@ export default class LeaderboardList extends React.Component {
 
   render() {
     return (
-      <FlexColumnContainer
-        style={{ overflow: "auto", width: "90%", alignSelf: "center" }}
-      >
-        <InfiniteScroll
-          pageStart={this.state.initialPage}
-          loader={this.loader}
-          loadMore={this.fetchItems}
-          hasMore={this.state.hasMoreItems}
-          threshold={5}
-          useWindow={false}
+      <FlexColumnContainer style={{ overflow: "clip" }}>
+        <FlexColumnContainer
+          style={{
+            overflow: "auto",
+            height: "90%",
+            width: "90%",
+            alignSelf: "center",
+          }}
         >
-          <LeaderboardContainer>
-            {this.state.items.map((hs, idx) => {
-              let currItemIdx = this.state.initialIdx + idx;
-              if (currItemIdx === this.state.focusItemIdx) {
-                // create special focused item that we can scroll to top
-                return (
-                  <LeaderboardItem
-                    ref={this.focusItemRef}
-                    giveFocus={true}
-                    userId={hs.userId}
-                    score={hs.finalScore}
-                    timeStamp={hs.timeStamp}
-                    idx={currItemIdx}
-                    key={currItemIdx}
-                  />
-                );
-              } else {
-                return (
-                  <LeaderboardItem
-                    userId={hs.userId}
-                    score={hs.finalScore}
-                    timeStamp={hs.timeStamp}
-                    idx={currItemIdx}
-                    key={currItemIdx}
-                  />
-                );
-              }
-            })}
-          </LeaderboardContainer>
-        </InfiniteScroll>
+          <InfiniteScroll
+            pageStart={this.state.initialPage}
+            loader={this.loader}
+            loadMore={this.fetchNextPage}
+            hasMore={this.state.hasMoreItems}
+            threshold={5}
+            useWindow={false}
+          >
+            <LeaderboardContainer>
+              {this.state.items.map((hs, idx) => {
+                let currItemIdx = this.state.initialIdx + idx;
+                if (currItemIdx === this.state.focusItemIdx) {
+                  // create special focused item that we can scroll to top
+                  return (
+                    <LeaderboardItem
+                      ref={this.focusItemRef}
+                      giveFocus={true}
+                      userId={hs.userId}
+                      score={hs.finalScore}
+                      timeStamp={hs.timeStamp}
+                      idx={currItemIdx}
+                      key={currItemIdx}
+                    />
+                  );
+                } else {
+                  return (
+                    <LeaderboardItem
+                      userId={hs.userId}
+                      score={hs.finalScore}
+                      timeStamp={hs.timeStamp}
+                      idx={currItemIdx}
+                      key={currItemIdx}
+                    />
+                  );
+                }
+              })}
+            </LeaderboardContainer>
+          </InfiniteScroll>
+        </FlexColumnContainer>
       </FlexColumnContainer>
     );
   }

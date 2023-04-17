@@ -38,9 +38,7 @@ export default class CategorySelection extends React.Component {
 
     return (
       <FlexColumnContainer>
-        <FlexColumnContainer>
-          <CategorySelectionScrollDiv>{content}</CategorySelectionScrollDiv>
-        </FlexColumnContainer>
+        <CategorySelectionScrollDiv>{content}</CategorySelectionScrollDiv>
       </FlexColumnContainer>
     );
   }
