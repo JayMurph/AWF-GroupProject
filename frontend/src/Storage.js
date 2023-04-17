@@ -18,27 +18,27 @@ export const COOKIE_KEYS = [
 //const LAST_NAME_KEY = "lastName";
 //const BIRTH_DATE_KEY = "birthDate";
 
-export function GetUserId() {
+export function GetSessionUserId() {
   return secureLocalStorage.getItem(USER_ID_KEY);
 }
 
-export function SetUserId(userId) {
+export function SetSessionUserId(userId) {
   secureLocalStorage.setItem(USER_ID_KEY, userId);
 }
 
-export function GetAccessToken() {
+export function GetSessionAccessToken() {
   return secureLocalStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
-export function SetAccessToken(accessToken) {
+export function SetSessionAccessToken(accessToken) {
   secureLocalStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
 } 
 
-export function GetRefreshToken() {
+export function GetSessionRefreshToken() {
   return secureLocalStorage.getItem(REFRESH_TOKEN_KEY);
 }
 
-export function SetRefreshToken(refreshToken) {
+export function SetSessionRefreshToken(refreshToken) {
   secureLocalStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
 } 
 

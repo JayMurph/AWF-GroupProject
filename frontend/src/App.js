@@ -8,11 +8,11 @@ import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
 import {
-  GetAccessToken,
-  GetUserId,
-  GetRefreshToken,
+  GetSessionAccessToken,
+  GetSessionUserId,
+  GetSessionRefreshToken,
   ClearSessionData,
-  SetAccessToken,
+  SetSessionAccessToken,
   SaveSessionData,
 } from "./Storage";
 import { AppContentContainer } from "./StyledElements";
@@ -24,7 +24,7 @@ import swal from 'sweetalert';
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 function isAuthenticated() {
-  return GetAccessToken() && !isExpired(GetAccessToken());
+  return GetSessionAccessToken() && !isExpired(GetSessionAccessToken());
 }
 
 /**
@@ -33,8 +33,8 @@ function isAuthenticated() {
  */
 function App() {
   const [authenticated, setAuthenticated] = useState(() => isAuthenticated());
-  const [userId, setUserId] = useState(GetUserId());
-  const [privateAccessToken, setPrivateAccessToken] = useState(GetAccessToken());
+  const [userId, setUserId] = useState(GetSessionUserId());
+  const [privateAccessToken, setPrivateAccessToken] = useState(GetSessionAccessToken());
 
   /**
    * callback for user logging in. Saves user info to storage and sets user as
@@ -64,7 +64,7 @@ function App() {
    */
   const onLogout = async () => {
     try {
-      let refreshToken = GetRefreshToken();
+      let refreshToken = GetSessionRefreshToken();
       if (refreshToken) {
         await LogoutUser(refreshToken);
       }
@@ -78,18 +78,18 @@ function App() {
   };
 
   /**
-   * renews the user's access token and saves it back to cookies
+   * renews the user's access token and saves it back to storage
    * @returns boolean : true if access token was renewed, otherwise false
    */
   const renewAccessToken = async () => {
-    let accessToken = GetAccessToken();
-    let refreshToken = GetRefreshToken();
+    let accessToken = GetSessionAccessToken();
+    let refreshToken = GetSessionRefreshToken();
     let renewed = false;
     if (accessToken && refreshToken) {
       renewed = await RenewAccessToken(refreshToken)
         .then((res) => res.json())
         .then((resData) => {
-          SetAccessToken(resData.accessToken);
+          SetSessionAccessToken(resData.accessToken);
           setPrivateAccessToken(resData.accessToken);
           return true;
         })

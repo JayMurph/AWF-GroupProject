@@ -2,7 +2,7 @@ import React from "react";
 import { ErrorLabel } from "../../StyledElements";
 import { GetCategoryQuizResultsPage, PostQuizResults } from "../../ApiCalls";
 import LeaderboardList from "../Leaderboard/LeaderboardList";
-import { GetAccessToken } from "../../Storage";
+import { GetSessionAccessToken } from "../../Storage";
 
 /**
  * Placeholder page. Displays the results of a quiz: Total score plus score and
@@ -29,7 +29,7 @@ export default class QuizResultsForm extends React.Component {
         this.state.userId,
         this.state.quizResults,
         timestamp,
-        GetAccessToken()
+        GetSessionAccessToken()
       )
         .then((res) => res.json())
         .then(async (data) => {
