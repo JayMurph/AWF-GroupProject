@@ -16,7 +16,8 @@ function calcStats(queryResult) {
 
     quizzesCompleted = queryResult.length;
     scoreAverage = totalScore / quizzesCompleted;
-    //console.log(`hS: ${highestScore}, avg: ${scoreAverage}, tot: ${totalScore}`);
+    scoreAverage = (isNaN(scoreAverage)) ? scoreAverage = 0 : scoreAverage = scoreAverage;
+
     return [highestScore, scoreAverage, totalScore, quizzesCompleted];
 }
 
