@@ -15,6 +15,7 @@ server.use(cors({ origin:"*" }));
 
 //ROUTES
 var indexRouter = require('./routes/index');
+var docsRouter = require('./routes/docs');
 var quizRouter = require('./routes/quiz');
 var signupRouter = require('./routes/signup');
 var profileRouter = require('./routes/profile');
@@ -23,6 +24,7 @@ var authRouter = require('./routes/auth');
 
 server.use('/', authRouter);
 server.use('/', indexRouter);
+server.use('/api', docsRouter);
 server.use('/quiz', quizRouter);
 server.use('/signup', signupRouter);
 server.use('/profile', profileRouter);

@@ -7,6 +7,7 @@ const leaderboardModel = require('../models/leaderboard');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { isEmptyObject } = require('../util/isEmptyObject');
 const { authToken } = require('../util/auth');
+const { calcStats } = require('../util/profile')
 
 router.get('/', (req, res) => {
     res.sendStatus(400);
@@ -19,31 +20,43 @@ router.get('/:userId', async (req, res, next) => {
         res.sendStatus(400);
     }
 
-    var query = userModel.find({_id: `${req.params.userId}`});    
+    const userQuery = await userModel.aggregate([
+        { $match: { _id: ObjectId(req.params.userId) } },
+        { $project: { firstName: 1, lastName: 1, userName: 1, email: 1 } }
+    ]);
 
-    query.select("firstName");
-    query.select("lastName");
-    query.select("userName");
-    query.select("email");
-    query.limit(1);
+    const userLBQuery = await leaderboardModel.aggregate([
+        { $match: { userId: ObjectId(req.params.userId) } },
+        { $sort: { _id: -1 } },
+        { $limit: 10 }
+    ]);
 
-    try {
-        await query.exec((err, qRes) => {
+    const statQuery = await leaderboardModel.aggregate([
+        { $match: {userId: ObjectId(req.params.userId)} },
+        { $sort: { finalScore: -1 } }
+    ]);
 
-            if (isEmptyObject(qRes)) {
-                res.sendStatus(404);    
-            } else {
-                if (qRes.length === 1) {
-                    res.contentType('json').send(qRes[0]);
-                    return;
-                }
+    const [ highestScore, scoreAverage, totalScore, quizzesCompleted ] = calcStats(statQuery);
 
-                res.contentType('json').send(qRes);
-            }
-        });
-    } catch (err) {
-        console.error(err);
+    if (isEmptyObject(userQuery)) {
+        res.sendStatus(404);    
+        return;
     }
+
+    res.contentType('json').send({
+        _id: req.params.userId,
+        firstName: userQuery[0].firstName,
+        lastName: userQuery[0].lastName,
+        userName: userQuery[0].userName,
+        email: userQuery[0].email,
+        highestScore: highestScore,
+        scoreAverage: scoreAverage,
+        totalScore: totalScore,
+        quizzesCompleted: quizzesCompleted,
+        recentScores: userLBQuery
+    });
+
+    return;
 });
 
 // a request to delete the profile
