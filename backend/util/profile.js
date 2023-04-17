@@ -18,7 +18,7 @@ function calcStats(queryResult) {
     scoreAverage = totalScore / quizzesCompleted;
     scoreAverage = (isNaN(scoreAverage)) ? scoreAverage = 0 : scoreAverage = scoreAverage;
 
-    return [highestScore, scoreAverage, totalScore, quizzesCompleted];
+    return [highestScore, Math.round(scoreAverage), totalScore, quizzesCompleted];
 }
 
 module.exports = {
