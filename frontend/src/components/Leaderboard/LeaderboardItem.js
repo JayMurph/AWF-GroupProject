@@ -50,7 +50,7 @@ export default class LeaderboardItem extends React.Component {
   /**
    * Calculates and returns size values for item depdending on its score value
    * and idx
-   * @returns {width, height, fontSize} 
+   * @returns {width, height, fontSize}
    */
   calculateSizeAttributes() {
     let width = (this.state.score / MAX_SCORE) * 100;

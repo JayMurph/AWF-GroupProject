@@ -1,6 +1,11 @@
 import React from "react";
 import FormField from "./FormField";
-import { FormButton, CenteredDiv, ButtonDiv, ErrorLabel} from "../StyledElements";
+import {
+  FormButton,
+  CenteredDiv,
+  ButtonDiv,
+  ErrorLabel,
+} from "../StyledElements";
 import ReactFormInputValidation from "react-form-input-validation";
 
 export default class LoginForm extends React.Component {
@@ -13,8 +18,7 @@ export default class LoginForm extends React.Component {
         password: "",
       },
       errors: {},
-      onSubmit:props.onSubmit
-
+      onSubmit: props.onSubmit,
     };
 
     //this.handleSubmit = this.handleSubmit.bind(this);

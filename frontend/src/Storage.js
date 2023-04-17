@@ -26,13 +26,17 @@ export function SetSessionUserId(userId) {
   secureLocalStorage.setItem(USER_ID_KEY, userId);
 }
 
+export function GetSessionUserName() {
+  return secureLocalStorage.getItem(USERNAME_KEY);
+}
+
 export function GetSessionAccessToken() {
   return secureLocalStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
 export function SetSessionAccessToken(accessToken) {
   secureLocalStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-} 
+}
 
 export function GetSessionRefreshToken() {
   return secureLocalStorage.getItem(REFRESH_TOKEN_KEY);
@@ -40,7 +44,7 @@ export function GetSessionRefreshToken() {
 
 export function SetSessionRefreshToken(refreshToken) {
   secureLocalStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-} 
+}
 
 export function SaveSessionData(
   accessToken,

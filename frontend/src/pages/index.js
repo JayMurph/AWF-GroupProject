@@ -1,10 +1,16 @@
 import React from "react";
 import { Paragraph, CenteredDiv, PageHeader } from "../StyledElements";
+import { GetSessionUserName } from "../Storage";
 
 const Home = () => {
+  const userName = GetSessionUserName();
   return (
     <CenteredDiv>
-      <PageHeader>Trivia Mania</PageHeader>
+      {userName ? (
+        <PageHeader>Welcome {userName}</PageHeader>
+      ) : (
+        <PageHeader>Trivia Mania</PageHeader>
+      )}
       <div>
         <Paragraph>Unleash your inner genius with Trivia Mania!</Paragraph>
         <Paragraph>

@@ -19,7 +19,8 @@ import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
 import { decodeToken, isExpired } from "react-jwt";
 import { LogoutUser, RenewAccessToken } from "./ApiCalls";
-import swal from 'sweetalert';
+import Logout from "./pages/logout";
+import swal from "sweetalert";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -34,7 +35,9 @@ function isAuthenticated() {
 function App() {
   const [authenticated, setAuthenticated] = useState(() => isAuthenticated());
   const [userId, setUserId] = useState(GetSessionUserId());
-  const [privateAccessToken, setPrivateAccessToken] = useState(GetSessionAccessToken());
+  const [privateAccessToken, setPrivateAccessToken] = useState(
+    GetSessionAccessToken()
+  );
 
   /**
    * callback for user logging in. Saves user info to storage and sets user as
@@ -117,9 +120,9 @@ function App() {
       //let millisToExpiry = 10000;
       const timer = setTimeout(async () => {
         let shouldRenew = await swal({
-          title:"Stay logged in?",
-          text:"You have been away for a bit. Would you like to stay logged in?",
-          buttons:["No", "Yes"]
+          title: "Stay logged in?",
+          text: "You have been away for a bit. Would you like to stay logged in?",
+          buttons: ["No", "Yes"],
         });
         let renewed = false;
         if (shouldRenew) {
@@ -144,12 +147,15 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           {authenticated ? (
-            <Route
-              path="/quiz"
-              element={
-                <Quiz userId={userId} renewAccessToken={renewAccessToken} />
-              }
-            />
+            <>
+              <Route
+                path="/quiz"
+                element={
+                  <Quiz userId={userId} renewAccessToken={renewAccessToken} />
+                }
+              />
+              <Route path="/logout" element={<Logout onLogout={onLogout} />} />
+            </>
           ) : (
             <>
               <Route path="/login" element={<Login onLogin={onLogin} />} />
