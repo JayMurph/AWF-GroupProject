@@ -4,7 +4,6 @@ import CategorySelection from "../components/Quiz/CategorySelection";
 import { Button, PageHeader } from "../StyledElements";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import { GetCategoryQuizResultsPage } from "../ApiCalls";
-import { CenteredDiv } from "../StyledElements";
 
 export default class Leaderboard extends React.Component {
   constructor(props) {
@@ -35,6 +34,7 @@ export default class Leaderboard extends React.Component {
   updateRootWithCategories = (categories) => {
     this.setState({
       categories: categories,
+      headerContent: <PageHeader>Categories</PageHeader>,
       content: (
         <CategorySelection
           key={"populatedCategorySelection"}
@@ -46,7 +46,6 @@ export default class Leaderboard extends React.Component {
   };
 
   onBackButtonPressed() {
-    this.setState({ headerContent: <PageHeader>Categories</PageHeader> });
     this.updateRootWithCategories(this.state.categories);
   }
 
@@ -77,9 +76,9 @@ export default class Leaderboard extends React.Component {
         }
 
         if (res.length > 0) {
-          this.setState({ currCategory: category });
           this.setState({
             // display leaderboard
+            currCategory:category,
             headerContent: (
               <div style={{ display: "flex" }}>
                 <Button onClick={this.onBackButtonPressed}>Back</Button>
