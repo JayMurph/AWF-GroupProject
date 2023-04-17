@@ -1,7 +1,8 @@
 import React from "react";
-import { ErrorLabel, PageHeader } from "../../StyledElements";
+import { ErrorLabel } from "../../StyledElements";
 import { GetCategoryQuizResultsPage, PostQuizResults } from "../../ApiCalls";
 import LeaderboardList from "../Leaderboard/LeaderboardList";
+import { GetAccessToken } from "../../Storage";
 
 /**
  * Placeholder page. Displays the results of a quiz: Total score plus score and
@@ -14,7 +15,6 @@ export default class QuizResultsForm extends React.Component {
       quizResults: props.quizResults,
       category: props.quizResults.getCategory(),
       userId: props.userId,
-      getAccessToken: props.getAccessToken,
       postResponseData: null,
       content: null,
       errorText: "",
@@ -29,7 +29,7 @@ export default class QuizResultsForm extends React.Component {
         this.state.userId,
         this.state.quizResults,
         timestamp,
-        this.state.getAccessToken()
+        GetAccessToken()
       )
         .then((res) => res.json())
         .then(async (data) => {
@@ -58,6 +58,11 @@ export default class QuizResultsForm extends React.Component {
     }
   }
 
+  /**
+   * Produces a timestamp of the current time in the format expected by the
+   * backed for a quiz result post
+   * @returns Timestamp string suitable for quiz results
+   */
   createPostQuizTimestamp() {
     return new Date().toLocaleDateString(undefined, {
       day: "numeric",
@@ -70,6 +75,12 @@ export default class QuizResultsForm extends React.Component {
     });
   }
 
+  /**
+   * Retrieves and returns several pages of leaderboard entries
+   * @param {int} initialPage : Starting page of items to retrieve
+   * @param {int} pageCount : Total number of pages to retrieve
+   * @returns
+   */
   async getInitialLeaderboardItems(initialPage, pageCount) {
     let leaderboardItems = [];
 
@@ -91,6 +102,10 @@ export default class QuizResultsForm extends React.Component {
     return leaderboardItems;
   }
 
+  /**
+   * Displays error message in body content
+   * @param {string} err : to be displayed
+   */
   displayErrorMessage(err) {
     console.log(err);
     this.setState({ errorText: err });
@@ -99,7 +114,6 @@ export default class QuizResultsForm extends React.Component {
   render() {
     return (
       <>
-        <PageHeader>Score : {this.state.quizResults.getScore()}</PageHeader>
         <>{this.state.content}</>
         <ErrorLabel>{this.state.errorText}</ErrorLabel>
       </>

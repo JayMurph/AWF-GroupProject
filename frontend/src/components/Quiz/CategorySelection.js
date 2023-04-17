@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  PageHeader,
   FlexColumnContainer,
   CategorySelectionScrollDiv,
 } from "../../StyledElements";
@@ -39,7 +38,6 @@ export default class CategorySelection extends React.Component {
 
     return (
       <FlexColumnContainer>
-        <PageHeader>Categories</PageHeader>
         <FlexColumnContainer>
           <CategorySelectionScrollDiv>{content}</CategorySelectionScrollDiv>
         </FlexColumnContainer>

@@ -59,9 +59,9 @@ export default class LeaderboardList extends React.Component {
   };
 
   loader() {
-    <div key="loader" className="loader">
+    return (<div key="loader" className="loader">
       Loading ...
-    </div>;
+    </div>);
   }
 
   async componentDidMount() {
@@ -80,7 +80,7 @@ export default class LeaderboardList extends React.Component {
           loader={this.loader}
           loadMore={this.fetchItems}
           hasMore={this.state.hasMoreItems}
-          threshold="5"
+          threshold={5}
           useWindow={false}
         >
           <LeaderboardContainer>
@@ -96,6 +96,7 @@ export default class LeaderboardList extends React.Component {
                     score={hs.finalScore}
                     timeStamp={hs.timeStamp}
                     idx={currItemIdx}
+                    key={currItemIdx}
                   />
                 );
               } else {
@@ -105,6 +106,7 @@ export default class LeaderboardList extends React.Component {
                     score={hs.finalScore}
                     timeStamp={hs.timeStamp}
                     idx={currItemIdx}
+                    key={currItemIdx}
                   />
                 );
               }

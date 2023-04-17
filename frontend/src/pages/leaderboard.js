@@ -10,17 +10,19 @@ export default class Leaderboard extends React.Component {
     super(props);
     this.state = {
       content: null,
-      headerText: "",
+      headerContent: "",
       currCategory: "",
-      categories: []
+      categories: [],
     };
 
     this.state.content = (
       <CategorySelection
+        key={"unpopulatedCategorySelection"}
         categories={this.state.categories}
         onCategorySelection={this.onCategorySelection}
       />
     );
+    this.state.headerContent = <PageHeader>Categories</PageHeader>;
   }
 
   /**
@@ -32,7 +34,7 @@ export default class Leaderboard extends React.Component {
       categories: categories,
       content: (
         <CategorySelection
-          key={null}
+          key={"populatedCategorySelection"}
           categories={categories}
           onCategorySelection={this.onCategorySelection}
         />
@@ -64,14 +66,17 @@ export default class Leaderboard extends React.Component {
         } catch (err) {
           // No high scores
           this.setState({
-            headerText:
-              "No " +
-              category.substring(0, 1).toUpperCase() +
-              category.substring(1) +
-              " High Scores",
+            headerContent: (
+              <PageHeader>
+                {"No " +
+                  category.substring(0, 1).toUpperCase() +
+                  category.substring(1) +
+                  " High Scores"}
+              </PageHeader>
+            ),
             content: (
               <CategorySelection
-                key={null}
+                key={"populatedCategorySelection"}
                 categories={this.state.categories}
                 onCategorySelection={this.onCategorySelection}
               />
@@ -84,26 +89,27 @@ export default class Leaderboard extends React.Component {
           this.setState({ currCategory: category });
           this.setState({
             // display leaderboard
-            headerText:
-              category.substring(0, 1).toUpperCase() + category.substring(1),
-            content: (
-              <LeaderboardList
-                category={category}
-                initialItems={res}
-              />
+            headerContent: (
+              <PageHeader>
+                {category.substring(0, 1).toUpperCase() + category.substring(1)}
+              </PageHeader>
             ),
+            content: <LeaderboardList category={category} initialItems={res} />,
           });
         } else {
           // NO HIGH SCORES
           this.setState({
-            headerText:
-              "No " +
-              category.substring(0, 1).toUpperCase() +
-              category.substring(1) +
-              " High Scores",
+            headerContent: (
+              <PageHeader>
+                {"No " +
+                  category.substring(0, 1).toUpperCase() +
+                  category.substring(1) +
+                  " High Scores"}
+              </PageHeader>
+            ),
             content: (
               <CategorySelection
-                key={null}
+                key={"populatedCategorySelection"}
                 categories={this.state.categories}
                 onCategorySelection={this.onCategorySelection}
               />
@@ -118,8 +124,8 @@ export default class Leaderboard extends React.Component {
   render() {
     return (
       <>
-        <PageHeader>{this.state.headerText}</PageHeader>
-        <>{this.state.content}</>
+        {this.state.headerContent}
+        {this.state.content}
       </>
     );
   }

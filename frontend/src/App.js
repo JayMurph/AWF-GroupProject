@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -31,9 +31,7 @@ function isAuthenticated() {
  * @returns component
  */
 function App() {
-  const [authenticated, setAuthenticated] = useState(() =>
-    isAuthenticated()
-  );
+  const [authenticated, setAuthenticated] = useState(() => isAuthenticated());
   const [userId, setUserId] = useState(GetUserId());
 
   /**
@@ -79,32 +77,36 @@ function App() {
    * renews the user's access token and saves it back to cookies
    * @returns boolean : true if access token was renewed, otherwise false
    */
-  const renewAccessToken = async() => {
+  const renewAccessToken = async () => {
     let accessToken = GetAccessToken();
     let refreshToken = GetRefreshToken();
     let renewed = false;
     if (accessToken && refreshToken) {
       renewed = await RenewAccessToken(refreshToken)
-        .then((res)=>res.json())
-        .then((resData)=>{
-          SetAccessToken(resData.accessToken)
+        .then((res) => res.json())
+        .then((resData) => {
+          SetAccessToken(resData.accessToken);
           return true;
         })
-        .catch((err)=>{
+        .catch((err) => {
           console.log(err);
           return false;
-        })
+        });
+
+      if (renewed) {
+        // set new timer for refreshing access token
+      }
     }
     return renewed;
-  }
+  };
 
   /**
    * Retrieves the user's JWT accessToken from storage
    * @returns JWT access token
    */
-  const getAccessToken = () => {
-    return GetAccessToken();
-  }
+  //const getAccessToken = () => {
+  //  return GetAccessToken();
+  //}
 
   useEffect(() => {
     if (authenticated) {
@@ -135,7 +137,7 @@ function App() {
             <Route
               path="/quiz"
               element={
-                <Quiz userId={userId} getAccessToken={getAccessToken} renewAccessToken={renewAccessToken} />
+                <Quiz userId={userId} renewAccessToken={renewAccessToken} />
               }
             />
           ) : (

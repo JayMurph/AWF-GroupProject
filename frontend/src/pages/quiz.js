@@ -3,6 +3,7 @@ import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
 import QuestionsSequence from "../components/Quiz/QuestionsSequence";
 import TriviaQuestion from "../components/Quiz/TriviaQuestion.js";
+import { PageHeader } from "../StyledElements";
 
 /**
  * Pages that guides user through an entire quiz. Gets categories and quiz
@@ -16,15 +17,18 @@ export default class Quiz extends React.Component {
       currCategory: "",
       categories: [],
       userId: props.userId,
-      getAccessToken: props.getAccessToken,
       renewAccessToken: props.renewAccessToken,
     };
 
     this.state.root = (
-      <CategorySelection
-        categories={this.state.categories}
-        onCategorySelection={this.onCategorySelection}
-      />
+      <>
+        <PageHeader>Categories</PageHeader>
+        <CategorySelection
+          key={"unpopulatedCategorySelection"}
+          categories={this.state.categories}
+          onCategorySelection={this.onCategorySelection}
+        />
+      </>
     );
   }
 
@@ -36,11 +40,14 @@ export default class Quiz extends React.Component {
     this.setState({
       categories: categories,
       root: (
-        <CategorySelection
-          key={null}
-          categories={categories}
-          onCategorySelection={this.onCategorySelection}
-        />
+        <>
+          <PageHeader>Categories</PageHeader>
+          <CategorySelection
+            key={"populatedCategorySelection"}
+            categories={categories}
+            onCategorySelection={this.onCategorySelection}
+          />
+        </>
       ),
     });
   };
@@ -83,7 +90,6 @@ export default class Quiz extends React.Component {
                 category={category}
                 triviaQuestions={triviaQuestions}
                 userId={this.state.userId}
-                getAccessToken={this.state.getAccessToken}
                 renewAccessToken={this.state.renewAccessToken}
               />
             ),

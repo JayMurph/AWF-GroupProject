@@ -29,6 +29,9 @@ export default class LeaderboardItem extends React.Component {
     this.containerRef = React.createRef();
   }
 
+  /**
+   * Retrieves username to display
+   */
   async componentDidMount() {
     // get username to display on item
     await GetProfile(this.state.userId)
@@ -37,10 +40,18 @@ export default class LeaderboardItem extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  /**
+   * Scrolls the leaderboard item to the top of its container
+   */
   scrollItemToTop() {
     this.containerRef.current.scrollIntoView(true);
   }
 
+  /**
+   * Calculates and returns size values for item depdending on its score value
+   * and idx
+   * @returns {width, height, fontSize} 
+   */
   calculateSizeAttributes() {
     let width = (this.state.score / MAX_SCORE) * 100;
     width = width < MIN_WIDTH_PERCENTAGE ? MIN_WIDTH_PERCENTAGE : width;

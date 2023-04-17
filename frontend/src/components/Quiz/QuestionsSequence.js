@@ -28,7 +28,6 @@ export default class QuestionsSequence extends React.Component {
       triviaQuestionsArr: props.triviaQuestions,
       quizResults: new QuizResults(props.category),
       userId: props.userId,
-      getAccessToken: props.getAccessToken,
       renewAccessToken: props.renewAccessToken,
     };
 
@@ -55,7 +54,6 @@ export default class QuestionsSequence extends React.Component {
       <QuizResultsForm
         quizResults={this.state.quizResults}
         userId={this.state.userId}
-        getAccessToken={this.state.getAccessToken}
       />
     );
   }
