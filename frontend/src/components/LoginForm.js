@@ -43,7 +43,7 @@ export default class LoginForm extends React.Component {
           </ErrorLabel>
           <FormField
             fieldName="Password"
-            type="text"
+            type="password"
             name="password"
             fieldValue={this.state.fields.password}
             onChangeCB={this.form.handleChangeEvent}
