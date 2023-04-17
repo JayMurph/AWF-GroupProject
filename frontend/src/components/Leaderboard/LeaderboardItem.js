@@ -54,11 +54,11 @@ export default class LeaderboardItem extends React.Component {
       this.state.idx >= 5
         ? MIN_FONT_SIZE
         : MIN_FONT_SIZE + TOP_FONT_SIZE_INC * (5 - this.state.idx);
-    return {width, height, fontSize};
+    return { width, height, fontSize };
   }
 
   render() {
-    const {width, height,fontSize} = this.calculateSizeAttributes();
+    const { width, height, fontSize } = this.calculateSizeAttributes();
 
     return (
       <>
@@ -68,7 +68,7 @@ export default class LeaderboardItem extends React.Component {
             width: `${width}%`,
             alignSelf: "start",
             height: `${height}px`,
-            background: this.state.giveFocus && FOCUS_COLOR
+            background: this.state.giveFocus && FOCUS_COLOR,
           }}
         >
           <LeaderboardIndex style={{ fontSize: `${fontSize}px` }}>

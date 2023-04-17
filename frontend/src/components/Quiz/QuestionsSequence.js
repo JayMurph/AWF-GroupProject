@@ -28,7 +28,8 @@ export default class QuestionsSequence extends React.Component {
       triviaQuestionsArr: props.triviaQuestions,
       quizResults: new QuizResults(props.category),
       userId: props.userId,
-      accessToken:props.accessToken,
+      getAccessToken: props.getAccessToken,
+      renewAccessToken: props.renewAccessToken,
     };
 
     this.timerRef = React.createRef();
@@ -54,7 +55,7 @@ export default class QuestionsSequence extends React.Component {
       <QuizResultsForm
         quizResults={this.state.quizResults}
         userId={this.state.userId}
-        accessToken={this.state.accessToken}
+        getAccessToken={this.state.getAccessToken}
       />
     );
   }
@@ -79,8 +80,13 @@ export default class QuestionsSequence extends React.Component {
   /**
    * Handles when user starts the quiz
    */
-  onStartButtonClick = () => {
-    this.goToNextPage();
+  onStartButtonClick = async () => {
+    let renewed = await this.state.renewAccessToken();
+    if (renewed) {
+      this.goToNextPage();
+    } else {
+      alert("Can't renew token before quiz...shouldnt be here");
+    }
   };
 
   /**

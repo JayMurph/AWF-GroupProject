@@ -14,7 +14,7 @@ export default class QuizResultsForm extends React.Component {
       quizResults: props.quizResults,
       category: props.quizResults.getCategory(),
       userId: props.userId,
-      accessToken: props.accessToken,
+      getAccessToken: props.getAccessToken,
       postResponseData: null,
       content: null,
       errorText: "",
@@ -29,7 +29,7 @@ export default class QuizResultsForm extends React.Component {
         this.state.userId,
         this.state.quizResults,
         timestamp,
-        this.state.accessToken
+        this.state.getAccessToken()
       )
         .then((res) => res.json())
         .then(async (data) => {

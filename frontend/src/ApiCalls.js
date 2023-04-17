@@ -68,3 +68,13 @@ export function LogoutUser(refreshToken) {
     }),
   });
 }
+
+export function RenewAccessToken(refreshToken) {
+  return fetch(API_URL + "/renew", {
+    method: "POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      refreshToken:refreshToken
+    })
+  });
+}

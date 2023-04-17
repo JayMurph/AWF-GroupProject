@@ -21,14 +21,19 @@ import {
 import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
 import { decodeToken, isExpired } from "react-jwt";
-import { LogoutUser } from "./ApiCalls";
+import { LogoutUser, RenewAccessToken } from "./ApiCalls";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const COOKIE_OPTIONS = { path: "/" };
 
 function isAuthenticated(cookies) {
   return cookies.accessToken && !isExpired(cookies.accessToken);
 }
 
+/**
+ * Contains main routes for the trivia site app. Handles user auth
+ * @returns component
+ */
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(COOKIE_KEYS);
   const [authenticated, setAuthenticated] = useState(() =>
@@ -36,6 +41,11 @@ function App() {
   );
   const [userId, setUserId] = useState(cookies.userId);
 
+  /**
+   * callback for user logging in. Saves user info to cookies and sets user as
+   * authenticated
+   * @param {*} tokens : contains JWT accessToken and refreshToken fields
+   */
   const onLogin = async (tokens) => {
     if (tokens) {
       const dt = decodeToken(tokens.accessToken);
@@ -53,6 +63,9 @@ function App() {
     }
   };
 
+  /**
+   * Callback for user logging out. De-authorizes user 
+   */
   const onLogout = async () => {
     try {
       if (cookies.refreshToken) {
@@ -67,6 +80,45 @@ function App() {
     }
   };
 
+  /**
+   * renews the user's access token and saves it back to cookies
+   * @returns boolean : true if access token was renewed, otherwise false
+   */
+  const renewAccessToken = async() => {
+    let renewed = false;
+    if (cookies.accessToken && cookies.refreshToken) {
+      renewed = await RenewAccessToken(cookies.refreshToken)
+        .then((res)=>res.json())
+        .then((resData)=>{
+          setCookie(ACCESS_TOKEN_KEY, resData.accessToken, COOKIE_OPTIONS);
+          return true;
+        })
+        .catch((err)=>{
+          console.log(err);
+          return false;
+        })
+    }
+    return renewed;
+  }
+
+  /**
+   * Retrieves the user's JWT accessToken from cookies
+   * @returns JWT access token
+   */
+  const getAccessToken = () => {
+    return cookies.accessToken;
+  }
+
+  /**
+   * Saves provided values to cookies
+   * @param {*} accessToken : JWT user access token
+   * @param {*} refreshToken : JWT user refresh token
+   * @param {*} userId 
+   * @param {*} username 
+   * @param {*} password 
+   * @param {*} firstName 
+   * @param {*} email 
+   */
   const setCookies = (
     accessToken,
     refreshToken,
@@ -76,16 +128,18 @@ function App() {
     firstName,
     email
   ) => {
-    const options = { path: "/" };
-    setCookie(ACCESS_TOKEN_KEY, accessToken, options);
-    setCookie(REFRESH_TOKEN_KEY, refreshToken, options);
-    setCookie(USER_ID_KEY, userId, options);
-    setCookie(USERNAME_KEY, username, options);
-    setCookie(PASSWORD_KEY, password, options);
-    setCookie(FIRST_NAME_KEY, firstName, options);
-    setCookie(EMAIL_KEY, email, options);
+    setCookie(ACCESS_TOKEN_KEY, accessToken, COOKIE_OPTIONS);
+    setCookie(REFRESH_TOKEN_KEY, refreshToken, COOKIE_OPTIONS);
+    setCookie(USER_ID_KEY, userId, COOKIE_OPTIONS);
+    setCookie(USERNAME_KEY, username, COOKIE_OPTIONS);
+    setCookie(PASSWORD_KEY, password, COOKIE_OPTIONS);
+    setCookie(FIRST_NAME_KEY, firstName, COOKIE_OPTIONS);
+    setCookie(EMAIL_KEY, email, COOKIE_OPTIONS);
   };
 
+  /**
+   * Empties all cookies stored by the application
+   */
   const clearCookies = useCallback(() => {
     const options = { path: "/" };
     removeCookie(ACCESS_TOKEN_KEY, options);
@@ -104,7 +158,7 @@ function App() {
       console.log(authExpirySecs);
       let millisToExpiry = authExpirySecs * 1000 - Date.now();
       const timer = setTimeout(() => {
-        // refresh token
+        alert("Access token expired");
       }, millisToExpiry);
       return () => clearTimeout(timer);
     } else {
@@ -125,7 +179,7 @@ function App() {
             <Route
               path="/quiz"
               element={
-                <Quiz userId={userId} accessToken={cookies.accessToken} />
+                <Quiz userId={userId} getAccessToken={getAccessToken} renewAccessToken={renewAccessToken} />
               }
             />
           ) : (

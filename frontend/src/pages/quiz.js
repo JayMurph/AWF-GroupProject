@@ -16,7 +16,8 @@ export default class Quiz extends React.Component {
       currCategory: "",
       categories: [],
       userId: props.userId,
-      accessToken: props.accessToken,
+      getAccessToken: props.getAccessToken,
+      renewAccessToken: props.renewAccessToken,
     };
 
     this.state.root = (
@@ -82,7 +83,8 @@ export default class Quiz extends React.Component {
                 category={category}
                 triviaQuestions={triviaQuestions}
                 userId={this.state.userId}
-                accessToken={this.state.accessToken}
+                getAccessToken={this.state.getAccessToken}
+                renewAccessToken={this.state.renewAccessToken}
               />
             ),
           });
