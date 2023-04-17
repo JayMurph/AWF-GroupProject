@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect} from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import Home from "./pages";
 import About from "./pages/about";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
 import {
-  USER_ID_KEY,
-  USERNAME_KEY,
-  ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
-  COOKIE_KEYS,
-  PASSWORD_KEY,
-  FIRST_NAME_KEY,
-  EMAIL_KEY,
+  GetAccessToken,
+  GetUserId,
+  GetRefreshToken,
+  ClearSessionData,
+  SetAccessToken,
+  SaveSessionData,
 } from "./Storage";
 import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
@@ -24,10 +21,9 @@ import { decodeToken, isExpired } from "react-jwt";
 import { LogoutUser, RenewAccessToken } from "./ApiCalls";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
-const COOKIE_OPTIONS = { path: "/" };
 
-function isAuthenticated(cookies) {
-  return cookies.accessToken && !isExpired(cookies.accessToken);
+function isAuthenticated() {
+  return GetAccessToken() && !isExpired(GetAccessToken());
 }
 
 /**
@@ -35,21 +31,20 @@ function isAuthenticated(cookies) {
  * @returns component
  */
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(COOKIE_KEYS);
   const [authenticated, setAuthenticated] = useState(() =>
-    isAuthenticated(cookies)
+    isAuthenticated()
   );
-  const [userId, setUserId] = useState(cookies.userId);
+  const [userId, setUserId] = useState(GetUserId());
 
   /**
-   * callback for user logging in. Saves user info to cookies and sets user as
+   * callback for user logging in. Saves user info to storage and sets user as
    * authenticated
    * @param {*} tokens : contains JWT accessToken and refreshToken fields
    */
   const onLogin = async (tokens) => {
     if (tokens) {
       const dt = decodeToken(tokens.accessToken);
-      setCookies(
+      SaveSessionData(
         tokens.accessToken,
         tokens.refreshToken,
         dt.sub,
@@ -64,19 +59,19 @@ function App() {
   };
 
   /**
-   * Callback for user logging out. De-authorizes user 
+   * Callback for user logging out. De-authorizes user, clears storage
    */
   const onLogout = async () => {
     try {
-      if (cookies.refreshToken) {
-        await LogoutUser(cookies.refreshToken);
+      let refreshToken = GetRefreshToken();
+      if (refreshToken) {
+        await LogoutUser(refreshToken);
       }
     } catch (err) {
       console.log(err);
     } finally {
       setAuthenticated(false);
-      setUserId(null);
-      clearCookies();
+      ClearSessionData();
     }
   };
 
@@ -85,12 +80,14 @@ function App() {
    * @returns boolean : true if access token was renewed, otherwise false
    */
   const renewAccessToken = async() => {
+    let accessToken = GetAccessToken();
+    let refreshToken = GetRefreshToken();
     let renewed = false;
-    if (cookies.accessToken && cookies.refreshToken) {
-      renewed = await RenewAccessToken(cookies.refreshToken)
+    if (accessToken && refreshToken) {
+      renewed = await RenewAccessToken(refreshToken)
         .then((res)=>res.json())
         .then((resData)=>{
-          setCookie(ACCESS_TOKEN_KEY, resData.accessToken, COOKIE_OPTIONS);
+          SetAccessToken(resData.accessToken)
           return true;
         })
         .catch((err)=>{
@@ -102,70 +99,29 @@ function App() {
   }
 
   /**
-   * Retrieves the user's JWT accessToken from cookies
+   * Retrieves the user's JWT accessToken from storage
    * @returns JWT access token
    */
   const getAccessToken = () => {
-    return cookies.accessToken;
+    return GetAccessToken();
   }
-
-  /**
-   * Saves provided values to cookies
-   * @param {*} accessToken : JWT user access token
-   * @param {*} refreshToken : JWT user refresh token
-   * @param {*} userId 
-   * @param {*} username 
-   * @param {*} password 
-   * @param {*} firstName 
-   * @param {*} email 
-   */
-  const setCookies = (
-    accessToken,
-    refreshToken,
-    userId,
-    username,
-    password,
-    firstName,
-    email
-  ) => {
-    setCookie(ACCESS_TOKEN_KEY, accessToken, COOKIE_OPTIONS);
-    setCookie(REFRESH_TOKEN_KEY, refreshToken, COOKIE_OPTIONS);
-    setCookie(USER_ID_KEY, userId, COOKIE_OPTIONS);
-    setCookie(USERNAME_KEY, username, COOKIE_OPTIONS);
-    setCookie(PASSWORD_KEY, password, COOKIE_OPTIONS);
-    setCookie(FIRST_NAME_KEY, firstName, COOKIE_OPTIONS);
-    setCookie(EMAIL_KEY, email, COOKIE_OPTIONS);
-  };
-
-  /**
-   * Empties all cookies stored by the application
-   */
-  const clearCookies = useCallback(() => {
-    const options = { path: "/" };
-    removeCookie(ACCESS_TOKEN_KEY, options);
-    removeCookie(REFRESH_TOKEN_KEY, options);
-    removeCookie(USER_ID_KEY, options);
-    removeCookie(USERNAME_KEY, options);
-    removeCookie(PASSWORD_KEY, options);
-    removeCookie(FIRST_NAME_KEY, options);
-    removeCookie(EMAIL_KEY, options);
-  }, [removeCookie]);
 
   useEffect(() => {
     if (authenticated) {
       // set callback to refresh token
-      let authExpirySecs = decodeToken(cookies.accessToken).exp;
+      let accessToken = GetAccessToken();
+      let authExpirySecs = decodeToken(accessToken).exp;
       console.log(authExpirySecs);
       let millisToExpiry = authExpirySecs * 1000 - Date.now();
       const timer = setTimeout(() => {
         alert("Access token expired");
+        // blah
       }, millisToExpiry);
       return () => clearTimeout(timer);
     } else {
-      clearCookies();
       return () => {};
     }
-  }, [clearCookies, cookies.accessToken, authenticated]);
+  }, [authenticated]);
 
   return (
     <Router>
