@@ -19,6 +19,7 @@ import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
 import { decodeToken, isExpired } from "react-jwt";
 import { LogoutUser, RenewAccessToken } from "./ApiCalls";
+import swal from 'sweetalert';
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -33,6 +34,7 @@ function isAuthenticated() {
 function App() {
   const [authenticated, setAuthenticated] = useState(() => isAuthenticated());
   const [userId, setUserId] = useState(GetUserId());
+  const [privateAccessToken, setPrivateAccessToken] = useState(GetAccessToken());
 
   /**
    * callback for user logging in. Saves user info to storage and sets user as
@@ -52,6 +54,7 @@ function App() {
         dt.email
       );
       setUserId(dt.sub);
+      setPrivateAccessToken(tokens.accessToken);
       setAuthenticated(true);
     }
   };
@@ -69,6 +72,7 @@ function App() {
       console.log(err);
     } finally {
       setAuthenticated(false);
+      setPrivateAccessToken(null);
       ClearSessionData();
     }
   };
@@ -86,16 +90,13 @@ function App() {
         .then((res) => res.json())
         .then((resData) => {
           SetAccessToken(resData.accessToken);
+          setPrivateAccessToken(resData.accessToken);
           return true;
         })
         .catch((err) => {
           console.log(err);
           return false;
         });
-
-      if (renewed) {
-        // set new timer for refreshing access token
-      }
     }
     return renewed;
   };
@@ -109,21 +110,30 @@ function App() {
   //}
 
   useEffect(() => {
-    if (authenticated) {
+    if (authenticated && privateAccessToken) {
       // set callback to refresh token
-      let accessToken = GetAccessToken();
-      let authExpirySecs = decodeToken(accessToken).exp;
-      console.log(authExpirySecs);
+      let authExpirySecs = decodeToken(privateAccessToken).exp;
       let millisToExpiry = authExpirySecs * 1000 - Date.now();
-      const timer = setTimeout(() => {
-        alert("Access token expired");
-        // blah
+      //let millisToExpiry = 10000;
+      const timer = setTimeout(async () => {
+        let shouldRenew = await swal({
+          title:"Stay logged in?",
+          text:"You have been away for a bit. Would you like to stay logged in?",
+          buttons:["No", "Yes"]
+        });
+        let renewed = false;
+        if (shouldRenew) {
+          renewed = await renewAccessToken();
+        }
+        if (!renewed) {
+          onLogout();
+        }
       }, millisToExpiry);
       return () => clearTimeout(timer);
     } else {
       return () => {};
     }
-  }, [authenticated]);
+  }, [authenticated, privateAccessToken]);
 
   return (
     <Router>

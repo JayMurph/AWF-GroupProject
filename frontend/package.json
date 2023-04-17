@@ -20,6 +20,7 @@
     "react-secure-storage": "^1.2.0",
     "redux": "^4.2.1",
     "styled-components": "^5.3.6",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
