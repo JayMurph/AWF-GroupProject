@@ -1,7 +1,7 @@
 import React from "react";
 import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
-import { Button, PageHeader } from "../StyledElements";
+import { Button, PageHeader, QuestionSequenceHeaderContainer } from "../StyledElements";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import { GetCategoryQuizResultsPage } from "../ApiCalls";
 
@@ -84,13 +84,13 @@ export default class Leaderboard extends React.Component {
             // display leaderboard
             currCategory: category,
             headerContent: (
-              <div style={{ display: "flex" }}>
+              <QuestionSequenceHeaderContainer>
                 <Button onClick={this.onBackButtonPressed}>Back</Button>
-                <PageHeader style={{ width: "min-content" }}>
+                <PageHeader style={{ width: "min-content", justifySelf:"center" }}>
                   {category.substring(0, 1).toUpperCase() +
                     category.substring(1)}
                 </PageHeader>
-              </div>
+            </QuestionSequenceHeaderContainer>
             ),
             content: <LeaderboardList category={category} initialItems={res} />,
           });
