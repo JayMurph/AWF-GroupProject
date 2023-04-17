@@ -80,7 +80,6 @@ export default class Leaderboard extends React.Component {
           return;
         }
 
-        console.log(res);
         if (res.length > 0) {
           this.setState({ currCategory: category });
           this.setState({
