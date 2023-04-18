@@ -3,7 +3,6 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages";
-import About from "./pages/about";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
@@ -12,8 +11,10 @@ import {
   GetSessionUserId,
   GetSessionRefreshToken,
   ClearSessionData,
-  SetSessionAccessToken,
   SaveSessionData,
+  GetSessionUserName,
+  ClearSessionAccessToken,
+  SetSessionAccessToken,
 } from "./Storage";
 import { AppContentContainer } from "./StyledElements";
 import Leaderboard from "./pages/leaderboard";
@@ -25,8 +26,40 @@ import swal from "sweetalert";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
-function isAuthenticated() {
+/**
+ * Indicates if the current user is authenticated
+ * @returns boolean : True if user is currently authenticated, otherwise false
+ */
+function IsAuthenticated() {
   return GetSessionAccessToken() && !isExpired(GetSessionAccessToken());
+}
+
+/**
+ * Verifies authentication access token as belonging to given user and saves them if
+ * valid
+ * @param {JWT} accessToken : token from login to backend
+ * @param {JWT} refreshToken : token from login to backend
+ * @param {string} userName : form login username
+ * @param {string} password  : form login password
+ * @returns True if accessToken is valid for given user and password
+ */
+function AuthenticateSession(accessToken, refreshToken, userName, password) {
+  if (accessToken && refreshToken) {
+    const dat = decodeToken(accessToken);
+    if (userName === dat.userName && password === dat.password) {
+      SaveSessionData(
+        accessToken,
+        refreshToken,
+        dat.sub,
+        dat.userName,
+        dat.password,
+        dat.firstName,
+        dat.email
+      );
+      return dat.sub;
+    }
+    return false;
+  }
 }
 
 /**
@@ -34,51 +67,30 @@ function isAuthenticated() {
  * @returns component
  */
 function App() {
-  const [authenticated, setAuthenticated] = useState(() => isAuthenticated());
-  const [userId, setUserId] = useState(GetSessionUserId());
-  const [privateAccessToken, setPrivateAccessToken] = useState(
-    GetSessionAccessToken()
-  );
+  const [authenticated, setAuthenticated] = useState(IsAuthenticated);
+  const [userId, setUserId] = useState(GetSessionUserId);
   const navigate = useNavigate();
 
-  /**
-   * callback for user logging in. Saves user info to storage and sets user as
-   * authenticated
-   * @param {*} tokens : contains JWT accessToken and refreshToken fields
-   */
-  const onLogin = async (tokens) => {
-    if (tokens) {
-      const dt = decodeToken(tokens.accessToken);
-      SaveSessionData(
-        tokens.accessToken,
-        tokens.refreshToken,
-        dt.sub,
-        dt.userName,
-        dt.password,
-        dt.firstName,
-        dt.email
-      );
-      setUserId(dt.sub);
-      setPrivateAccessToken(tokens.accessToken);
-      setAuthenticated(true);
-    }
-  };
-
-  /**
-   * Callback for user logging out. De-authorizes user, clears storage
-   */
-  const onLogout = async () => {
-    try {
-      let refreshToken = GetSessionRefreshToken();
-      if (refreshToken) {
-        await LogoutUser(refreshToken);
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
+  const handleAuthentication = (
+    accessToken,
+    refreshToken,
+    userName,
+    password
+  ) => {
+    const result = AuthenticateSession(
+      accessToken,
+      refreshToken,
+      userName,
+      password
+    );
+    if (result === false) {
       setAuthenticated(false);
-      setPrivateAccessToken(null);
       ClearSessionData();
+      return false;
+    } else {
+      setUserId(result);
+      setAuthenticated(true);
+      return true;
     }
   };
 
@@ -87,15 +99,14 @@ function App() {
    * @returns boolean : true if access token was renewed, otherwise false
    */
   const renewAccessToken = async () => {
-    let accessToken = GetSessionAccessToken();
     let refreshToken = GetSessionRefreshToken();
     let renewed = false;
-    if (accessToken && refreshToken) {
+    if (GetSessionAccessToken() && refreshToken) {
+      ClearSessionAccessToken();
       renewed = await RenewAccessToken(refreshToken)
         .then((res) => res.json())
-        .then((resData) => {
-          SetSessionAccessToken(resData.accessToken);
-          setPrivateAccessToken(resData.accessToken);
+        .then((authData) => {
+          SetSessionAccessToken(authData.accessToken);
           return true;
         })
         .catch((err) => {
@@ -107,17 +118,41 @@ function App() {
   };
 
   /**
-   * Retrieves the user's JWT accessToken from storage
-   * @returns JWT access token
+   * De-authorizes user, clears storage
    */
-  //const getAccessToken = () => {
-  //  return GetAccessToken();
-  //}
+  const logout = async () => {
+    try {
+      let refreshToken = GetSessionRefreshToken();
+      if (refreshToken) {
+        await LogoutUser(refreshToken);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setAuthenticated(false);
+      ClearSessionData();
+    }
+  };
 
+  /**
+   * Set window load callback to clear session data if user is no long
+   * authenticated
+   */
   useEffect(() => {
-    if (authenticated && privateAccessToken) {
+    window.addEventListener("load", (ev) => {
+      if (!IsAuthenticated()) {
+        ClearSessionData();
+      }
+    });
+  });
+
+  /**
+   * Set timer to prompt user to re-login after certain period of time
+   */
+  useEffect(() => {
+    if (authenticated) {
       // set callback to refresh token
-      let authExpirySecs = decodeToken(privateAccessToken).exp;
+      let authExpirySecs = decodeToken(GetSessionAccessToken()).exp;
       let millisToExpiry = authExpirySecs * 1000 - Date.now();
       const timer = setTimeout(async () => {
         let shouldRenew = await swal({
@@ -130,7 +165,7 @@ function App() {
           renewed = await renewAccessToken();
         }
         if (!renewed) {
-          onLogout();
+          logout();
           navigate("/");
         }
       }, millisToExpiry);
@@ -138,15 +173,22 @@ function App() {
     } else {
       return () => {};
     }
-  }, [authenticated, privateAccessToken, navigate]);
+  }, [authenticated, navigate]);
 
   return (
     <>
-      <Navbar authenticated={authenticated} onLogout={onLogout} />
+      <Navbar authenticated={authenticated} onLogout={logout} />
       <AppContentContainer>
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          {authenticated ? (
+            <Route
+              exact
+              path="/"
+              element={<Home userName={GetSessionUserName()} />}
+            />
+          ) : (
+            <Route exact path="/" element={<Home />} />
+          )}
           <Route path="/leaderboard" element={<Leaderboard />} />
           {authenticated ? (
             <>
@@ -156,11 +198,14 @@ function App() {
                   <Quiz userId={userId} renewAccessToken={renewAccessToken} />
                 }
               />
-              <Route path="/logout" element={<Logout onLogout={onLogout} />} />
+              <Route path="/logout" element={<Logout onLogout={logout} />} />
             </>
           ) : (
             <>
-              <Route path="/login" element={<Login onLogin={onLogin} />} />
+              <Route
+                path="/login"
+                element={<Login onLogin={handleAuthentication} />}
+              />
               <Route path="/sign-up" element={<SignUp />} />
             </>
           )}
