@@ -2,7 +2,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { LeaderboardContainer } from "../../StyledElements";
 import { GetCategoryQuizResultsPage } from "../../ApiCalls";
-import { FlexColumnContainer } from "../../StyledElements";
+import { FlexColumnContainer, CenteredDiv } from "../../StyledElements";
 import LeaderboardItem from "./LeaderboardItem";
 
 export default class LeaderboardList extends React.Component {
@@ -16,7 +16,7 @@ export default class LeaderboardList extends React.Component {
       items: props.initialItems,
       fetching: false,
       initialPageNum: startPageNum,
-      initialIdx: (startPageNum - 1) * 10,
+      initialIdx: ((startPageNum - 1) * 10) + 1,
       lastLoadedPageNum: endPageNum,
       hasMoreItems: true,
       focusItemIdx: props.focusItemIdx || -1,
@@ -44,7 +44,7 @@ export default class LeaderboardList extends React.Component {
           if (res.length > 0) {
             this.setState({
               items: [...this.state.items, ...res],
-              lastLoadedPage: pageToLoad,
+              lastLoadedPageNum: pageToLoad,
             });
           } else {
             this.setState({ hasMoreItems: false });
@@ -63,9 +63,9 @@ export default class LeaderboardList extends React.Component {
 
   loader() {
     return (
-      <div key="loader" className="loader">
-        Loading ...
-      </div>
+      <CenteredDiv key="loader" className="loader">
+        <b>Loading ...</b>
+      </CenteredDiv >
     );
   }
 

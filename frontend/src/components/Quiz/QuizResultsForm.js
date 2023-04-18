@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorLabel } from "../../StyledElements";
+import { CenteredDiv, ErrorLabel } from "../../StyledElements";
 import { GetCategoryQuizResultsPage, PostQuizResults } from "../../ApiCalls";
 import LeaderboardList from "../Leaderboard/LeaderboardList";
 import { GetSessionAccessToken } from "../../Storage";
@@ -123,7 +123,7 @@ export default class QuizResultsForm extends React.Component {
   render() {
     return (
       <>
-        <>{this.state.content}</>
+        <>{this.state.content ?? (<CenteredDiv><b>Loading ...</b></CenteredDiv>)}</>
         <ErrorLabel>{this.state.errorText}</ErrorLabel>
       </>
     );
