@@ -36,7 +36,7 @@ function App() {
 
   return (
     <Router>
-      {/* <Navbar authenticated={authenticated} onLogout={onLogout} /> */}
+      <Navbar authenticated={authenticated} onLogout={onLogout} />
       <AppContentContainer>
         <Routes>
           <Route exact path="/" element={<Home />} />

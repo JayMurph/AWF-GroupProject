@@ -64,13 +64,54 @@ export const AppContentContainer = styled(FlexColumnContainer)`
 
 export const AccountContentContainer = styled.div`
     float: right;
-    height:100vh;
+    height:80vh;
     width:80vw;
 `;
 
-export const ProfileContentContainer = styled(FlexColumnContainer)`
-    height:100%;
-    width:160vh;
+export const ImageBox = styled.div`
+    position:absolute;
+    left: 25vw;
+    top: 20vh;
+    width: 200px;
+    height:230px;
+`;
+
+export const ScoreTable = styled.table`   
+    position:relative;
+    left: 25vw;
+    top: 20vh;
+    text-align: center;
+    width:600px;
+`;
+
+export const Username = styled.div`
+    position:absolute;
+    top: 170px;
+    width: 200px;
+    text-align: center;
+`;
+
+export const RecentScoreList = styled.div`
+    position:absolute;
+    left: 45vw;
+    top: 50vh;
+    width: 200px;
+    text-align: center;
+`;
+
+export const ProfileContainer = styled.div`
+    position:absolute;
+    left: 35vw;
+    top: 30vh;
+    width: 40vw;
+`;
+
+export const DivLine = styled.div`
+    position: relative;
+    padding-bottom: 10px; 
+    width:100%; 
+    display: flex;
+    justify-content: space-between;
 `;
 
 export const ScrollDiv = styled(CenteredDiv)`

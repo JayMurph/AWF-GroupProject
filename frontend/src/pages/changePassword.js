@@ -8,16 +8,18 @@ function ChangePassword() {
   const [password2, setPassword2] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit =  async (e) => {
+    e.preventDefault();
     if (password1.length < 6 || password2.length < 6) {
       setErrorText("Invalid input!");
     }
     else if(password1 === password2){
         try {
-          let res = fetch("https://localhost/profile/"+ GetUserId, {
+          let res = await fetch("https://127.0.0.1/3000/profile/" + GetUserId, {
             method: "PUT",
             body: JSON.stringify({
-              new_password: {password1}
+              old_password: "oldPassword",
+              new_password: password1
             })
           });
           if (res.status === 200) {
@@ -27,6 +29,7 @@ function ChangePassword() {
           }
         } catch (err) {
           console.log(err);
+          setErrorText("Some error occured");
         }
     }else{
       setErrorText("Passwords are inconsistent");

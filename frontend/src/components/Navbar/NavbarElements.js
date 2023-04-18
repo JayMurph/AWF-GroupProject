@@ -32,15 +32,16 @@ export const Title = styled.h1`
 	}
 `;
 
-export const TitleAccount = styled.h1`
+export const TitleAccount = styled.h2`
 	position:absolute;
-	padding:5vh 80px 5vh 80px;
+	left: 5vw;
+    top: 15vh;
 `;
 
 export const MenuAccount = styled.div`
 	position:absolute;
-	left: 5%;
-    top: 30%;
+	left: 5vw;
+    top: 30vh;
 `;
 
 export const ButtonAccount = styled(Link)`
