@@ -6,8 +6,8 @@ import {
 } from "../../StyledElements";
 import { GetProfile } from "../../ApiCalls";
 
-const MAX_SCORE = 8000;
-const MIN_WIDTH_PERCENTAGE = 30;
+const MAX_SCORE = 10000;
+const MIN_WIDTH_PERCENTAGE = 25;
 const MIN_HEIGHT = 80;
 const MIN_FONT_SIZE = 32;
 const FOCUS_COLOR = "#E4D00A";

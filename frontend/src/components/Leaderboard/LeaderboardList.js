@@ -8,16 +8,16 @@ import LeaderboardItem from "./LeaderboardItem";
 export default class LeaderboardList extends React.Component {
   constructor(props) {
     super(props);
-    let initialPage = props.initialPage || 1;
-    let initialIdx = (initialPage - 1) * 10 + 1;
+    let startPageNum = props.startPageNum|| 1;
+    let endPageNum = props.endPageNum || startPageNum;
 
     this.state = {
       category: props.category,
       items: props.initialItems,
       fetching: false,
-      initialPage: initialPage,
-      initialIdx: initialIdx,
-      lastLoadedPage: initialPage,
+      initialPageNum: startPageNum,
+      initialIdx: (startPageNum - 1) * 10,
+      lastLoadedPageNum: endPageNum,
       hasMoreItems: true,
       focusItemIdx: props.focusItemIdx || -1,
     };
@@ -35,7 +35,7 @@ export default class LeaderboardList extends React.Component {
     }
 
     this.setState({ fetching: true });
-    const pageToLoad = this.state.lastLoadedPage + 1;
+    const pageToLoad = this.state.lastLoadedPageNum + 1;
 
     try {
       await GetCategoryQuizResultsPage(this.state.category, pageToLoad)
@@ -88,8 +88,8 @@ export default class LeaderboardList extends React.Component {
           }}
         >
           <InfiniteScroll
-            pageStart={this.state.initialPage}
-            loader={this.loader}
+            pageStart={this.state.initialPageNum}
+            loader={this.loader()}
             loadMore={this.fetchNextPage}
             hasMore={this.state.hasMoreItems}
             threshold={5}

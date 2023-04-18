@@ -34,10 +34,12 @@ export default class QuizResultsForm extends React.Component {
         .then((res) => res.json())
         .then(async (data) => {
           this.setState({ postResponseData: data });
-          let initialPage = data.page > 1 ? data.page - 1 : 1;
-          let pageCount = data.page > 1 ? 2 : 1;
+          let isScoreOnFirstPage = data.page === 1;
+          // if score is not on first page, get 3 pages starting at N-1, else get 2 pages starting at 1
+          let startPage = isScoreOnFirstPage ? 1 : data.page - 1;
+          let pageCount = isScoreOnFirstPage ? 2 : 3;
           let leaderboardItems = await this.getInitialLeaderboardItems(
-            initialPage,
+            startPage,
             pageCount
           );
 
@@ -46,7 +48,8 @@ export default class QuizResultsForm extends React.Component {
               <LeaderboardList
                 category={this.state.category}
                 initialItems={leaderboardItems}
-                initialPage={initialPage}
+                startPageNum={startPage}
+                endPageNum={startPage + (leaderboardItems.length / 10)}
                 focusItemIdx={data.globalPosition}
               ></LeaderboardList>
             ),
@@ -86,13 +89,19 @@ export default class QuizResultsForm extends React.Component {
 
     for (let i = initialPage; i < initialPage + pageCount; i++) {
       try {
-        await GetCategoryQuizResultsPage(this.state.category, i)
+        let hasMore = await GetCategoryQuizResultsPage(this.state.category, i)
           .then((leaderBoardRes) => leaderBoardRes.json())
           .then((leaderboardResData) => {
             if (leaderboardResData.length > 0) {
               leaderboardItems.push(...leaderboardResData);
+              return true;
             }
-          });
+            return false;
+          })
+          .catch((err) => false);
+        if (!hasMore) {
+          break;
+        }
       } catch (err) {
         this.displayErrorMessage(err);
         break;
