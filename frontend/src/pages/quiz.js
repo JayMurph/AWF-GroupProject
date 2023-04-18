@@ -30,14 +30,14 @@ export default class Quiz extends React.Component {
         />
       </>
     );
-    this.updateRootWithCategories.bind(this);
+    this.updateWithCategories.bind(this);
   }
 
   /**
    * Gives a list of categories to be displayed on the page
    * @param {String[]} categories Category names
    */
-  updateRootWithCategories = (categories) => {
+  updateWithCategories = (categories) => {
     this.setState({
       categories: categories,
       root: (
@@ -59,7 +59,7 @@ export default class Quiz extends React.Component {
   async componentDidMount() {
     await fetch(API_URL + "/quiz")
       .then((res) => res.json())
-      .then((res) => this.updateRootWithCategories(res))
+      .then((res) => this.updateWithCategories(res))
       .catch((er) => console.log(er));
   }
 
@@ -92,7 +92,7 @@ export default class Quiz extends React.Component {
                 triviaQuestions={triviaQuestions}
                 userId={this.state.userId}
                 renewAccessToken={this.state.renewAccessToken}
-                onBackButtonPressed={()=>this.updateRootWithCategories(this.state.categories)}
+                onBackButtonPressed={()=>this.updateWithCategories(this.state.categories)}
               />
             ),
           });
