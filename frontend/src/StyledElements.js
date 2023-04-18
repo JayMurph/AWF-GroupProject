@@ -164,6 +164,12 @@ export const FormTextbox = styled.input`
     240px;
 `;
 
+export const CenteredForm = styled.form`
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+`
+
 export const ErrorLabel = styled(CenteredDiv)`
     className:'error';
     color:#df0000;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
         <title>Quiz App Backend API</title>
     </head>
     <body>
@@ -23,6 +23,7 @@
             </div>
             <div>
                 <h2>POST: /<div class="prettyTextRoute">quiz</div></h2>
+                <h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - accessToken</h2>
                 <p>Takes a JSON in request body and validates it.</p>
                 <div class ="codeBlock">
                     <h3>Schema</h3>
@@ -37,12 +38,75 @@
                     <br>
                     <h3>Example following the above schema</h3>
                     <div class = "JSONView">
-                        <div class="prettyTextField">"userID"</div>: <div class="prettyTextString">"$GUID"</div>,<br>
+                        <div class="prettyTextField">"userId"</div>: <div class="prettyTextString">"$GUID"</div>,<br>
                         <div class="prettyTextField">"finalScore"</div>: <div class="prettyTextNum">1</div>,<br>
                         <div class="prettyTextField">"category"</div>: <div class="prettyTextString">"math"</div>,<br>
                         <div class="prettyTextField">"timeStamp"</div>: <div class="prettyTextString">"2023-02-21 13:47:11"</div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="dividingContainer">
+            <div class="prettyTextRoute"><h1>auth</h1></div>
+            <h2>POST: /<div class="prettyTextRoute">login</div></h2>
+            <!--<h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - refreshToken</h2>-->
+            <p>Takes an object containing username and password. Returns <strong>200</strong> if login succeeds, and two tokens (explained below). <strong>404</strong> if login failed.</p>
+            <div class ="codeBlock">
+                <h3>Schema</h3>
+                <div class ="schemaView">
+                    <ul>
+                        <li><div class="prettyTextField">userName</div>:  <strong>STRING</strong>, the username of the user.</li>
+                        <li><div class="prettyTextField">password</div>:  <strong>STRING</strong>, the user's password.</li>
+                    </ul>
+                </div>
+                <h3>Example following the above schema</h3>
+                <div class = "JSONView">
+                    <div class="prettyTextField">"userName"</div>: <div class="prettyTextString">"Drake"</div>,<br>
+                    <div class="prettyTextField">"password"</div>: <div class="prettyTextString">"secret"</div><br>
+                </div>
+                <h3>Returns on success</h3>
+                <div class = "JSONView">
+                    <div class="prettyTextField">"accessToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div>,<br>
+                    <div class="prettyTextField">"refreshToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div><br>
+                </div>
+            </div>
+            <p>The 'accessToken' is temporary (expires in a few minutes), the 'refreshToken' exists on the database until the user logs out. Once the 'accessToken' expires the /token endpoint can renew (explained later). The userId, username, and password are encoded within both tokens.</p>
+            <h2>POST: /<div class="prettyTextRoute">renew</div></h2>
+            <p>Takes an object containing the refreshToken issued earlier. Returns <strong>200</strong> if refreshToken valid, and a new renewed accessToken. <strong>403</strong> if refreshToken expired or missing from database.</p>
+            <div class ="codeBlock">
+                <h3>Schema</h3>
+                <div class ="schemaView">
+                    <ul>
+                        <li><div class="prettyTextField">refreshToken</div>:  <strong>STRING</strong>, the semi-permanent token.</li>
+                    </ul>
+                </div>
+                <h3>Example following the above schema</h3>
+                <div class = "JSONView">
+                    <div class="prettyTextField">"refreshToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div>,<br>
+                </div>
+                <h3>Returns on success</h3>
+                <div class = "JSONView">
+                    <div class="prettyTextField">"accessToken"</div>: <div class="prettyTextString">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV ..."</div>,<br>
+                </div>
+                <p>Assuming a valid 'refreshToken', returns a newly renewed 'accessToken'.</p>
+            </div>
+            <h2>DELETE: /<div class="prettyTextRoute">logout</div></h2>
+            <p>Takes an object containing the refreshToken. Returns <strong>204</strong> if refreshToken valid, then the refreshToken is deleted form the database. <strong>500</strong> if refreshToken could not be deleted from the database.</p>
+            <div class ="codeBlock">
+                <h3>Schema</h3>
+                <div class ="schemaView">
+                    <ul>
+                        <li><div class="prettyTextField">refreshToken</div>:  <strong>STRING</strong>, the semi-permanent token to be invalidated/deleted.</li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <h3>Note</h3>
+            <p>Endpoints bearing this label:</p>
+            <h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - accessToken</h2>
+            <p>Require the Authorization Header to be set accordingly</p>
+            <div class="urlView">
+                <p><div class="prettyTextField" style="padding-left: 3%;">Header</div>: <div class="prettyTextField">Authorization</div>: Bearer $accessToken</p>
             </div>
         </div>
         <div class="dividingContainer">
@@ -58,6 +122,7 @@
                 <br>
             </div>
             <h2>DELETE: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
+            <h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - accessToken</h2>
             <p>Takes a userId in url and delete the user at with that userId if user exists. <strong>500</strong> if userId doesn't exist.</p>
             <div class ="codeBlock">
                 <h3>Example</h3>
@@ -68,6 +133,7 @@
                 <br>
             </div>
             <h2>PUT: /<div class="prettyTextRoute">profile</div>/:<div class="prettyTextField">userId</div></h2>
+            <h2>🛡️ - <div class="prettyTextAuth">requires authentication</div> - accessToken</h2>
             <p>Takes a userId in url and will update the user based on the information in the request body, if that user exists. <strong>500</strong> if userId doesn't exist.</p>
             <div class ="codeBlock">
                     <h3>Schema</h3>

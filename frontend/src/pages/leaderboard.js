@@ -1,7 +1,7 @@
 import React from "react";
 import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
-import { PageHeader } from "../StyledElements";
+import { Button, PageHeader, QuestionSequenceHeaderContainer } from "../StyledElements";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import { GetCategoryQuizResultsPage } from "../ApiCalls";
 
@@ -10,17 +10,21 @@ export default class Leaderboard extends React.Component {
     super(props);
     this.state = {
       content: null,
-      headerText: "",
+      headerContent: "",
       currCategory: "",
-      categories: []
+      categories: [],
     };
 
     this.state.content = (
       <CategorySelection
+        key={"unpopulatedCategorySelection"}
         categories={this.state.categories}
         onCategorySelection={this.onCategorySelection}
       />
     );
+
+    this.state.headerContent = <PageHeader>Categories</PageHeader>;
+    this.onBackButtonPressed = this.onBackButtonPressed.bind(this);
   }
 
   /**
@@ -30,15 +34,24 @@ export default class Leaderboard extends React.Component {
   updateRootWithCategories = (categories) => {
     this.setState({
       categories: categories,
+      headerContent: <PageHeader>Categories</PageHeader>,
       content: (
         <CategorySelection
-          key={null}
+          key={"populatedCategorySelection"}
           categories={categories}
           onCategorySelection={this.onCategorySelection}
         />
       ),
     });
   };
+
+  /**
+   * Callback for when back button is pressed on a leaderboard sub page, returns
+   * to main category selection
+   */
+  onBackButtonPressed() {
+    this.updateRootWithCategories(this.state.categories);
+  }
 
   /**
    * Gets quiz categories from API to display on page
@@ -62,65 +75,63 @@ export default class Leaderboard extends React.Component {
         try {
           res = await res.json();
         } catch (err) {
-          // No high scores
-          this.setState({
-            headerText:
-              "No " +
-              category.substring(0, 1).toUpperCase() +
-              category.substring(1) +
-              " High Scores",
-            content: (
-              <CategorySelection
-                key={null}
-                categories={this.state.categories}
-                onCategorySelection={this.onCategorySelection}
-              />
-            ),
-          });
+          this.setNoHighScoresAvailableContent(category);
           return;
         }
 
-        console.log(res);
         if (res.length > 0) {
-          this.setState({ currCategory: category });
           this.setState({
             // display leaderboard
-            headerText:
-              category.substring(0, 1).toUpperCase() + category.substring(1),
-            content: (
-              <LeaderboardList
-                category={category}
-                initialItems={res}
-              />
+            currCategory: category,
+            headerContent: (
+              <QuestionSequenceHeaderContainer>
+                <Button onClick={this.onBackButtonPressed}>Back</Button>
+                <PageHeader style={{ width: "min-content", justifySelf:"center" }}>
+                  {category.substring(0, 1).toUpperCase() +
+                    category.substring(1)}
+                </PageHeader>
+            </QuestionSequenceHeaderContainer>
             ),
+            content: <LeaderboardList category={category} initialItems={res} />,
           });
         } else {
-          // NO HIGH SCORES
-          this.setState({
-            headerText:
-              "No " +
-              category.substring(0, 1).toUpperCase() +
-              category.substring(1) +
-              " High Scores",
-            content: (
-              <CategorySelection
-                key={null}
-                categories={this.state.categories}
-                onCategorySelection={this.onCategorySelection}
-              />
-            ),
-          });
+          this.setNoHighScoresAvailableContent(category);
           return;
         }
       })
       .catch((er) => console.log(er));
   };
 
+  /**
+   * Sets content to show category selection and indicate that the given
+   * category did not have high score available
+   * @param {string} category
+   */
+  setNoHighScoresAvailableContent(category) {
+    this.setState({
+      headerContent: (
+        <PageHeader>
+          {"No " +
+            category.substring(0, 1).toUpperCase() +
+            category.substring(1) +
+            " High Scores"}
+        </PageHeader>
+      ),
+      content: (
+        <CategorySelection
+          key={"populatedCategorySelection"}
+          categories={this.state.categories}
+          onCategorySelection={this.onCategorySelection}
+        />
+      ),
+    });
+  }
+
   render() {
     return (
       <>
-        <PageHeader>{this.state.headerText}</PageHeader>
-        <>{this.state.content}</>
+        {this.state.headerContent}
+        {this.state.content}
       </>
     );
   }

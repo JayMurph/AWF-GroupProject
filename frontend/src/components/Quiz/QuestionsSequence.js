@@ -2,6 +2,8 @@ import React from "react";
 import QuizStartForm from "./QuizStartForm";
 import QuestionForm from "./QuestionForm";
 import {
+  Button,
+  ErrorLabel,
   FlexColumnContainer,
   QuestionSequenceHeaderContainer,
 } from "../../StyledElements";
@@ -28,6 +30,9 @@ export default class QuestionsSequence extends React.Component {
       triviaQuestionsArr: props.triviaQuestions,
       quizResults: new QuizResults(props.category),
       userId: props.userId,
+      renewAccessToken: props.renewAccessToken,
+      onBackButtonPressed: props.onBackButtonPressed,
+      errorText: "",
     };
 
     this.timerRef = React.createRef();
@@ -77,8 +82,13 @@ export default class QuestionsSequence extends React.Component {
   /**
    * Handles when user starts the quiz
    */
-  onStartButtonClick = () => {
-    this.goToNextPage();
+  onStartButtonClick = async () => {
+    let renewed = await this.state.renewAccessToken();
+    if (renewed) {
+      this.goToNextPage();
+    } else {
+      this.setState({ errorText: "Unable to start quiz right now." });
+    }
   };
 
   /**
@@ -114,23 +124,35 @@ export default class QuestionsSequence extends React.Component {
     }
   };
 
-  render() {
-    let content = this.pages[this.state.currPgIdx];
-    let questionCountText = "";
+  /**
+   * Creates and returns html div displaying the current trivia category name
+   * @returns html div containing current category named text
+   */
+  getCategoryTitleDivHtml() {
     // capitalize category name
     let categoryName =
       this.state.category.substring(0, 1).toUpperCase() +
       this.state.category.substring(1);
+    return (
+      <div style={{ justifySelf: "end" }}>
+        <h2>{categoryName}</h2>
+      </div>
+    );
+  }
 
+  /**
+   * Creates and returns html text indicating current and total question count, in
+   * the form 'Question A / B'
+   * @returns html
+   */
+  getQuestionCountTextHtml() {
     // generate text for indicating position in quiz
     if (this.state.currPgIdx === 0) {
       // on start page
-      questionCountText = (
-        <h2>Question 1 / {this.state.triviaQuestionsArr.length}</h2>
-      );
+      return <h2>Question 1 / {this.state.triviaQuestionsArr.length}</h2>;
     } else if (this.state.currPgIdx !== this.state.pgCount - 1) {
       // on quiz question
-      questionCountText = (
+      return (
         <h2>
           Question {this.state.currPgIdx} /{" "}
           {this.state.triviaQuestionsArr.length}
@@ -138,10 +160,51 @@ export default class QuestionsSequence extends React.Component {
       );
     }
 
+    return <></>;
+  }
+
+  /**
+   * Creates and returns html of a timer for trivia questions
+   * @returns Html timer
+   */
+  getQuestionTimerHtml() {
+    return (
+      <Timer
+        ref={this.timerRef}
+        initialTime={QUESTION_DURATION_MILLIS}
+        lastUnit="ms"
+        direction="backward"
+        timeToUpdate={TIMER_UPDATE_INTERVAL_MILLIS}
+        startImmediately={false}
+        checkpoints={[
+          {
+            time: 0,
+            callback: this.onTimeElapsed,
+          },
+        ]}
+      >
+        <h1 style={{ marginRight: "22px" }}>
+          <Timer.Milliseconds formatValue={(val) => (val * 0.001).toFixed(1)} />
+        </h1>
+        <h2>secs</h2>
+      </Timer>
+    );
+  }
+
+  render() {
+    let content = this.pages[this.state.currPgIdx];
+    let isQuizOver = this.state.currPgIdx >= this.state.pgCount - 1;
+
     return (
       <FlexColumnContainer>
         <QuestionSequenceHeaderContainer>
-          <div style={{ justifySelf: "start" }}>{questionCountText}</div>
+          {isQuizOver ? (
+            <Button onClick={this.state.onBackButtonPressed}>Play Again</Button>
+          ) : (
+            <div style={{ justifySelf: "start" }}>
+              {this.getQuestionCountTextHtml()}
+            </div>
+          )}
           <div
             style={{
               justifySelf: "center",
@@ -150,34 +213,15 @@ export default class QuestionsSequence extends React.Component {
               alignItems: "center",
             }}
           >
-            {this.state.currPgIdx < this.state.pgCount - 1 && (
-              <Timer
-                ref={this.timerRef}
-                initialTime={QUESTION_DURATION_MILLIS}
-                lastUnit="ms"
-                direction="backward"
-                timeToUpdate={TIMER_UPDATE_INTERVAL_MILLIS}
-                startImmediately={false}
-                checkpoints={[
-                  {
-                    time: 0,
-                    callback: this.onTimeElapsed,
-                  },
-                ]}
-              >
-                <h1 style={{ marginRight: "22px" }}>
-                  <Timer.Milliseconds
-                    formatValue={(val) => (val * 0.001).toFixed(1)}
-                  />
-                </h1>
-                <h2>secs</h2>
-              </Timer>
+            {isQuizOver ? (
+              <h2>Final Score : {this.state.quizResults.getScore()}</h2>
+            ) : (
+              this.getQuestionTimerHtml()
             )}
           </div>
-          <div style={{ justifySelf: "end" }}>
-            <h2>{categoryName}</h2>
-          </div>
+          {this.getCategoryTitleDivHtml()}
         </QuestionSequenceHeaderContainer>
+        <ErrorLabel>{this.state.errorText}</ErrorLabel>
         <FlexColumnContainer>{content}</FlexColumnContainer>
       </FlexColumnContainer>
     );

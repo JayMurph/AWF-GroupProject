@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignupForm from "../components/SignupForm.js";
-import { ErrorLabel, PageHeader } from "../StyledElements.js";
-import {SignUpUser} from "../ApiCalls.js";
+import { ErrorLabel, PageHeader, ScrollDiv } from "../StyledElements.js";
+import { SignUpUser } from "../ApiCalls.js";
 
 function SignUp(props) {
   const navigate = useNavigate();
@@ -11,12 +11,16 @@ function SignUp(props) {
 
   useEffect(() => {
     if (userData) {
-      props.onSignupSuccess(userData);
-      navigate("/");
+      navigate("/login", { state: { userName: userData.userName } });
     }
   }, [userData, props, navigate]);
 
   const formSubmit = (fields) => {
+    if(fields.password_confirm !== fields.password){
+      setErrorText("Error: Passwords do not match!");
+      return;
+    }
+    
     SignUpUser(
       fields.email,
       fields.user_name,
@@ -34,11 +38,11 @@ function SignUp(props) {
   };
 
   return (
-    <>
+    <ScrollDiv>
       <PageHeader>Create a New Account</PageHeader>
       <SignupForm onSubmit={formSubmit}></SignupForm>
       <ErrorLabel>{errorText}</ErrorLabel>
-    </>
+    </ScrollDiv>
   );
 }
 

@@ -1,42 +1,50 @@
 import React from "react";
 import FormField from "./FormField";
-import { FormButton, CenteredDiv, ButtonDiv, ErrorLabel} from "../StyledElements";
+import {
+  FormButton,
+  CenteredDiv,
+  ButtonDiv,
+  ErrorLabel,
+  CenteredForm,
+} from "../StyledElements";
 import ReactFormInputValidation from "react-form-input-validation";
-import SignUp from "../ApiCalls";
 
 export default class SignupForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      onSumit:props.onSubmit,
+      onSumit: props.onSubmit,
       fields: {
         email: "",
         user_name: "",
         password: "",
+        password_confirm: "",
         first_name: "",
         last_name: "",
         birth_date: "",
       },
       errors: {},
     };
-
+    
     this.form = new ReactFormInputValidation(this);
     this.form.useRules({
       email: "required|email",
       user_name: "required|alpha_dash",
       password: "required|alpha_dash",
+      password_confirm: "required|alpha_dash",
       first_name: "required|alpha",
       last_name: "required|alpha",
-      birth_date:"required|date"
+      birth_date: "required|date",
     });
+
     this.form.onformsubmit = props.onSubmit;
   }
 
   render() {
     return (
       <CenteredDiv>
-        <form onSubmit={this.form.handleSubmit}>
+        <CenteredForm onSubmit={this.form.handleSubmit} >
           <FormField
             name="email"
             fieldName="Email"
@@ -62,13 +70,24 @@ export default class SignupForm extends React.Component {
           <FormField
             name="password"
             fieldName="Password"
-            type="text"
+            type="password"
             fieldValue={this.state.fields.password}
             onChangeCB={this.form.handleChangeEvent}
             onBlurCB={this.form.handleBlurEvent}
           />
           <ErrorLabel>
             {this.state.errors.password ? this.state.errors.password : ""}
+          </ErrorLabel>
+          <FormField
+            name="password_confirm"
+            fieldName="Confirm Password"
+            type="password"
+            fieldValue={this.state.fields.password_confirm}
+            onChangeCB={this.form.handleChangeEvent}
+            onBlurCB={this.form.handleBlurEvent}
+          />
+          <ErrorLabel>
+          {this.state.errors.password_confirm? this.state.errors.password_confirm: ""}
           </ErrorLabel>
           <FormField
             name="first_name"
@@ -106,7 +125,7 @@ export default class SignupForm extends React.Component {
           <ButtonDiv>
             <FormButton type="submit">Create</FormButton>
           </ButtonDiv>
-        </form>
+        </CenteredForm>
       </CenteredDiv>
     );
   }
