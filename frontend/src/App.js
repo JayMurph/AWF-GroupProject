@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages";
 import About from "./pages/about";
 import Login from "./pages/login";
@@ -20,6 +20,7 @@ import Leaderboard from "./pages/leaderboard";
 import { decodeToken, isExpired } from "react-jwt";
 import { LogoutUser, RenewAccessToken } from "./ApiCalls";
 import Logout from "./pages/logout";
+import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
@@ -38,6 +39,7 @@ function App() {
   const [privateAccessToken, setPrivateAccessToken] = useState(
     GetSessionAccessToken()
   );
+  const navigate = useNavigate();
 
   /**
    * callback for user logging in. Saves user info to storage and sets user as
@@ -130,16 +132,17 @@ function App() {
         }
         if (!renewed) {
           onLogout();
+          navigate("/");
         }
       }, millisToExpiry);
       return () => clearTimeout(timer);
     } else {
       return () => {};
     }
-  }, [authenticated, privateAccessToken]);
+  }, [authenticated, privateAccessToken, navigate]);
 
   return (
-    <Router>
+    <>
       <Navbar authenticated={authenticated} onLogout={onLogout} />
       <AppContentContainer>
         <Routes>
@@ -164,7 +167,7 @@ function App() {
           )}
         </Routes>
       </AppContentContainer>
-    </Router>
+    </>
   );
 }
 
