@@ -1,6 +1,12 @@
 import React from "react";
 import FormField from "./FormField";
-import { FormButton, CenteredDiv, ButtonDiv, ErrorLabel} from "../StyledElements";
+import {
+  FormButton,
+  CenteredDiv,
+  ButtonDiv,
+  ErrorLabel,
+  CenteredForm,
+} from "../StyledElements";
 import ReactFormInputValidation from "react-form-input-validation";
 
 export default class SignupForm extends React.Component {
@@ -8,7 +14,7 @@ export default class SignupForm extends React.Component {
     super(props);
 
     this.state = {
-      onSumit:props.onSubmit,
+      onSumit: props.onSubmit,
       fields: {
         email: "",
         user_name: "",
@@ -29,7 +35,7 @@ export default class SignupForm extends React.Component {
       password_confirm: "required|alpha_dash",
       first_name: "required|alpha",
       last_name: "required|alpha",
-      birth_date:"required|date"
+      birth_date: "required|date",
     });
 
     this.form.onformsubmit = props.onSubmit;
@@ -38,7 +44,7 @@ export default class SignupForm extends React.Component {
   render() {
     return (
       <CenteredDiv>
-        <form onSubmit={this.form.handleSubmit}>
+        <CenteredForm onSubmit={this.form.handleSubmit} >
           <FormField
             name="email"
             fieldName="Email"
@@ -119,7 +125,7 @@ export default class SignupForm extends React.Component {
           <ButtonDiv>
             <FormButton type="submit">Create</FormButton>
           </ButtonDiv>
-        </form>
+        </CenteredForm>
       </CenteredDiv>
     );
   }

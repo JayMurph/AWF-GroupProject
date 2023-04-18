@@ -1,10 +1,15 @@
 import React from "react";
 import { Paragraph, CenteredDiv, PageHeader } from "../StyledElements";
 
-const Home = () => {
+const Home = (props) => {
+  let userName = props.userName
   return (
     <CenteredDiv>
-      <PageHeader>Trivia Mania</PageHeader>
+      {userName ? (
+        <PageHeader>Welcome {userName}</PageHeader>
+      ) : (
+        <PageHeader>Trivia Mania</PageHeader>
+      )}
       <div>
         <Paragraph>Unleash your inner genius with Trivia Mania!</Paragraph>
         <Paragraph>

@@ -16,7 +16,7 @@ export default class QuestionForm extends React.Component {
 
   /**
    * Handles when an answer is clicked.
-   * @param {*} ev
+   * @param {*} ev : Event info
    */
   handleAnswerClick = (ev) => {
     this.state.onQuestionAnswered(
@@ -68,30 +68,14 @@ export default class QuestionForm extends React.Component {
           {this.state.triviaQuestion.question}
         </PageHeader>
         <CenteredDiv>
-          <BigButton
-            id={answers[0].idx}
-            onClick={(ev) => this.handleAnswerClick(ev)}
-          >
-            {answers[0].answerTxt}
-          </BigButton>
-          <BigButton
-            id={answers[1].idx}
-            onClick={(ev) => this.handleAnswerClick(ev)}
-          >
-            {answers[1].answerTxt}
-          </BigButton>
-          <BigButton
-            id={answers[2].idx}
-            onClick={(ev) => this.handleAnswerClick(ev)}
-          >
-            {answers[2].answerTxt}
-          </BigButton>
-          <BigButton
-            id={answers[3].idx}
-            onClick={(ev) => this.handleAnswerClick(ev)}
-          >
-            {answers[3].answerTxt}
-          </BigButton>
+          {answers.map((answer)=>{
+            return (<BigButton
+              id={answer.idx}
+              onClick={(ev) => this.handleAnswerClick(ev)}
+            >
+              {answer.answerTxt}
+            </BigButton>)
+          })}
         </CenteredDiv>
       </>
     );
