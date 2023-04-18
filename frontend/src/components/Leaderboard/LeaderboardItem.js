@@ -11,6 +11,7 @@ const MIN_WIDTH_PERCENTAGE = 25;
 const MIN_HEIGHT = 80;
 const MIN_FONT_SIZE = 32;
 const FOCUS_COLOR = "#E4D00A";
+const TOP_SCORES_COUNT = 5;
 
 const TOP_HEIGHT_INC = 15;
 const TOP_FONT_SIZE_INC = 8;
@@ -57,14 +58,14 @@ export default class LeaderboardItem extends React.Component {
     width = width < MIN_WIDTH_PERCENTAGE ? MIN_WIDTH_PERCENTAGE : width;
 
     let height =
-      this.state.idx >= 5
+      this.state.idx >= TOP_SCORES_COUNT
         ? MIN_HEIGHT
-        : MIN_HEIGHT + TOP_HEIGHT_INC * (5 - this.state.idx);
+        : MIN_HEIGHT + TOP_HEIGHT_INC * (TOP_SCORES_COUNT - this.state.idx);
 
     let fontSize =
-      this.state.idx >= 5
+      this.state.idx >= TOP_SCORES_COUNT
         ? MIN_FONT_SIZE
-        : MIN_FONT_SIZE + TOP_FONT_SIZE_INC * (5 - this.state.idx);
+        : MIN_FONT_SIZE + TOP_FONT_SIZE_INC * (TOP_SCORES_COUNT - this.state.idx);
     return { width, height, fontSize };
   }
 

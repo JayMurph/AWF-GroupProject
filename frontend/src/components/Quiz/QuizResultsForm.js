@@ -49,7 +49,7 @@ export default class QuizResultsForm extends React.Component {
                 category={this.state.category}
                 initialItems={leaderboardItems}
                 startPageNum={startPage}
-                endPageNum={startPage + (leaderboardItems.length / 10)}
+                endPageNum={startPage + leaderboardItems.length / 10}
                 focusItemIdx={data.globalPosition}
               ></LeaderboardList>
             ),

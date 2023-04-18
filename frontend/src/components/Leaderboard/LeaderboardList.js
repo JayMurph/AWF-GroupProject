@@ -8,7 +8,7 @@ import LeaderboardItem from "./LeaderboardItem";
 export default class LeaderboardList extends React.Component {
   constructor(props) {
     super(props);
-    let startPageNum = props.startPageNum|| 1;
+    let startPageNum = props.startPageNum || 1;
     let endPageNum = props.endPageNum || startPageNum;
 
     this.state = {

@@ -5,6 +5,7 @@ import {
   CenteredDiv,
   ButtonDiv,
   ErrorLabel,
+  CenteredForm,
 } from "../StyledElements";
 import ReactFormInputValidation from "react-form-input-validation";
 
@@ -33,7 +34,7 @@ export default class LoginForm extends React.Component {
   render() {
     return (
       <CenteredDiv>
-        <form onSubmit={this.form.handleSubmit}>
+        <CenteredForm onSubmit={this.form.handleSubmit}>
           <FormField
             fieldName="User Name"
             type="text"
@@ -59,7 +60,7 @@ export default class LoginForm extends React.Component {
           <ButtonDiv>
             <FormButton type="submit">Login</FormButton>
           </ButtonDiv>
-        </form>
+        </CenteredForm>
       </CenteredDiv>
     );
   }
