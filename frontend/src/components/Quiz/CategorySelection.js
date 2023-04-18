@@ -11,8 +11,6 @@ import CategoryButton from "./CategoryButton";
 export default class CategorySelection extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log(props.categories);
     this.state = {
       categories: props.categories,
       onCategorySelection: props.onCategorySelection,

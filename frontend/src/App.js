@@ -119,7 +119,6 @@ function App() {
       // set callback to refresh token
       let authExpirySecs = decodeToken(privateAccessToken).exp;
       let millisToExpiry = authExpirySecs * 1000 - Date.now();
-      //let millisToExpiry = 10000;
       const timer = setTimeout(async () => {
         let shouldRenew = await swal({
           title: "Stay logged in?",

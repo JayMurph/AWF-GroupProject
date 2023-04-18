@@ -3,6 +3,7 @@ import QuizStartForm from "./QuizStartForm";
 import QuestionForm from "./QuestionForm";
 import {
   Button,
+  ErrorLabel,
   FlexColumnContainer,
   QuestionSequenceHeaderContainer,
 } from "../../StyledElements";
@@ -31,6 +32,7 @@ export default class QuestionsSequence extends React.Component {
       userId: props.userId,
       renewAccessToken: props.renewAccessToken,
       onBackButtonPressed: props.onBackButtonPressed,
+      errorText: "",
     };
 
     this.timerRef = React.createRef();
@@ -85,7 +87,7 @@ export default class QuestionsSequence extends React.Component {
     if (renewed) {
       this.goToNextPage();
     } else {
-      alert("Can't renew token before quiz...shouldnt be here");
+      this.setState({ errorText: "Unable to start quiz right now." });
     }
   };
 
@@ -219,6 +221,7 @@ export default class QuestionsSequence extends React.Component {
           </div>
           {this.getCategoryTitleDivHtml()}
         </QuestionSequenceHeaderContainer>
+        <ErrorLabel>{this.state.errorText}</ErrorLabel>
         <FlexColumnContainer>{content}</FlexColumnContainer>
       </FlexColumnContainer>
     );
