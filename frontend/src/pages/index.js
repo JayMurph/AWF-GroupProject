@@ -1,9 +1,8 @@
 import React from "react";
 import { Paragraph, CenteredDiv, PageHeader } from "../StyledElements";
-import { GetSessionUserName } from "../Storage";
 
-const Home = () => {
-  const userName = GetSessionUserName();
+const Home = (props) => {
+  let userName = props.userName
   return (
     <CenteredDiv>
       {userName ? (

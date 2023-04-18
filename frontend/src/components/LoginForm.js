@@ -22,7 +22,6 @@ export default class LoginForm extends React.Component {
       onSubmit: props.onSubmit,
     };
 
-    //this.handleSubmit = this.handleSubmit.bind(this);
     this.form = new ReactFormInputValidation(this);
     this.form.useRules({
       username: "required",

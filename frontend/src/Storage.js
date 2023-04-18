@@ -30,12 +30,20 @@ export function GetSessionUserName() {
   return secureLocalStorage.getItem(USERNAME_KEY);
 }
 
+export function GetSessionPassword() {
+  return secureLocalStorage.getItem(PASSWORD_KEY);
+}
+
 export function GetSessionAccessToken() {
   return secureLocalStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
 export function SetSessionAccessToken(accessToken) {
   secureLocalStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+}
+
+export function ClearSessionAccessToken() {
+  secureLocalStorage.removeItem(ACCESS_TOKEN_KEY);
 }
 
 export function GetSessionRefreshToken() {
@@ -65,11 +73,12 @@ export function SaveSessionData(
 }
 
 export function ClearSessionData() {
-  secureLocalStorage.removeItem(ACCESS_TOKEN_KEY);
-  secureLocalStorage.removeItem(REFRESH_TOKEN_KEY);
-  secureLocalStorage.removeItem(USER_ID_KEY);
-  secureLocalStorage.removeItem(USERNAME_KEY);
-  secureLocalStorage.removeItem(PASSWORD_KEY);
-  secureLocalStorage.removeItem(FIRST_NAME_KEY);
-  secureLocalStorage.removeItem(EMAIL_KEY);
+  //secureLocalStorage.removeItem(ACCESS_TOKEN_KEY);
+  //secureLocalStorage.removeItem(REFRESH_TOKEN_KEY);
+  //secureLocalStorage.removeItem(USER_ID_KEY);
+  //secureLocalStorage.removeItem(USERNAME_KEY);
+  //secureLocalStorage.removeItem(PASSWORD_KEY);
+  //secureLocalStorage.removeItem(FIRST_NAME_KEY);
+  //secureLocalStorage.removeItem(EMAIL_KEY);
+  secureLocalStorage.clear();
 }

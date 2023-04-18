@@ -7,21 +7,32 @@ import { LoginUser } from "../ApiCalls.js";
 const Login = (props) => {
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState("");
-  const [tokens, setTokens] = useState(null);
+  const [loginData, setLoginData] = useState(null);
   const location = useLocation();
   const userName = location.state?.userName ?? "";
 
   useEffect(() => {
-    if (tokens) {
-      props.onLogin(tokens);
-      navigate("/");
+    if (loginData) {
+      if (props.onLogin(loginData.accessToken, loginData.refreshToken, loginData.userName, loginData.password)) {
+        navigate("/");
+      }
+      else {
+        setErrorText("Unable to Login!");
+      }
     }
-  }, [tokens, props, navigate, userName]);
+  }, [loginData, props, navigate, userName]);
 
   const formSubmit = (fields) => {
     LoginUser(fields.username, fields.password)
       .then((res) => res.json())
-      .then((tokens) => setTokens(tokens))
+      .then((authRes) =>
+        setLoginData({
+          accessToken: authRes.accessToken,
+          refreshToken: authRes.refreshToken,
+          userName: fields.username,
+          password: fields.password,
+        })
+      )
       .catch((err) => {
         console.log(err);
         setErrorText("Unable to Login!");
