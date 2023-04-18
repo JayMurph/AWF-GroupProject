@@ -16,6 +16,11 @@ function SignUp(props) {
   }, [userData, props, navigate]);
 
   const formSubmit = (fields) => {
+    if(fields.password_confirm !== fields.password){
+      setErrorText("Error: Passwords do not match!");
+      return;
+    }
+    
     SignUpUser(
       fields.email,
       fields.user_name,
