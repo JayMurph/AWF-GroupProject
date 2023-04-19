@@ -66,17 +66,20 @@ export default class LeaderboardItem extends React.Component {
     let scoreFontSize =
       this.state.idx >= TOP_SCORES_COUNT
         ? MIN_SCORE_FONT_SIZE
-        : MIN_SCORE_FONT_SIZE + TOP_FONT_SIZE_INC * (TOP_SCORES_COUNT - this.state.idx);
+        : MIN_SCORE_FONT_SIZE +
+          TOP_FONT_SIZE_INC * (TOP_SCORES_COUNT - this.state.idx);
 
-      let userNameFontSize = 
-        this.state.idx >= TOP_SCORES_COUNT
-          ? MIN_USERNAME_FONT_SIZE  
-          : MIN_USERNAME_FONT_SIZE + TOP_FONT_SIZE_INC * (TOP_SCORES_COUNT - this.state.idx);
-    return { width, height, scoreFontSize, userNameFontSize};
+    let userNameFontSize =
+      this.state.idx >= TOP_SCORES_COUNT
+        ? MIN_USERNAME_FONT_SIZE
+        : MIN_USERNAME_FONT_SIZE +
+          TOP_FONT_SIZE_INC * (TOP_SCORES_COUNT - this.state.idx);
+    return { width, height, scoreFontSize, userNameFontSize };
   }
 
   render() {
-    const { width, height, scoreFontSize, userNameFontSize } = this.calculateSizeAttributes();
+    const { width, height, scoreFontSize, userNameFontSize } =
+      this.calculateSizeAttributes();
 
     return (
       <>
@@ -92,7 +95,9 @@ export default class LeaderboardItem extends React.Component {
           <LeaderboardIndex style={{ fontSize: `${scoreFontSize}px` }}>
             {this.state.idx}
           </LeaderboardIndex>
-          <div style={{ fontSize: `${userNameFontSize}px` }}>{this.state.username}</div>
+          <div style={{ fontSize: `${userNameFontSize}px` }}>
+            {this.state.username}
+          </div>
           <LeaderboardScore style={{ fontSize: `${scoreFontSize}px` }}>
             {this.state.score}
           </LeaderboardScore>

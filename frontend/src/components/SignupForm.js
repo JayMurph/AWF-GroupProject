@@ -26,7 +26,7 @@ export default class SignupForm extends React.Component {
       },
       errors: {},
     };
-    
+
     this.form = new ReactFormInputValidation(this);
     this.form.useRules({
       email: "required|email",
@@ -44,7 +44,7 @@ export default class SignupForm extends React.Component {
   render() {
     return (
       <CenteredDiv>
-        <CenteredForm onSubmit={this.form.handleSubmit} >
+        <CenteredForm onSubmit={this.form.handleSubmit}>
           <FormField
             name="email"
             fieldName="Email"
@@ -87,7 +87,9 @@ export default class SignupForm extends React.Component {
             onBlurCB={this.form.handleBlurEvent}
           />
           <ErrorLabel>
-          {this.state.errors.password_confirm? this.state.errors.password_confirm: ""}
+            {this.state.errors.password_confirm
+              ? this.state.errors.password_confirm
+              : ""}
           </ErrorLabel>
           <FormField
             name="first_name"

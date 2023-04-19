@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import LoginForm from "../components/LoginForm.js";
-import { PageHeader, ErrorLabel, ScrollDiv, NoBreakScrollDiv } from "../StyledElements.js";
+import {
+  PageHeader,
+  ErrorLabel,
+  ScrollDiv,
+  NoBreakScrollDiv,
+} from "../StyledElements.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LoginUser } from "../ApiCalls.js";
 
@@ -13,10 +18,16 @@ const Login = (props) => {
 
   useEffect(() => {
     if (loginData) {
-      if (props.onLogin(loginData.accessToken, loginData.refreshToken, loginData.userName, loginData.password)) {
+      if (
+        props.onLogin(
+          loginData.accessToken,
+          loginData.refreshToken,
+          loginData.userName,
+          loginData.password
+        )
+      ) {
         navigate("/");
-      }
-      else {
+      } else {
         setErrorText("Unable to Login!");
       }
     }

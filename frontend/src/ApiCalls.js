@@ -25,21 +25,22 @@ export function SignUpUser(
 export function PostQuizResults(userId, quizResults, timeStamp, accessToken) {
   return fetch(API_URL + "/quiz", {
     method: "POST",
-    headers: { 
-      "Content-Type": "application/json", 
-      "Authorization": "Bearer " + accessToken
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
       userId: userId,
       finalScore: quizResults.getScore(),
       category: quizResults.quizCategory,
-      timeStamp: timeStamp
+      timeStamp: timeStamp,
     }),
   });
 }
 
 export function GetCategoryQuizResultsPage(category, pageNum) {
-  const leaderboardEndpoint = API_URL + "/leaderboard?category=" + category + "&page=" + pageNum;
+  const leaderboardEndpoint =
+    API_URL + "/leaderboard?category=" + category + "&page=" + pageNum;
   return fetch(leaderboardEndpoint);
 }
 
@@ -49,21 +50,21 @@ export function GetProfile(userId) {
 
 export function LoginUser(username, password) {
   return fetch(API_URL + "/login", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       userName: username,
-      password: password
+      password: password,
     }),
   });
 }
 
 export function LogoutUser(refreshToken) {
   return fetch(API_URL + "/logout", {
-    method:"DELETE",
-    headers:{"Content-Type":"application/json"},
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      refreshToken:refreshToken
+      refreshToken: refreshToken,
     }),
   });
 }
@@ -71,9 +72,9 @@ export function LogoutUser(refreshToken) {
 export function RenewAccessToken(refreshToken) {
   return fetch(API_URL + "/renew", {
     method: "POST",
-    headers:{"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      refreshToken:refreshToken
-    })
+      refreshToken: refreshToken,
+    }),
   });
 }

@@ -1,5 +1,9 @@
 import React from "react";
-import { QuestionTextHeader, AnswerButton, AnswerScrollDiv } from "../../StyledElements";
+import {
+  QuestionTextHeader,
+  AnswerButton,
+  AnswerScrollDiv,
+} from "../../StyledElements";
 import UserAnswerInfo from "../../Quiz/UserAnswerInfo";
 
 /**
@@ -66,15 +70,17 @@ export default class QuestionForm extends React.Component {
       <>
         <QuestionTextHeader style={{ backgroundColor: "lightGray" }}>
           {this.state.triviaQuestion.question}
-        </QuestionTextHeader >
+        </QuestionTextHeader>
         <AnswerScrollDiv>
-          {answers.map((answer)=>{
-            return (<AnswerButton
-              id={answer.idx}
-              onClick={(ev) => this.handleAnswerClick(ev)}
-            >
-              {answer.answerTxt}
-            </AnswerButton>)
+          {answers.map((answer) => {
+            return (
+              <AnswerButton
+                id={answer.idx}
+                onClick={(ev) => this.handleAnswerClick(ev)}
+              >
+                {answer.answerTxt}
+              </AnswerButton>
+            );
           })}
         </AnswerScrollDiv>
       </>
