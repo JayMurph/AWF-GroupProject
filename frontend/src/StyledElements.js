@@ -144,10 +144,6 @@ export const ErrorLabel = styled(CenteredDiv)`
   color: #df0000;
 `;
 
-export const LeaderboardContainer = styled(CenteredDiv)`
-  row-gap: 24px;
-`;
-
 export const QuestionTextHeader = styled.div`
     padding:2vw;
     height: min-content;
@@ -178,25 +174,118 @@ export const AnswerScrollDiv = styled(ScrollDiv)`
 `;
 
 export const LeaderboardItemContainer = styled.div`
-  height: 80px;
   width: 90%;
   display: flex;
   flex-direction: row;
   justify-content: start;
-  align-items: center;
   background: lightGray;
   border-radius: 20px;
+  align-self:start;
 `;
 
 export const LeaderboardIndex = styled.div`
   font-size: 48px;
-  margin: 2vw;
   font-weight: bold;
+  margin: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const LeaderboardScore = styled.div`
-  margin: 2vw;
+  margin-right: 2vw;
   margin-left: auto;
   font-size: 48px;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LeaderboardUsername = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const LeaderboardContainer = styled(CenteredDiv)`
+  >* {
+    height:80px;
+  }
+  >* > ${LeaderboardIndex} {
+    font-size:32px;
+  }
+  >* > ${LeaderboardScore} {
+    font-size:32px;
+  }
+  >* > ${LeaderboardUsername} {
+    font-size:16px;
+  }
+
+  >div:nth-child(1) {
+    height:155px
+  }
+  >div:nth-child(1) > ${LeaderboardIndex} {
+    font-size:72px;
+  }
+  >div:nth-child(1) > ${LeaderboardScore} {
+    font-size:72px;
+  }
+  >div:nth-child(1) > ${LeaderboardUsername} {
+    font-size:64px;
+  }
+
+  >div:nth-child(2) {
+    height:140px
+  }
+  >div:nth-child(2) > ${LeaderboardIndex} {
+    font-size:64px;
+  }
+  >div:nth-child(2) > ${LeaderboardScore} {
+    font-size:64px;
+  }
+  >div:nth-child(2) > ${LeaderboardUsername} {
+    font-size:56px;
+  }
+
+  >div:nth-child(3) {
+    height:125px
+  }
+  >div:nth-child(3) > ${LeaderboardIndex} {
+    font-size:56px;
+  }
+  >div:nth-child(3) > ${LeaderboardScore} {
+    font-size:56px;
+  }
+  >div:nth-child(3) > ${LeaderboardUsername} {
+    font-size:48px;
+  }
+
+  >div:nth-child(4) {
+    height:110px
+  }
+  >div:nth-child(4) > ${LeaderboardIndex} {
+    font-size:48px;
+  }
+  >div:nth-child(4) > ${LeaderboardScore} {
+    font-size:48px;
+  }
+  >div:nth-child(4) > ${LeaderboardUsername} {
+    font-size:32px;
+  }
+
+  >div:nth-child(5) {
+    height:95px
+  }
+  >div:nth-child(5) > ${LeaderboardIndex} {
+    font-size:40px;
+  }
+  >div:nth-child(5) > ${LeaderboardScore} {
+    font-size:40px;
+  }
+  >div:nth-child(5) > ${LeaderboardUsername} {
+    font-size:24px;
+  }
+
+  row-gap: 24px;
 `;
