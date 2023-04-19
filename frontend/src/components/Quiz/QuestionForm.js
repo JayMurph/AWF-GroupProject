@@ -1,5 +1,5 @@
 import React from "react";
-import { PageHeader, BigButton, CenteredDiv } from "../../StyledElements";
+import { QuestionTextHeader, AnswerButton, AnswerScrollDiv } from "../../StyledElements";
 import UserAnswerInfo from "../../Quiz/UserAnswerInfo";
 
 /**
@@ -64,19 +64,19 @@ export default class QuestionForm extends React.Component {
     // display question and answers. embed answer idx into button id so that we can tell if the correct answer is clicked
     return (
       <>
-        <PageHeader style={{ backgroundColor: "lightGray" }}>
+        <QuestionTextHeader style={{ backgroundColor: "lightGray" }}>
           {this.state.triviaQuestion.question}
-        </PageHeader>
-        <CenteredDiv>
+        </QuestionTextHeader >
+        <AnswerScrollDiv>
           {answers.map((answer)=>{
-            return (<BigButton
+            return (<AnswerButton
               id={answer.idx}
               onClick={(ev) => this.handleAnswerClick(ev)}
             >
               {answer.answerTxt}
-            </BigButton>)
+            </AnswerButton>)
           })}
-        </CenteredDiv>
+        </AnswerScrollDiv>
       </>
     );
   }

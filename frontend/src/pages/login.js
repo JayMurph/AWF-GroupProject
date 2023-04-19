@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LoginForm from "../components/LoginForm.js";
-import { PageHeader, ErrorLabel } from "../StyledElements.js";
+import { PageHeader, ErrorLabel, ScrollDiv, NoBreakScrollDiv } from "../StyledElements.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LoginUser } from "../ApiCalls.js";
 
@@ -40,11 +40,11 @@ const Login = (props) => {
   };
 
   return (
-    <>
+    <NoBreakScrollDiv>
       <PageHeader>Login</PageHeader>
       <LoginForm onSubmit={formSubmit} username={userName}></LoginForm>
       <ErrorLabel>{errorText}</ErrorLabel>
-    </>
+    </NoBreakScrollDiv>
   );
 };
 

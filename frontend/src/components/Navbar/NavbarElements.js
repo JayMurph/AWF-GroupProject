@@ -7,7 +7,7 @@ export const Header = styled.div`
 	background:var(--navBackground); 
 	display: flex;
 	flex-direction:row;
-	min-height: 85px;
+	min-height: 10vh;
 	height: 10vh;
 	min-width:0px;
 	justify-content: space-between;
@@ -15,9 +15,11 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.h1`
-	position:absolute;
 	padding-left:3vw;
-	@media screen and (max-width: 560px) {
+	font-size:4vh;
+	
+
+	@media screen and (max-width: 640px) {
 		display: none;
 	}
 `;

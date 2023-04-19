@@ -23,7 +23,6 @@ export function SignUpUser(
 }
 
 export function PostQuizResults(userId, quizResults, timeStamp, accessToken) {
-  console.log(accessToken);
   return fetch(API_URL + "/quiz", {
     method: "POST",
     headers: { 
