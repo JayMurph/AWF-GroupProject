@@ -46,7 +46,6 @@ export const QuestionSequenceHeaderContainer = styled.div`
 
 export const AppContentContainer = styled(FlexColumnContainer)`
     height:88vh;
-    width:100%;
 `;
 export const NoBreakScrollDiv = styled(CenteredDiv)`
     display:grid;
@@ -130,8 +129,8 @@ export const Paragraph = styled.p`
 `;
 
 export const FormTextbox = styled.input`
-    width:
-    240px;
+    width: 240px;
+    height: 28px;
 `;
 
 export const CenteredForm = styled.form`
