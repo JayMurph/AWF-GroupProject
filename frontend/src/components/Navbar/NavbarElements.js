@@ -17,7 +17,6 @@ export const Header = styled.div`
 export const Title = styled.h1`
 	padding-left:3vw;
 	font-size:4vh;
-	
 
 	@media screen and (max-width: 640px) {
 		display: none;
@@ -29,6 +28,9 @@ export const Nav = styled.nav`
 	min-width:0px;
 	justify-content: space-between;
 	margin-left:auto;
+	@media screen and (max-width: 640px) {
+		margin-right:auto;
+	}
 `;
 
 export const NavLink = styled(Link)`
