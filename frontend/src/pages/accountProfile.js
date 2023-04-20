@@ -17,14 +17,7 @@ function Profile() {
 
   const [errorText, setErrorText] = useState("");
 
-  const inputElement = useRef(null);
-
-  useEffect(() => {
-    if (inputElement.current) {
-      inputElement.current.focus();
-    }
-  }, []);
-
+  
   try {
     fetch(API_URL + "/profile/" +  GetSessionUserId()).then(
       res => {
@@ -75,7 +68,7 @@ function Profile() {
           type = "text"
           value={newUsername}
           onChange={(event) => setNewUsername(event.target.value)}
-          ref={inputElement}
+          autoFocus          
         />            
         <Button onClick={()=>handleSubmit("userName:"+ newUsername)}>Submit</Button>
     </DivLine>
@@ -88,8 +81,7 @@ function Profile() {
           type = "text"
           value={newEmail}
           onChange={(event) => setNewEmail(event.target.value)}
-          autofocus
-          onFocus={e => e.currentTarget.select()}
+          autoFocus
         />            
         <Button onClick={()=>handleSubmit("email:" + newEmail)}>Submit</Button>
     </DivLine>
