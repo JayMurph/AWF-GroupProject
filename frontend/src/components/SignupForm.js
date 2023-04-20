@@ -8,6 +8,12 @@ import {
   CenteredForm,
 } from "../StyledElements";
 import ReactFormInputValidation from "react-form-input-validation";
+import {
+  MAX_PASSWORD_LENGTH,
+  MAX_USERNAME_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  MIN_USERNAME_LENGTH,
+} from "../pages/signup";
 
 export default class SignupForm extends React.Component {
   constructor(props) {
@@ -30,12 +36,12 @@ export default class SignupForm extends React.Component {
     this.form = new ReactFormInputValidation(this);
     this.form.useRules({
       email: "required|email",
-      user_name: "required|alpha_dash|between:2,12",
-      password: "required|alpha_dash|between:4,12",
-      password_confirm: "required|alpha_dash|between:4,12",
+      user_name: `required|alpha_dash|between:${MIN_USERNAME_LENGTH},${MAX_USERNAME_LENGTH}`,
+      password: `required|alpha_dash|between:${MIN_PASSWORD_LENGTH},${MAX_PASSWORD_LENGTH}`,
+      password_confirm: `required|alpha_dash|between:${MIN_PASSWORD_LENGTH},${MAX_PASSWORD_LENGTH}`,
       first_name: "required|alpha",
       last_name: "required|alpha",
-      birth_date: "required|date"
+      birth_date: "required|date",
     });
 
     this.form.onformsubmit = props.onSubmit;

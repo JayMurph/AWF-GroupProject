@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FormTextbox, PadLabel, ErrorLabel, Button, ChangePasswordDiv, ButtonDiv } from "../StyledElements.js";
 import { API_URL}  from '../App.js';
 import { GetSessionUserId, GetSessionPassword, GetSessionAccessToken } from '../Storage.js';
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from './signup.js';
 
 function ChangePassword() {
   const [password1, setPassword1] = useState("");
@@ -9,8 +10,11 @@ function ChangePassword() {
   const [errorText, setErrorText] = useState("");
 
   const handleSubmit =  async () => {   
-    if (password1.length < 6 || password2.length < 6) {
-      setErrorText("No less than 6 chars!");
+    if (password1.length < MIN_PASSWORD_LENGTH || password2.length < MIN_PASSWORD_LENGTH) {
+      setErrorText(`No less than ${MIN_PASSWORD_LENGTH} chars!`);
+    }
+    else if (password1.length > MAX_PASSWORD_LENGTH || password2.length > MAX_PASSWORD_LENGTH) {
+      setErrorText(`No more than ${MAX_PASSWORD_LENGTH} chars!`);
     }
     else if(password1 === password2){
         try {
