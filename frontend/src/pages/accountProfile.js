@@ -16,7 +16,6 @@ function Profile() {
   const [showEmailInput, setShowEmailInput] = useState(false);
 
   const [errorText, setErrorText] = useState("");
-
   
   try {
     fetch(API_URL + "/profile/" +  GetSessionUserId()).then(
@@ -37,9 +36,8 @@ function Profile() {
   }
 
 
-  const handleSubmit =  async (stringValue) => {
-    console.log(stringValue);
-    console.log(GetSessionAccessToken()); 
+  const handleSubmitUsername =  async () => {
+    console.log(newUsername);
     try {
       let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
         method: "PUT",
@@ -48,8 +46,33 @@ function Profile() {
           "Authorization": "Bearer " + GetSessionAccessToken()
         },
         body: JSON.stringify({
-          stringValue  
-        })
+          userName: newUsername,
+          old_password: GetSessionPassword()  
+      })
+      });
+      if (res.status === 200) {
+        setErrorText("Updated successfully");
+      } else {
+        setErrorText("Some error occured");
+      }
+    } catch (err) {
+      console.log(err);            
+    }
+  };
+  
+  const handleSubmitEmail =  async () => {
+    console.log(newUsername);
+    try {
+      let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
+        method: "PUT",
+        headers: { 
+          "Content-Type": "application/json", 
+          "Authorization": "Bearer " + GetSessionAccessToken()
+        },
+        body: JSON.stringify({
+          email: newEmail,
+          old_password: GetSessionPassword()  
+      })
       });
       if (res.status === 200) {
         setErrorText("Updated successfully");
@@ -71,7 +94,7 @@ function Profile() {
           onChange={(event) => setNewUsername(event.target.value)}
           autoFocus          
         />            
-        <Button onClick={()=>handleSubmit("userName:" + newUsername + ", old_password:" + GetSessionPassword())}>Submit</Button>
+        <Button onClick={()=>handleSubmitUsername()}>Submit</Button>
     </DivLine>
   )  
 
@@ -84,7 +107,7 @@ function Profile() {
           onChange={(event) => setNewEmail(event.target.value)}
           autoFocus
         />            
-        <Button onClick={()=>handleSubmit("email:" + newEmail + ", old_password:" + GetSessionPassword())}>Submit</Button>
+        <Button onClick={()=>handleSubmitEmail()}>Submit</Button>
     </DivLine>
   )  
 
