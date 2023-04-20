@@ -52,7 +52,7 @@ function AccountMain() {
           </tr>
            <tr>
             <th>Highest</th>
-            <th>Avarage</th>
+            <th>Average</th>
             <th>Total</th>
           </tr>
         </tbody>
