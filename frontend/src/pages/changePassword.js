@@ -8,8 +8,7 @@ function ChangePassword() {
   const [password2, setPassword2] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  const handleSubmit =  async (e) => {
-    e.preventDefault();
+  const handleSubmit =  async () => {   
     if (password1.length < 6 || password2.length < 6) {
       setErrorText("Invalid input!");
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { ProfileContainer, DivLine, ErrorLabel, Button} from "../StyledElements.js";
 import {API_URL}  from '../App.js';
 import { GetSessionUserId, GetSessionAccessToken } from '../Storage.js';
@@ -29,7 +29,7 @@ function Profile() {
           setUsername(data.userName);
           setName(data.firstName + " " + data.lastName);
           setEmail(data.email);
-        });
+        })
       }
     );
   } catch (err) {
@@ -37,16 +37,17 @@ function Profile() {
   }
 
 
-  const handleSubmit =  async (e, stringValue) => {
-    e.preventDefault();
+  const handleSubmit =  async (stringValue) => {
+    console.log(GetSessionUserId());
+    console.log(GetSessionAccessToken()); 
     try {
       let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
-      method: "PUT",
-      headers: { 
-        "Content-Type": "application/json", 
-        "Authorization": "Bearer " + GetSessionAccessToken()
-      },
-      body: JSON.stringify({
+        method: "PUT",
+        headers: { 
+          "Content-Type": "application/json", 
+          "Authorization": "Bearer " + GetSessionAccessToken()
+        },
+        body: JSON.stringify({
           stringValue  
         })
       });
