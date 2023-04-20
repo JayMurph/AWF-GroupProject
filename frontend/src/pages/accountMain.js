@@ -22,8 +22,8 @@ function AccountMain() {
           if (data != null)
           {
             setUsername(data.userName);
-            setHighest(data.hightestScore);
-            setAvarage(data.scoreAvarage);
+            setHighest(data.highestScore);
+            setAvarage(Math.round(data.totalScore/data.quizzesCompleted));
             setTotal(data.totalScore);
             setRecentScores(data.recentScores);
           }

@@ -108,7 +108,7 @@ export const ProfileContainer = styled.div`
 
 export const DivLine = styled.div`
     position: relative;
-    padding-bottom: 10px; 
+    padding-bottom: 20px; 
     width:100%; 
     display: flex;
     justify-content: space-between;
