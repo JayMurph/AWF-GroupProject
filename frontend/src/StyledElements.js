@@ -77,9 +77,9 @@ export const ImageBox = styled.div`
 `;
 
 export const ScoreTable = styled.table`   
-    position:relative;
-    left: 25vw;
-    top: 20vh;
+    position:absolute;
+    left: 40vw;
+    top: 40vh;
     text-align: center;
     width:600px;
 `;
@@ -94,7 +94,7 @@ export const Username = styled.div`
 export const RecentScoreList = styled.div`
     position:absolute;
     left: 45vw;
-    top: 50vh;
+    top: 60vh;
     width: 200px;
     text-align: center;
 `;

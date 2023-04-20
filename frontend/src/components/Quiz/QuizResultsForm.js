@@ -67,7 +67,7 @@ export default class QuizResultsForm extends React.Component {
    * @returns Timestamp string suitable for quiz results
    */
   createPostQuizTimestamp() {
-    return new Date().toLocaleDateString(undefined, {
+    return new Date().toISOString(undefined, {
       day: "numeric",
       month: "numeric",
       year: "numeric",

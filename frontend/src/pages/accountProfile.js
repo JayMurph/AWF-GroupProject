@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ProfileContainer, DivLine, ErrorLabel, Button} from "../StyledElements.js";
 import {API_URL}  from '../App.js';
 import { GetSessionUserId, GetSessionAccessToken } from '../Storage.js';
@@ -10,14 +10,20 @@ function Profile() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
-  const [newName, setNewName] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const [showNameInput, setShowNameInput] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showEmailInput, setShowEmailInput] = useState(false);
 
   const [errorText, setErrorText] = useState("");
+
+  const inputElement = useRef(null);
+
+  useEffect(() => {
+    if (inputElement.current) {
+      inputElement.current.focus();
+    }
+  }, []);
 
   try {
     fetch(API_URL + "/profile/" +  GetSessionUserId()).then(
@@ -28,7 +34,7 @@ function Profile() {
         res.json().then(data => {
           if (data != null)
           setUsername(data.userName);
-          setName(data.name);
+          setName(data.firstName + " " + data.lastName);
           setEmail(data.email);
         });
       }
@@ -62,18 +68,6 @@ function Profile() {
   }; 
 
 
-  const ChangeName = () => (
-    <DivLine>
-        <h4>New name: </h4>  
-        <input
-          type = "text"
-          value={newName}
-          onChange={(event) => setNewName(event.target.value)}
-        />            
-        <Button onClick={()=>handleSubmit("name:" + newName)}>Submit</Button>
-    </DivLine>
-  ) 
-  
   const ChangeUsername = () => (
     <DivLine>
         <h4>New username: </h4>  
@@ -81,6 +75,7 @@ function Profile() {
           type = "text"
           value={newUsername}
           onChange={(event) => setNewUsername(event.target.value)}
+          ref={inputElement}
         />            
         <Button onClick={()=>handleSubmit("userName:"+ newUsername)}>Submit</Button>
     </DivLine>
@@ -93,6 +88,8 @@ function Profile() {
           type = "text"
           value={newEmail}
           onChange={(event) => setNewEmail(event.target.value)}
+          autofocus
+          onFocus={e => e.currentTarget.select()}
         />            
         <Button onClick={()=>handleSubmit("email:" + newEmail)}>Submit</Button>
     </DivLine>
@@ -105,9 +102,7 @@ function Profile() {
      
         <DivLine>    
           <span>Name: {name}</span>                       
-          <button type="button" onClick={()=>setShowNameInput(!showNameInput)}>Change</button>
         </DivLine>
-        { showNameInput ? <ChangeName /> : null }
 
         <DivLine>       
           <span>Username: {username}</span>                       
