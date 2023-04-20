@@ -200,10 +200,10 @@ function App() {
                 }
               />
               <Route path="/logout" element={<Logout onLogout={logout} />} />
+              <Route path="/profile/*" element={<AccountHome />} />
             </>
           ) : (
             <>
-              <Route path="/profile/*" element={<AccountHome />} />
               <Route
                 path="/login"
                 element={<Login onLogin={handleAuthentication} />}
