@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import "./styles.module.css";
-import QuestionsSequence from "./components/Quiz/QuestionsSequence";
 
 export const CenteredDiv = styled.div`
   display: flex;

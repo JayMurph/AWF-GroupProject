@@ -1,7 +1,7 @@
 import React from "react";
 import { API_URL } from "../App";
 import CategorySelection from "../components/Quiz/CategorySelection";
-import { Button, LeaderboardHeaderContainer, PageHeader, QuestionSequenceHeaderContainer } from "../StyledElements";
+import { Button, LeaderboardHeaderContainer, PageHeader } from "../StyledElements";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import { GetCategoryQuizResultsPage } from "../ApiCalls";
 

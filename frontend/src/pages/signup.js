@@ -5,7 +5,6 @@ import {
   ErrorLabel,
   NoBreakScrollDiv,
   PageHeader,
-  ScrollDiv,
 } from "../StyledElements.js";
 import { SignUpUser } from "../ApiCalls.js";
 
