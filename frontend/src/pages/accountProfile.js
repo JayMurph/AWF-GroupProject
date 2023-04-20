@@ -20,7 +20,7 @@ function Profile() {
   const [errorText, setErrorText] = useState("");
 
   try {
-    fetch(API_URL + "/profile/" +  GetSessionUserId).then(
+    fetch(API_URL + "/profile/" +  GetSessionUserId()).then(
       res => {
         if (res.status !== 200) {
           return;
@@ -41,11 +41,11 @@ function Profile() {
   const handleSubmit =  async (e, stringValue) => {
     e.preventDefault();
     try {
-      let res = await fetch(API_URL + "/profile/" +  GetSessionUserId, {
+      let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json", 
-        "Authorization": "Bearer " + GetSessionAccessToken
+        "Authorization": "Bearer " + GetSessionAccessToken()
       },
       body: JSON.stringify({
           stringValue  

@@ -15,14 +15,14 @@ function ChangePassword() {
     }
     else if(password1 === password2){
         try {
-          let res = await fetch(API_URL + "/profile/" +  GetSessionUserId, {
+          let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
             method: "PUT",
             headers: { 
               "Content-Type": "application/json", 
-              "Authorization": "Bearer " + GetSessionAccessToken
+              "Authorization": "Bearer " + GetSessionAccessToken()
             },
             body: JSON.stringify({
-              old_password: GetSessionPassword,
+              old_password: GetSessionPassword(),
               new_password: password1
             })
           });

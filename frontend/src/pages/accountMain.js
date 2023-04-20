@@ -13,7 +13,7 @@ function AccountMain() {
 
 
   try {
-      fetch(API_URL + "/profile/" +  GetSessionUserId).then(
+      fetch(API_URL + "/profile/" +  GetSessionUserId()).then(
       res => {
         if (res.status !== 200) {
           return;
