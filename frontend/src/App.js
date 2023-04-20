@@ -6,6 +6,7 @@ import Home from "./pages";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Quiz from "./pages/quiz";
+import AccountHome from "./pages/accountHome";
 import {
   GetSessionAccessToken,
   GetSessionUserId,
@@ -199,6 +200,7 @@ function App() {
                 }
               />
               <Route path="/logout" element={<Logout onLogout={logout} />} />
+              <Route path="/profile/*" element={<AccountHome />} />
             </>
           ) : (
             <>

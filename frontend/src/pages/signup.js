@@ -8,6 +8,11 @@ import {
 } from "../StyledElements.js";
 import { SignUpUser } from "../ApiCalls.js";
 
+export const MIN_USERNAME_LENGTH = 2;
+export const MAX_USERNAME_LENGTH = 12;
+export const MIN_PASSWORD_LENGTH = 4;
+export const MAX_PASSWORD_LENGTH = 12;
+
 function SignUp(props) {
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState("");

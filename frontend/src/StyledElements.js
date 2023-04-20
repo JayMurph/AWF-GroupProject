@@ -9,6 +9,25 @@ export const CenteredDiv = styled.div`
   align-items: center;
 `;
 
+
+export const PadLabel = styled.label`
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+`;
+
+export const ChangePasswordDiv = styled.div`
+    position:absolute;
+    left: 40%;
+    top: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+`;
+
+
 export const PageHeader = styled.h1`
   text-align: center;
   min-width: 0px;
@@ -49,11 +68,63 @@ export const LeaderboardHeaderContainer = styled(QuestionSequenceHeaderContainer
 `
 
 export const AppContentContainer = styled(FlexColumnContainer)`
-  height: 88vh;
+  height: 90vh;
 `;
 export const NoBreakScrollDiv = styled(CenteredDiv)`
   display: grid;
   overflow-y: auto;
+`;
+
+export const AccountContentContainer = styled.div`
+    float: right;
+    height:100%;
+    width:80vw;
+`;
+
+export const ImageBox = styled.div`
+    position:absolute;
+    left: 25vw;
+    top: 20vh;
+    width: 200px;
+    height:230px;
+`;
+
+export const ScoreTable = styled.table`   
+    position:absolute;
+    left: 40vw;
+    top: 40vh;
+    text-align: center;
+    width:600px;
+`;
+
+export const Username = styled.div`
+    position:absolute;
+    top: 170px;
+    width: 200px;
+    text-align: center;
+`;
+
+export const RecentScoreList = styled.div`
+    position:absolute;
+    left: 45vw;
+    top: 60vh;
+    width: 200px;
+    text-align: center;
+`;
+
+export const ProfileContainer = styled.div`
+    position:absolute;
+    left: 35vw;
+    top: 30vh;
+    width: 40vw;
+`;
+
+export const DivLine = styled.div`
+    position: relative;
+    padding-bottom: 20px; 
+    width:100%; 
+    display: flex;
+    justify-content: space-between;
 `;
 
 export const ScrollDiv = styled(CenteredDiv)`

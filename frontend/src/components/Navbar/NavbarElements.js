@@ -14,6 +14,20 @@ export const Header = styled.div`
   z-index: 12;
 `;
 
+export const ProfileMenu = styled.div`
+	float: left;
+	background:var(--navBackground); 
+	display: flex;
+	flex-direction:column;
+	height: 100%;
+	width: 230px;
+
+  @media screen and (max-width: 640px) {
+    width: 150px;
+  }
+`;
+
+
 export const Title = styled.h1`
   padding-left: 3vw;
   font-size: 4vh;
@@ -21,6 +35,33 @@ export const Title = styled.h1`
   @media screen and (max-width: 640px) {
     display: none;
   }
+`;
+
+export const TitleAccount = styled.h2`
+	position:absolute;
+	left: 48px;
+  top: 15vh;
+`;
+
+export const MenuAccount = styled.div`
+	position:absolute;
+	left: 48px;
+  top: 30vh;
+`;
+
+export const ButtonAccount = styled(Link)`
+	color: var(--navText);
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	padding-top:2vh;
+	padding-bottom:2vh;
+	height: 90%;
+	font-size: 120%;
+	cursor: pointer;
+	&.active {
+		color: var(--navTextActive)
+	}
 `;
 
 export const Nav = styled.nav`
