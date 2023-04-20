@@ -3,19 +3,11 @@ import {
   LeaderboardIndex,
   LeaderboardItemContainer,
   LeaderboardScore,
+  LeaderboardUsername,
 } from "../../StyledElements";
 import { GetProfile } from "../../ApiCalls";
 
 const MAX_SCORE = 10000;
-const MIN_WIDTH_PERCENTAGE = 25;
-const MIN_HEIGHT = 80;
-const MIN_SCORE_FONT_SIZE = 32;
-const MIN_USERNAME_FONT_SIZE = 16;
-const FOCUS_COLOR = "#E4D00A";
-const TOP_SCORES_COUNT = 5;
-
-const TOP_HEIGHT_INC = 15;
-const TOP_FONT_SIZE_INC = 8;
 
 export default class LeaderboardItem extends React.Component {
   constructor(props) {
@@ -50,54 +42,54 @@ export default class LeaderboardItem extends React.Component {
   }
 
   /**
-   * Calculates and returns size values for item depdending on its score value
-   * and idx
-   * @returns {width, height, scoreFontSize, userNameFontSize}
+   * Creates appropriate class names for the CSS LeaderboardItem given its current state
+   * @returns String containing class names for the CSS LeaderboardItem
    */
-  calculateSizeAttributes() {
-    let width = (this.state.score / MAX_SCORE) * 100;
-    width = width < MIN_WIDTH_PERCENTAGE ? MIN_WIDTH_PERCENTAGE : width;
+  getItemClassNames() {
+    let classNames = "leaderboardItem";
 
-    let height =
-      this.state.idx >= TOP_SCORES_COUNT
-        ? MIN_HEIGHT
-        : MIN_HEIGHT + TOP_HEIGHT_INC * (TOP_SCORES_COUNT - this.state.idx);
+    switch (this.state.idx) {
+      case 1:
+        classNames += "One";
+        break;
+      case 2:
+        classNames += "Two";
+        break;
+      case 3:
+        classNames += "Three";
+        break;
+      case 4:
+        classNames += "Four";
+        break;
+      case 5:
+        classNames += "Five";
+        break;
+      default:
+        break;
+    }
 
-    let scoreFontSize =
-      this.state.idx >= TOP_SCORES_COUNT
-        ? MIN_SCORE_FONT_SIZE
-        : MIN_SCORE_FONT_SIZE + TOP_FONT_SIZE_INC * (TOP_SCORES_COUNT - this.state.idx);
+    if (this.state.giveFocus) {
+      classNames += " focusLeaderboardItem";
+    }
 
-      let userNameFontSize = 
-        this.state.idx >= TOP_SCORES_COUNT
-          ? MIN_USERNAME_FONT_SIZE  
-          : MIN_USERNAME_FONT_SIZE + TOP_FONT_SIZE_INC * (TOP_SCORES_COUNT - this.state.idx);
-    return { width, height, scoreFontSize, userNameFontSize};
+    return classNames;
   }
 
   render() {
-    const { width, height, scoreFontSize, userNameFontSize } = this.calculateSizeAttributes();
+    let width = (this.state.score / MAX_SCORE) * 100;
 
     return (
-      <>
-        <LeaderboardItemContainer
-          ref={this.containerRef}
-          style={{
-            width: `${width}%`,
-            alignSelf: "start",
-            height: `${height}px`,
-            background: this.state.giveFocus && FOCUS_COLOR,
-          }}
-        >
-          <LeaderboardIndex style={{ fontSize: `${scoreFontSize}px` }}>
-            {this.state.idx}
-          </LeaderboardIndex>
-          <div style={{ fontSize: `${userNameFontSize}px` }}>{this.state.username}</div>
-          <LeaderboardScore style={{ fontSize: `${scoreFontSize}px` }}>
-            {this.state.score}
-          </LeaderboardScore>
-        </LeaderboardItemContainer>
-      </>
+      <LeaderboardItemContainer
+        className={this.getItemClassNames()}
+        ref={this.containerRef}
+        style={{
+          width: `${width}%`,
+        }}
+      >
+        <LeaderboardIndex> {this.state.idx} </LeaderboardIndex>
+        <LeaderboardUsername> {this.state.username}</LeaderboardUsername>
+        <LeaderboardScore> {this.state.score} </LeaderboardScore>
+      </LeaderboardItemContainer>
     );
   }
 }

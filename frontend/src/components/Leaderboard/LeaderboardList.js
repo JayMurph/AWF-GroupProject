@@ -1,6 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { LeaderboardContainer } from "../../StyledElements";
+import { InfiniteListOuter, LeaderboardContainer } from "../../StyledElements";
 import { GetCategoryQuizResultsPage } from "../../ApiCalls";
 import { FlexColumnContainer, CenteredDiv } from "../../StyledElements";
 import LeaderboardItem from "./LeaderboardItem";
@@ -78,11 +78,11 @@ export default class LeaderboardList extends React.Component {
 
   render() {
     return (
-      <FlexColumnContainer style={{ overflow: "clip" }}>
+      <InfiniteListOuter>
         <FlexColumnContainer
           style={{
             overflow: "auto",
-            height: "90%",
+            height: "100%",
             width: "90%",
             alignSelf: "center",
           }}
@@ -126,7 +126,7 @@ export default class LeaderboardList extends React.Component {
             </LeaderboardContainer>
           </InfiniteScroll>
         </FlexColumnContainer>
-      </FlexColumnContainer>
+      </InfiniteListOuter>
     );
   }
 }

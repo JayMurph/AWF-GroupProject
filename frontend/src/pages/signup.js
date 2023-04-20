@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignupForm from "../components/SignupForm.js";
-import { ErrorLabel, PageHeader, ScrollDiv } from "../StyledElements.js";
+import {
+  ErrorLabel,
+  NoBreakScrollDiv,
+  PageHeader,
+  ScrollDiv,
+} from "../StyledElements.js";
 import { SignUpUser } from "../ApiCalls.js";
 
 function SignUp(props) {
@@ -16,11 +21,11 @@ function SignUp(props) {
   }, [userData, props, navigate]);
 
   const formSubmit = (fields) => {
-    if(fields.password_confirm !== fields.password){
+    if (fields.password_confirm !== fields.password) {
       setErrorText("Error: Passwords do not match!");
       return;
     }
-    
+
     SignUpUser(
       fields.email,
       fields.user_name,
@@ -38,11 +43,11 @@ function SignUp(props) {
   };
 
   return (
-    <ScrollDiv>
+    <NoBreakScrollDiv>
       <PageHeader>Create a New Account</PageHeader>
       <SignupForm onSubmit={formSubmit}></SignupForm>
       <ErrorLabel>{errorText}</ErrorLabel>
-    </ScrollDiv>
+    </NoBreakScrollDiv>
   );
 }
 
