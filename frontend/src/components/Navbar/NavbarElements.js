@@ -19,8 +19,12 @@ export const ProfileMenu = styled.div`
 	background:var(--navBackground); 
 	display: flex;
 	flex-direction:column;
-	height: 100vh;
-	width: 20vw;
+	height: 100%;
+	width: 230px;
+
+  @media screen and (max-width: 640px) {
+    width: 150px;
+  }
 `;
 
 
@@ -35,14 +39,14 @@ export const Title = styled.h1`
 
 export const TitleAccount = styled.h2`
 	position:absolute;
-	left: 5vw;
-    top: 15vh;
+	left: 48px;
+  top: 15vh;
 `;
 
 export const MenuAccount = styled.div`
 	position:absolute;
-	left: 5vw;
-    top: 30vh;
+	left: 48px;
+  top: 30vh;
 `;
 
 export const ButtonAccount = styled(Link)`

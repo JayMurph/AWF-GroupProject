@@ -68,7 +68,7 @@ export const LeaderboardHeaderContainer = styled(QuestionSequenceHeaderContainer
 `
 
 export const AppContentContainer = styled(FlexColumnContainer)`
-  height: 88vh;
+  height: 90vh;
 `;
 export const NoBreakScrollDiv = styled(CenteredDiv)`
   display: grid;
@@ -77,7 +77,7 @@ export const NoBreakScrollDiv = styled(CenteredDiv)`
 
 export const AccountContentContainer = styled.div`
     float: right;
-    height:80vh;
+    height:100%;
     width:80vw;
 `;
 
