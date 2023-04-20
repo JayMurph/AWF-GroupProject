@@ -8,8 +8,6 @@ import {
 import { GetProfile } from "../../ApiCalls";
 
 const MAX_SCORE = 10000;
-const MIN_WIDTH_PERCENTAGE = 25;
-const FOCUS_COLOR = "#E4D00A";
 
 export default class LeaderboardItem extends React.Component {
   constructor(props) {
@@ -43,16 +41,49 @@ export default class LeaderboardItem extends React.Component {
     this.containerRef.current.scrollIntoView(true);
   }
 
+  /**
+   * Creates appropriate class names for the CSS LeaderboardItem given its current state
+   * @returns String containing class names for the CSS LeaderboardItem
+   */
+  getItemClassNames() {
+    let classNames = "leaderboardItem";
+
+    switch (this.state.idx) {
+      case 1:
+        classNames += "One";
+        break;
+      case 2:
+        classNames += "Two";
+        break;
+      case 3:
+        classNames += "Three";
+        break;
+      case 4:
+        classNames += "Four";
+        break;
+      case 5:
+        classNames += "Five";
+        break;
+      default:
+        break;
+    }
+
+    if (this.state.giveFocus) {
+      classNames += " focusLeaderboardItem";
+    }
+
+    return classNames;
+  }
+
   render() {
     let width = (this.state.score / MAX_SCORE) * 100;
-    width = width < MIN_WIDTH_PERCENTAGE ? MIN_WIDTH_PERCENTAGE : width;
 
     return (
       <LeaderboardItemContainer
+        className={this.getItemClassNames()}
         ref={this.containerRef}
         style={{
           width: `${width}%`,
-          background: this.state.giveFocus && FOCUS_COLOR,
         }}
       >
         <LeaderboardIndex> {this.state.idx} </LeaderboardIndex>

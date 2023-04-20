@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import "./styles.module.css";
+import QuestionsSequence from "./components/Quiz/QuestionsSequence";
 
 export const CenteredDiv = styled.div`
   display: flex;
@@ -43,6 +44,10 @@ export const QuestionSequenceHeaderContainer = styled.div`
     font-size: 2.3vw;
   }
 `;
+
+export const LeaderboardHeaderContainer = styled(QuestionSequenceHeaderContainer)`
+  width:100%
+`
 
 export const AppContentContainer = styled(FlexColumnContainer)`
   height: 88vh;
@@ -178,114 +183,150 @@ export const LeaderboardItemContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
-  background: lightGray;
-  border-radius: 20px;
   align-self:start;
+
+  border-radius: 20px;
+  @media (max-width:640px) or (max-height:640px){
+    border-radius: 5px;
+  }
 `;
 
 export const LeaderboardIndex = styled.div`
-  font-size: 48px;
+  font-size:32px;
   font-weight: bold;
-  margin: 2vw;
+  margin-right: 1.4vw;
+  margin-left: 1.4vw;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-size:32px;
+  @media (max-width:640px) or (max-height:640px){
+    font-size:22px;
+  }
 `;
 
 export const LeaderboardScore = styled.div`
-  margin-right: 2vw;
+  margin-right: 1vw;
   margin-left: auto;
-  font-size: 48px;
+  padding-left: 2vw;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-size:32px;
+  @media (max-width:640px) or (max-height:640px){
+    font-size:22px;
+  }
 `;
 
 export const LeaderboardUsername = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-size:16px;
+`
+
+export const InfiniteListOuter = styled(FlexColumnContainer)`
+
+overflow:clip;
+
+margin-top:1vh;
+margin-bottom:1vh;
+
+@media (max-height:420px) {
+  margin-top:3vh;
+  margin-bottom:2vh;
+}
 `
 
 export const LeaderboardContainer = styled(CenteredDiv)`
-  >* {
-    height:80px;
-  }
-  >* > ${LeaderboardIndex} {
-    font-size:32px;
-  }
-  >* > ${LeaderboardScore} {
-    font-size:32px;
-  }
-  >* > ${LeaderboardUsername} {
-    font-size:16px;
+
+  @media (min-width: 641px) and (min-height:641px){
+    >* {
+      height:55px;
+      min-width:min-content;
+    }
+
+    >div:nth-child(1) {
+      height:100px
+    }
+    >div:nth-child(1) > ${LeaderboardIndex} {
+      font-size:72px;
+    }
+    >div:nth-child(1) > ${LeaderboardScore} {
+      font-size:72px;
+    }
+    >div:nth-child(1) > ${LeaderboardUsername} {
+      font-size:64px;
+    }
+
+    >div:nth-child(2) {
+      height:90px
+    }
+    >div:nth-child(2) > ${LeaderboardIndex} {
+      font-size:64px;
+    }
+    >div:nth-child(2) > ${LeaderboardScore} {
+      font-size:64px;
+    }
+    >div:nth-child(2) > ${LeaderboardUsername} {
+      font-size:56px;
+    }
+
+    >div:nth-child(3) {
+      height:80px
+    }
+    >div:nth-child(3) > ${LeaderboardIndex} {
+      font-size:56px;
+    }
+    >div:nth-child(3) > ${LeaderboardScore} {
+      font-size:56px;
+    }
+    >div:nth-child(3) > ${LeaderboardUsername} {
+      font-size:48px;
+    }
+
+    >div:nth-child(4) {
+      height:70px
+    }
+    >div:nth-child(4) > ${LeaderboardIndex} {
+      font-size:48px;
+    }
+    >div:nth-child(4) > ${LeaderboardScore} {
+      font-size:48px;
+    }
+    >div:nth-child(4) > ${LeaderboardUsername} {
+      font-size:32px;
+    }
+
+    >div:nth-child(5) {
+      height:60px
+    }
+    >div:nth-child(5) > ${LeaderboardIndex} {
+      font-size:40px;
+    }
+    >div:nth-child(5) > ${LeaderboardScore} {
+      font-size:40px;
+    }
+    >div:nth-child(5) > ${LeaderboardUsername} {
+      font-size:24px;
+    }
   }
 
-  >div:nth-child(1) {
-    height:155px
-  }
-  >div:nth-child(1) > ${LeaderboardIndex} {
-    font-size:72px;
-  }
-  >div:nth-child(1) > ${LeaderboardScore} {
-    font-size:72px;
-  }
-  >div:nth-child(1) > ${LeaderboardUsername} {
-    font-size:64px;
+  @media (max-width:640px) or (max-height:640px){
+    >* {
+      height:35px;
+      min-width:min-content;
+    }
   }
 
-  >div:nth-child(2) {
-    height:140px
-  }
-  >div:nth-child(2) > ${LeaderboardIndex} {
-    font-size:64px;
-  }
-  >div:nth-child(2) > ${LeaderboardScore} {
-    font-size:64px;
-  }
-  >div:nth-child(2) > ${LeaderboardUsername} {
-    font-size:56px;
-  }
-
-  >div:nth-child(3) {
-    height:125px
-  }
-  >div:nth-child(3) > ${LeaderboardIndex} {
-    font-size:56px;
-  }
-  >div:nth-child(3) > ${LeaderboardScore} {
-    font-size:56px;
-  }
-  >div:nth-child(3) > ${LeaderboardUsername} {
-    font-size:48px;
-  }
-
-  >div:nth-child(4) {
-    height:110px
-  }
-  >div:nth-child(4) > ${LeaderboardIndex} {
-    font-size:48px;
-  }
-  >div:nth-child(4) > ${LeaderboardScore} {
-    font-size:48px;
-  }
-  >div:nth-child(4) > ${LeaderboardUsername} {
-    font-size:32px;
-  }
-
-  >div:nth-child(5) {
-    height:95px
-  }
-  >div:nth-child(5) > ${LeaderboardIndex} {
-    font-size:40px;
-  }
-  >div:nth-child(5) > ${LeaderboardScore} {
-    font-size:40px;
-  }
-  >div:nth-child(5) > ${LeaderboardUsername} {
-    font-size:24px;
-  }
 
   row-gap: 24px;
+  @media (max-width:640px) or (max-height:640px){
+    row-gap: 16px;
+  }
 `;
+

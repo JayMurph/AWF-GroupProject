@@ -12,3 +12,26 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.leaderboardItem{
+  background: lightgray;
+}
+.focusLeaderboardItem {
+  border: 0.8vh solid green;
+}
+
+.leaderboardItemOne {
+  background: gold;
+}
+.leaderboardItemTwo {
+  background: silver;
+}
+.leaderboardItemThree {
+  background: #cd7f32;
+}
+.leaderboardItemFour {
+  background: #7fffd4;
+}
+.leaderboardItemFive {
+  background: pink;
+}
