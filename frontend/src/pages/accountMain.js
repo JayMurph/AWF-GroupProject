@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState,useEffect  } from 'react';
 import { ImageBox, Username, ScoreTable, RecentScoreList} from "../StyledElements.js";
 import {API_URL}  from '../App.js';
 import { GetSessionUserId } from '../Storage.js';
@@ -11,7 +11,7 @@ function AccountMain() {
   const [total, setTotal] = useState();
   const [recentScores, setRecentScores] = useState(null);
 
-
+  useEffect(() => {
   try {
       fetch(API_URL + "/profile/" +  GetSessionUserId()).then(
       res => {
@@ -34,7 +34,7 @@ function AccountMain() {
   } catch (err) {
     console.log(err);
   }
-
+}, []);
 
     return (
       <> 

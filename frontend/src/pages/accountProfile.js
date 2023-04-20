@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { ProfileContainer, DivLine, ErrorLabel, Button} from "../StyledElements.js";
 import {API_URL}  from '../App.js';
 import { GetSessionUserId, GetSessionPassword, GetSessionAccessToken } from '../Storage.js';
@@ -17,6 +17,7 @@ function Profile() {
 
   const [errorText, setErrorText] = useState("");
   
+  useEffect(() => {
   try {
     fetch(API_URL + "/profile/" +  GetSessionUserId()).then(
       res => {
@@ -34,7 +35,7 @@ function Profile() {
   } catch (err) {
     console.log(err);
   }
-
+}, [username, email]);
 
   const handleSubmitUsername =  async () => {
     console.log(newUsername);

@@ -14,8 +14,6 @@ function ChangePassword() {
     }
     else if(password1 === password2){
         try {
-          console.log(GetSessionUserId());
-    console.log(GetSessionAccessToken()); 
           let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
             method: "PUT",
             headers: { 
