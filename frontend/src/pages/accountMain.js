@@ -21,9 +21,10 @@ function AccountMain() {
         res.json().then(data => {
           if (data != null)
           {
+            console.log(data.totalScore);
             setUsername(data.userName);
             setHighest(data.highestScore);
-            setAvarage(Math.round(data.totalScore/data.quizzesCompleted));
+            setAvarage(data.totalScore/data.quizzesCompleted);
             setTotal(data.totalScore);
             setRecentScores(data.recentScores);
           }

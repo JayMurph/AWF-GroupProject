@@ -10,10 +10,12 @@ function ChangePassword() {
 
   const handleSubmit =  async () => {   
     if (password1.length < 6 || password2.length < 6) {
-      setErrorText("Invalid input!");
+      setErrorText("No less than 6 chars!");
     }
     else if(password1 === password2){
         try {
+          console.log(GetSessionUserId());
+    console.log(GetSessionAccessToken()); 
           let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
             method: "PUT",
             headers: { 

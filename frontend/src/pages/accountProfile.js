@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { ProfileContainer, DivLine, ErrorLabel, Button} from "../StyledElements.js";
 import {API_URL}  from '../App.js';
-import { GetSessionUserId, GetSessionAccessToken } from '../Storage.js';
+import { GetSessionUserId, GetSessionPassword, GetSessionAccessToken } from '../Storage.js';
 
 
 function Profile() {
@@ -38,7 +38,7 @@ function Profile() {
 
 
   const handleSubmit =  async (stringValue) => {
-    console.log(GetSessionUserId());
+    console.log(stringValue);
     console.log(GetSessionAccessToken()); 
     try {
       let res = await fetch(API_URL + "/profile/" +  GetSessionUserId(), {
@@ -71,7 +71,7 @@ function Profile() {
           onChange={(event) => setNewUsername(event.target.value)}
           autoFocus          
         />            
-        <Button onClick={()=>handleSubmit("userName:"+ newUsername)}>Submit</Button>
+        <Button onClick={()=>handleSubmit("userName:" + newUsername + ", old_password:" + GetSessionPassword())}>Submit</Button>
     </DivLine>
   )  
 
@@ -84,7 +84,7 @@ function Profile() {
           onChange={(event) => setNewEmail(event.target.value)}
           autoFocus
         />            
-        <Button onClick={()=>handleSubmit("email:" + newEmail)}>Submit</Button>
+        <Button onClick={()=>handleSubmit("email:" + newEmail + ", old_password:" + GetSessionPassword())}>Submit</Button>
     </DivLine>
   )  
 
