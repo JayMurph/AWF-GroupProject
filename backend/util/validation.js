@@ -6,10 +6,10 @@ function validateUserEntry(requestBody) {
   const schema = Joi.object({
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    userName: Joi.string().required(),
+    userName: Joi.string().required().min(2).max(12),
     email: Joi.string().email().required(),
     birthDate: Joi.string().required(),
-    password: Joi.string().required(),
+    password: Joi.string().required().min(4).max(12),
   });
 
     return schema.validate(requestBody);

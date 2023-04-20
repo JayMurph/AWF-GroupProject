@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "undefined/subscriptions/53d33c41-0a8c-4776-a5a3-55e4de1e47cc/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/AdvWebFrameFinal",
-    "appService.deploySubpath": "backend"
-}
