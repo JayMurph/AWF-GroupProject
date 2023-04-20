@@ -30,12 +30,12 @@ export default class SignupForm extends React.Component {
     this.form = new ReactFormInputValidation(this);
     this.form.useRules({
       email: "required|email",
-      user_name: "required|alpha_dash",
-      password: "required|alpha_dash",
-      password_confirm: "required|alpha_dash",
+      user_name: "required|alpha_dash|between:2,12",
+      password: "required|alpha_dash|between:4,12",
+      password_confirm: "required|alpha_dash|between:4,12",
       first_name: "required|alpha",
       last_name: "required|alpha",
-      birth_date: "required|date",
+      birth_date: "required|date"
     });
 
     this.form.onformsubmit = props.onSubmit;
