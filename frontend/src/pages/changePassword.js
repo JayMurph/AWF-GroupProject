@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FormTextbox, PadLabel, ErrorLabel, Button, ChangePasswordDiv, ButtonDiv } from "../StyledElements.js";
-import { GetUserId } from '../Storage.js';
-
+import { API_URL}  from '../App.js';
+import { GetSessionUserId, GetSessionPassword, GetSessionAccessToken } from '../Storage.js';
 
 function ChangePassword() {
   const [password1, setPassword1] = useState("");
@@ -15,10 +15,14 @@ function ChangePassword() {
     }
     else if(password1 === password2){
         try {
-          let res = await fetch("https://127.0.0.1/3000/profile/" + GetUserId, {
+          let res = await fetch(API_URL + "/profile/" +  GetSessionUserId, {
             method: "PUT",
+            headers: { 
+              "Content-Type": "application/json", 
+              "Authorization": "Bearer " + GetSessionAccessToken
+            },
             body: JSON.stringify({
-              old_password: "oldPassword",
+              old_password: GetSessionPassword,
               new_password: password1
             })
           });

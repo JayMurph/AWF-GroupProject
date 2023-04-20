@@ -12,7 +12,7 @@ return (
 	<AccountContentContainer>
 		<Routes>
 		  <Route path="/" element={<ProfileLayout/>} >
-			<Route index element={<AccountMain/>} />
+			<Route exact path="/" element={<AccountMain/>} />
 			<Route path='/details' element={<Profile/>} />
 			<Route path='/changePassword' element={<ChangePassword/>} />
 		  </Route>

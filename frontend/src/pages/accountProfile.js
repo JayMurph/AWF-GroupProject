@@ -1,28 +1,26 @@
 import React from 'react';
 import { useState } from 'react';
 import { ProfileContainer, DivLine, ErrorLabel, Button} from "../StyledElements.js";
+import {API_URL}  from '../App.js';
+import { GetSessionUserId, GetSessionAccessToken } from '../Storage.js';
+
 
 function Profile() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
-
 
   const [newName, setNewName] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const [newBirthday, setNewBirthday] = useState("");
   const [showNameInput, setShowNameInput] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showEmailInput, setShowEmailInput] = useState(false);
-  const [showBirthInput, setShowBirthInput] = useState(false);
-
 
   const [errorText, setErrorText] = useState("");
 
   try {
-    fetch("https:/127.0.0.1/3000/profile").then(
+    fetch(API_URL + "/profile/" +  GetSessionUserId).then(
       res => {
         if (res.status !== 200) {
           return;
@@ -32,7 +30,6 @@ function Profile() {
           setUsername(data.userName);
           setName(data.name);
           setEmail(data.email);
-          setBirthday(data.birthDate);
         });
       }
     );
@@ -44,8 +41,12 @@ function Profile() {
   const handleSubmit =  async (e, stringValue) => {
     e.preventDefault();
     try {
-      let res = await fetch("https://127.0.0.1/3000/profile/", {
+      let res = await fetch(API_URL + "/profile/" +  GetSessionUserId, {
       method: "PUT",
+      headers: { 
+        "Content-Type": "application/json", 
+        "Authorization": "Bearer " + GetSessionAccessToken
+      },
       body: JSON.stringify({
           stringValue  
         })
@@ -97,17 +98,6 @@ function Profile() {
     </DivLine>
   )  
 
-  const ChangeBirthday = () => (
-    <DivLine>
-        <h4>New birthday: </h4>  
-        <input
-          type = "text"
-          value={newBirthday}
-          onChange={(event) => setNewBirthday(event.target.value)}
-        />            
-        <Button onClick={()=>handleSubmit("birthDate:" + newBirthday)}>Submit</Button>
-    </DivLine>
-  )  
 
   return (
     <>
@@ -130,12 +120,6 @@ function Profile() {
           <button type="button" onClick={()=>setShowEmailInput(!showEmailInput)}>Change</button>       
         </DivLine>
         { showEmailInput ? <ChangeEmail /> : null }
-
-        <DivLine>       
-          <span>Birthday: {birthday}</span>                          
-          <button type="button" onClick={()=>setShowBirthInput(!showBirthInput)}>Change</button>
-        </DivLine>
-        { showBirthInput ? <ChangeBirthday /> : null }
 
         <ErrorLabel>{errorText}</ErrorLabel>
       
