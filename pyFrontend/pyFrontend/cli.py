@@ -14,6 +14,7 @@ import random
 
 from pyFrontend.base import userClass
 from pyFrontend.base import Log, log
+from pyFrontend.base import MAX_RAND_SCORE, MIN_RAND_SCORE
 
 from pyFrontend.util import testConnection, login, logout, getToken, validateToken
 from pyFrontend.util import postScore, signUp, deleteProfile, updateProfile
@@ -67,6 +68,7 @@ def new_score(username: str, password: str, count: str):
         return
 
     user = userClass(username, password)
+    #log(Log.TRACE, f"user obj = {user.userName}, {user.password}")
     ret = login(user)
 
     if ret == False:
@@ -76,7 +78,7 @@ def new_score(username: str, password: str, count: str):
     user.ingestTokens(ret)
 
     for i in range(count):
-        sc = postScore(user, random.randint(1000, 5000), cats[random.randint(0, 3)])
+        sc = postScore(user, random.randint(MIN_RAND_SCORE, MAX_RAND_SCORE), cats[random.randint(0, 3)])
         if sc != 200:
             log(Log.ERROR, f'Something went wrong, status code {sc}')
             return
@@ -98,7 +100,7 @@ def new_score_token(token: str, count):
 
     user = userClass(None, None, token=token)
     for i in range(count):
-        sc = postScore(user, random.randint(1000, 5000), cats[random.randint(0, 3)])
+        sc = postScore(user, random.randint(MIN_RAND_SCORE, MAX_RAND_SCORE), cats[random.randint(0, 3)])
         if sc != 200:
                 log(Log.ERROR, f'Something went wrong, status code {sc}')
                 return

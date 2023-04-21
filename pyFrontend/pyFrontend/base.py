@@ -21,10 +21,13 @@ from colorama import init, Fore, Style
 
 # example constant variable
 NAME = "pyFrontend"
-API_PORT = 3000
-API_BASE_URL = f"http://localhost:{API_PORT}"
+#API_PORT = 3000
+API_BASE_URL = f"https://advwebframefinaldeployment.azurewebsites.net"
 ACCESS_TOKEN_SECRET="4a300ba342e89659250c870751404e98"
 REFRESH_TOKEN_SECRET="958730ab56be8845961d1964f8eb3b35"
+
+MAX_RAND_SCORE = 8750
+MIN_RAND_SCORE = 1000
 
 
 class Log(Enum):
