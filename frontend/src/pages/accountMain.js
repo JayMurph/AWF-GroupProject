@@ -57,21 +57,20 @@ function AccountMain() {
             <Username>{username}</Username>
           </ImageBox>
 
-          <ScoreTable>
-            <tbody>
-              <tr>
-                <td>{highest}</td>
-                <td>{avarage}</td>
-                <td>{total}</td>
-              </tr>
-              <tr>
-                <th>Highest</th>
-                <th>Average</th>
-                <th>Total</th>
-              </tr>
-            </tbody>
-          </ScoreTable>
-        </AccountMainLineContainer>
+      <ScoreTable>
+        <tbody>
+          <tr>
+            <td>{highest}</td>
+            <td>{average}</td>
+            <td>{total}</td>
+          </tr>
+          <tr>
+            <th>Highest</th>
+            <th>Average</th>
+            <th>Total</th>
+          </tr>
+        </tbody>
+      </ScoreTable>
 
         <RecentScoreList>
           <h4>Recent Scores</h4>
