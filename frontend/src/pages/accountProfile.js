@@ -128,7 +128,7 @@ function Profile() {
         </DivLine>
 
         <DivLine>
-          <span>
+          <span style={{wordBreak:"break-all"}}>
             Username: <b>{username}</b>
           </span>
           <Button onClick={() => setShowUsernameInput(!showUsernameInput)}>
