@@ -277,6 +277,14 @@ export const CenteredForm = styled.form`
 export const ErrorLabel = styled(CenteredDiv)`
   classname: "error";
   color: #df0000;
+  font-weight:bold;
+  font-size:18px;
+`;
+
+export const LoadingLabel = styled(CenteredDiv)`
+  classname: "loadingLabel";
+  font-weight:bold;
+  font-size:18px;
 `;
 
 export const QuestionTextHeader = styled.div`
