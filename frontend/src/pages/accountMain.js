@@ -15,7 +15,7 @@ import { GetSessionUserId } from "../Storage.js";
 function AccountMain() {
   const [username, setUsername] = useState();
   const [highest, setHighest] = useState();
-  const [avarage, setAvarage] = useState();
+  const [average, setAverage] = useState();
   const [total, setTotal] = useState();
   const [recentScores, setRecentScores] = useState(null);
 
@@ -30,9 +30,7 @@ function AccountMain() {
             console.log(data.totalScore);
             setUsername(data.userName);
             setHighest(data.highestScore);
-            data.quizzesCompleted !== 0
-              ? setAvarage(parseInt(data.totalScore / data.quizzesCompleted))
-              : setAvarage(0);
+            setAverage(data.scoreAverage);
             setTotal(data.totalScore);
             setRecentScores(data.recentScores);
           }
@@ -56,6 +54,7 @@ function AccountMain() {
             ></img>
             <Username>{username}</Username>
           </ImageBox>
+        </AccountMainLineContainer>
 
       <ScoreTable>
         <tbody>
