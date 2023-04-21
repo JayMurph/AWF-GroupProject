@@ -54,7 +54,6 @@ function AccountMain() {
             ></img>
             <Username>{username}</Username>
           </ImageBox>
-        </AccountMainLineContainer>
 
       <ScoreTable>
         <tbody>
@@ -70,6 +69,7 @@ function AccountMain() {
           </tr>
         </tbody>
       </ScoreTable>
+        </AccountMainLineContainer>
 
         <RecentScoreList>
           <h4>Recent Scores</h4>

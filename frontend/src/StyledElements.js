@@ -122,20 +122,32 @@ export const ProfileOuterContainer = styled.div`
   display:flex;
   flex-direction:column;
   align-items:center;
+  overflow-y: auto;
+  overflow-x:hidden;
 `;
 
 export const AccountOuterContainer = styled.div`
   height: 100%;
   width: 100%;
+  overflow-y: auto;
 `;
 
 export const ProfileContainer = styled.div`
+  display:flex;
+  flex-direction:column;
   width:100%;
   max-width:  640px;
+  margin-left: 20px;
+  margin-right: 20px;
+  height:min-content;
 
   margin-top:72px;
   @media (max-height:420px) {
     margin-top:32px;
+  }
+  @media (max-width:640px) {
+    height:100%;
+    justify-content:space-evenly;
   }
 `;
 
@@ -166,7 +178,6 @@ export const AccountMainLineContainer = styled.div`
   width: 80vw;
   display: flex;
   flex-direction: row;
-  align-items: top;
   height: min-content;
   @media (max-width: 1000px) {
     align-items: center;
