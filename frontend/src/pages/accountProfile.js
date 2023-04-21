@@ -5,6 +5,9 @@ import {
   DivLine,
   ErrorLabel,
   Button,
+  ProfileScrollContainer,
+  VerticalScrollContainer,
+  ProfileOuterContainer,
 } from "../StyledElements.js";
 import { API_URL } from "../App.js";
 import {
@@ -66,7 +69,8 @@ function Profile() {
           }),
         });
         if (res.status === 200) {
-          setErrorText("Updated successfully");
+          setUsername(newUsername);
+          setShowUsernameInput(false);
         } else {
           setErrorText("Some error occured");
         }
@@ -91,7 +95,8 @@ function Profile() {
         }),
       });
       if (res.status === 200) {
-        setErrorText("Updated successfully");
+        setShowEmailInput(false);
+        setEmail(newEmail);
       } else {
         setErrorText("Some error occured");
       }
@@ -127,35 +132,37 @@ function Profile() {
   );
 
   return (
-    <ProfileContainer>
-      <DivLine>
-        <span>Name: {name}</span>
-      </DivLine>
+    <ProfileOuterContainer>
+      <ProfileContainer>
+        <DivLine>
+          <span>Name: {name}</span>
+        </DivLine>
 
-      <DivLine>
-        <span>Username: {username}</span>
-        <button
-          type="button"
-          onClick={() => setShowUsernameInput(!showUsernameInput)}
-        >
-          Change
-        </button>
-      </DivLine>
-      {showUsernameInput ? <ChangeUsername /> : null}
+        <DivLine>
+          <span>Username: <b>{username}</b></span>
+          <Button
+            type="button"
+            onClick={() => setShowUsernameInput(!showUsernameInput)}
+          >
+            Change
+          </Button>
+        </DivLine>
+        {showUsernameInput ? <ChangeUsername /> : null}
 
-      <DivLine>
-        <span>Email: {email}</span>
-        <button
-          type="button"
-          onClick={() => setShowEmailInput(!showEmailInput)}
-        >
-          Change
-        </button>
-      </DivLine>
-      {showEmailInput ? <ChangeEmail /> : null}
+        <DivLine>
+          <span>Email: <b>{email}</b></span>
+          <Button
+            type="button"
+            onClick={() => setShowEmailInput(!showEmailInput)}
+          >
+            Change
+          </Button>
+        </DivLine>
+        {showEmailInput ? <ChangeEmail /> : null}
 
-      <ErrorLabel>{errorText}</ErrorLabel>
-    </ProfileContainer>
+        <ErrorLabel>{errorText}</ErrorLabel>
+      </ProfileContainer>
+    </ProfileOuterContainer>
   );
 }
 

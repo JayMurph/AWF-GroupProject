@@ -102,21 +102,46 @@ export const RecentScoreList = styled.div`
   text-align: center;
 `;
 
+export const DivLine = styled.div`
+  font-size:24px;
+  padding-bottom: 20px;
+  display: flex;
+
+  justify-content: space-between;
+  align-items:center;
+
+  @media (max-width:640px) {
+    flex-direction:column;
+    align-items:center;
+  }
+`;
+
+export const ProfileOuterContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+`;
+
+export const AccountOuterContainer = styled.div`
+  height: 100%;
+  width: 100%;
+`;
+
 export const ProfileContainer = styled.div`
-  margin-left: 72px;
-  margin-top: 72px;
-  width: 40vw;
+  width:100%;
+  max-width:  640px;
+
+  margin-top:72px;
+  @media (max-height:420px) {
+    margin-top:32px;
+  }
 `;
 
 export const AccountContentContainer = styled.div`
   height: 100%;
   width: 100%;
-`;
-
-export const AccountScrollContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
 `;
 
 export const AccountContainer = styled.div`
@@ -149,14 +174,6 @@ export const AccountMainLineContainer = styled.div`
     width: 100%;
     row-gap: 32px;
   }
-`;
-
-export const DivLine = styled.div`
-  position: relative;
-  padding-bottom: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
 `;
 
 export const ScrollDiv = styled(CenteredDiv)`

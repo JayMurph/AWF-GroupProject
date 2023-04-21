@@ -7,7 +7,8 @@ import {
   RecentScoreList,
   AccountContainer,
   AccountMainLineContainer,
-  AccountScrollContainer,
+  VerticalScrollContainer,
+  AccountOuterContainer
 } from "../StyledElements.js";
 import { API_URL } from "../App.js";
 import { GetSessionUserId } from "../Storage.js";
@@ -44,7 +45,7 @@ function AccountMain() {
   }, []);
 
   return (
-    <AccountScrollContainer>
+    <AccountOuterContainer>
       <AccountContainer>
         <AccountMainLineContainer>
           <ImageBox>
@@ -84,7 +85,7 @@ function AccountMain() {
           </ol>
         </RecentScoreList>
       </AccountContainer>
-    </AccountScrollContainer>
+    </AccountOuterContainer>
   );
 }
 
