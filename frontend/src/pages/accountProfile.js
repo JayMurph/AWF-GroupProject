@@ -122,7 +122,7 @@ function Profile() {
     <ProfileOuterContainer>
       <ProfileContainer>
         <DivLine>
-          <span>
+          <span style={{wordBreak:"break-all"}}>
             Name: <b>{name}</b>
           </span>
         </DivLine>
@@ -162,7 +162,7 @@ function Profile() {
         )}
 
         <DivLine>
-          <span>
+          <span style={{wordBreak:"break-all"}}>
             Email: <b>{email}</b>
           </span>
           <Button onClick={() => setShowEmailInput(!showEmailInput)}>
