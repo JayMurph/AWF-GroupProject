@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ProfileContainer,
   DivLine,
@@ -106,13 +106,13 @@ function Profile(props) {
     <ProfileOuterContainer>
       <ProfileContainer>
         <DivLine>
-          <span style={{wordBreak:"break-all"}}>
+          <span style={{ wordBreak: "break-all" }}>
             Name: <b>{props.fullName}</b>
           </span>
         </DivLine>
 
         <DivLine>
-          <span style={{wordBreak:"break-all"}}>
+          <span style={{ wordBreak: "break-all" }}>
             Username: <b>{username}</b>
           </span>
           <Button onClick={() => setShowUsernameInput(!showUsernameInput)}>
@@ -139,14 +139,14 @@ function Profile(props) {
                 <Button type="submit">Submit</Button>
               </form>
             </DivLine>
-            <ErrorLabel style={{textAlign:"center"}}>
+            <ErrorLabel style={{ textAlign: "center" }}>
               {usernameErrors.username ? usernameErrors.username : ""}
             </ErrorLabel>
           </>
         )}
 
         <DivLine>
-          <span style={{wordBreak:"break-all"}}>
+          <span style={{ wordBreak: "break-all" }}>
             Email: <b>{email}</b>
           </span>
           <Button onClick={() => setShowEmailInput(!showEmailInput)}>
@@ -173,13 +173,13 @@ function Profile(props) {
                 <Button type="submit">Submit</Button>
               </form>
             </DivLine>
-            <ErrorLabel style={{textAlign:"center"}}>
+            <ErrorLabel style={{ textAlign: "center" }}>
               {emailErrors.email ? emailErrors.email : ""}
             </ErrorLabel>
           </>
         )}
 
-        <ErrorLabel style={{textAlign:"center"}}>{errorText}</ErrorLabel>
+        <ErrorLabel style={{ textAlign: "center" }}>{errorText}</ErrorLabel>
       </ProfileContainer>
     </ProfileOuterContainer>
   );

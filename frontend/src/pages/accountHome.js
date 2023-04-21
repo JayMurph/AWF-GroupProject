@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import ProfileLayout from "../components/Navbar/profileLayout";
 import { Routes, Route } from "react-router-dom";
@@ -11,6 +11,10 @@ import { GetSessionUserId } from "../Storage";
 
 function AccountHome() {
   const [fullName, setFullName] = useState("");
+  const [highest, setHighest] = useState();
+  const [average, setAverage] = useState();
+  const [total, setTotal] = useState();
+  const [recentScores, setRecentScores] = useState(null);
 
   useEffect(() => {
     try {
@@ -20,19 +24,34 @@ function AccountHome() {
         }
         res.json().then((data) => {
           setFullName(data.firstName + " " + data.lastName);
+          setHighest(data.highestScore);
+          setAverage(data.scoreAverage);
+          setTotal(data.totalScore);
+          setRecentScores(data.recentScores);
         });
       });
     } catch (err) {
       console.log(err);
     }
-  }, [fullName]);
+  }, []);
 
   return (
     <AccountContentContainer>
       <Routes>
         <Route path="/" element={<ProfileLayout />}>
-          <Route exact path="/" element={<AccountMain />} />
-          <Route path="/details" element={<Profile fullName={fullName}/>} />
+          <Route
+            exact
+            path="/"
+            element={
+              <AccountMain
+                highest={highest}
+                average={average}
+                total={total}
+                recentScores={recentScores}
+              />
+            }
+          />
+          <Route path="/details" element={<Profile fullName={fullName} />} />
           <Route path="/changePassword" element={<ChangePassword />} />
         </Route>
       </Routes>
