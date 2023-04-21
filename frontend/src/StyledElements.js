@@ -15,12 +15,13 @@ export const PadLabel = styled.label`
   font-weight: bold;
 `;
 
-export const ChangePasswordDiv = styled.div`
+export const ChangePasswordForm = styled.form`
   width:100%;
   margin-top: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align:center;
 
   @media (max-height:420px) {
     margin-top: 8px;
@@ -113,6 +114,11 @@ export const DivLine = styled.div`
   @media (max-width:640px) {
     flex-direction:column;
     align-items:center;
+  }
+
+  @media (max-height:420px) or (max-width:640px){
+    padding-bottom:8px;
+    font-size:16px;
   }
 `;
 

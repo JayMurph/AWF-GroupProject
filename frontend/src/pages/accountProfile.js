@@ -29,7 +29,7 @@ function Profile() {
   const [errorText, setErrorText] = useState("");
   const [usernameFields, usernameErrors, usernameForm] = useFormInputValidation(
     {
-      username: username,
+      username: "",
     },
     {
       username: `required|alpha_dash|between:${MIN_USERNAME_LENGTH},${MAX_USERNAME_LENGTH}`,
@@ -38,7 +38,7 @@ function Profile() {
 
   const [emailFields, emailErrors, emailForm] = useFormInputValidation(
     {
-      email: email,
+      email: "",
     },
     {
       email: "required|email",
@@ -91,7 +91,7 @@ function Profile() {
   };
 
   const handleSubmitEmail = async (event) => {
-    const isValid = emailForm.validate(event);
+    const isValid = await emailForm.validate(event);
     if (isValid) {
       try {
         let res = await fetch(API_URL + "/profile/" + GetSessionUserId(), {
@@ -155,7 +155,7 @@ function Profile() {
                 <Button type="submit">Submit</Button>
               </form>
             </DivLine>
-            <ErrorLabel>
+            <ErrorLabel style={{textAlign:"center"}}>
               {usernameErrors.username ? usernameErrors.username : ""}
             </ErrorLabel>
           </>
@@ -189,13 +189,13 @@ function Profile() {
                 <Button type="submit">Submit</Button>
               </form>
             </DivLine>
-            <ErrorLabel>
+            <ErrorLabel style={{textAlign:"center"}}>
               {emailErrors.email ? emailErrors.email : ""}
             </ErrorLabel>
           </>
         )}
 
-        <ErrorLabel>{errorText}</ErrorLabel>
+        <ErrorLabel style={{textAlign:"center"}}>{errorText}</ErrorLabel>
       </ProfileContainer>
     </ProfileOuterContainer>
   );
