@@ -16,18 +16,34 @@ import {
   SetsessionUsername,
 } from "../Storage.js";
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "./signup.js";
+import { useFormInputValidation } from "react-form-input-validation";
 
 function Profile() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
-  const [newUsername, setNewUsername] = useState("");
-  const [newEmail, setNewEmail] = useState("");
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showEmailInput, setShowEmailInput] = useState(false);
 
   const [errorText, setErrorText] = useState("");
+  const [usernameFields, usernameErrors, usernameForm] = useFormInputValidation(
+    {
+      username: username,
+    },
+    {
+      username: `required|alpha_dash|between:${MIN_USERNAME_LENGTH},${MAX_USERNAME_LENGTH}`,
+    }
+  );
+
+  const [emailFields, emailErrors, emailForm] = useFormInputValidation(
+    {
+      email: email,
+    },
+    {
+      email: "required|email",
+    }
+  );
 
   useEffect(() => {
     try {
@@ -46,16 +62,9 @@ function Profile() {
     }
   }, [username, email]);
 
-  const handleSubmitUsername = async () => {
-    if (newUsername.length < MIN_USERNAME_LENGTH) {
-      setErrorText(
-        `Username must be at least ${MIN_USERNAME_LENGTH} characters in length`
-      );
-    } else if (newUsername.length > MAX_USERNAME_LENGTH) {
-      setErrorText(
-        `Username must not be greater than ${MAX_USERNAME_LENGTH} characters in length`
-      );
-    } else {
+  const handleSubmitUsername = async (event) => {
+    const isValid = await usernameForm.validate(event);
+    if (isValid) {
       try {
         let res = await fetch(API_URL + "/profile/" + GetSessionUserId(), {
           method: "PUT",
@@ -64,13 +73,13 @@ function Profile() {
             Authorization: "Bearer " + GetSessionAccessToken(),
           },
           body: JSON.stringify({
-            userName: newUsername,
+            userName: usernameFields.username,
             old_password: GetSessionPassword(),
           }),
         });
         if (res.status === 200) {
-          SetsessionUsername(newUsername);
-          setUsername(newUsername);
+          SetsessionUsername(usernameFields.username);
+          setUsername(usernameFields.username);
           setShowUsernameInput(false);
         } else {
           setErrorText("Some error occured");
@@ -81,86 +90,110 @@ function Profile() {
     }
   };
 
-  const handleSubmitEmail = async () => {
-    console.log(newUsername);
-    try {
-      let res = await fetch(API_URL + "/profile/" + GetSessionUserId(), {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + GetSessionAccessToken(),
-        },
-        body: JSON.stringify({
-          email: newEmail,
-          old_password: GetSessionPassword(),
-        }),
-      });
-      if (res.status === 200) {
-        SetSessionEmail(newEmail);
-        setEmail(newEmail);
-        setShowEmailInput(false);
-      } else {
-        setErrorText("Some error occured");
+  const handleSubmitEmail = async (event) => {
+    const isValid = emailForm.validate(event);
+    if (isValid) {
+      try {
+        let res = await fetch(API_URL + "/profile/" + GetSessionUserId(), {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + GetSessionAccessToken(),
+          },
+          body: JSON.stringify({
+            email: emailFields.email,
+            old_password: GetSessionPassword(),
+          }),
+        });
+        if (res.status === 200) {
+          SetSessionEmail(emailFields.email);
+          setEmail(emailFields.email);
+          setShowEmailInput(false);
+        } else {
+          setErrorText("Some error occured");
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
   };
-
-  const ChangeUsername = () => (
-    <DivLine>
-      <h4>New username: </h4>
-      <input
-        type="text"
-        value={newUsername}
-        onChange={(event) => setNewUsername(event.target.value)}
-        autoFocus
-      />
-      <Button onClick={() => handleSubmitUsername()}>Submit</Button>
-    </DivLine>
-  );
-
-  const ChangeEmail = () => (
-    <DivLine>
-      <h4>New email: </h4>
-      <input
-        type="text"
-        value={newEmail}
-        onChange={(event) => setNewEmail(event.target.value)}
-        autoFocus
-      />
-      <Button onClick={() => handleSubmitEmail()}>Submit</Button>
-    </DivLine>
-  );
 
   return (
     <ProfileOuterContainer>
       <ProfileContainer>
         <DivLine>
-          <span>Name: <b>{name}</b></span>
+          <span>
+            Name: <b>{name}</b>
+          </span>
         </DivLine>
 
         <DivLine>
-          <span>Username: <b>{username}</b></span>
-          <Button
-            type="button"
-            onClick={() => setShowUsernameInput(!showUsernameInput)}
-          >
+          <span>
+            Username: <b>{username}</b>
+          </span>
+          <Button onClick={() => setShowUsernameInput(!showUsernameInput)}>
             Change
           </Button>
         </DivLine>
-        {showUsernameInput ? <ChangeUsername /> : null}
+        {showUsernameInput && (
+          <>
+            <DivLine>
+              <h4>New username: </h4>
+              <form
+                className="usernameForm"
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmitUsername}
+              >
+                <input
+                  type="text"
+                  name="username"
+                  onBlur={usernameForm.handleBlurEvent}
+                  onChange={usernameForm.handleChangeEvent}
+                  value={usernameFields.username}
+                />
+                <Button type="submit">Submit</Button>
+              </form>
+            </DivLine>
+            <ErrorLabel>
+              {usernameErrors.username ? usernameErrors.username : ""}
+            </ErrorLabel>
+          </>
+        )}
 
         <DivLine>
-          <span>Email: <b>{email}</b></span>
-          <Button
-            type="button"
-            onClick={() => setShowEmailInput(!showEmailInput)}
-          >
+          <span>
+            Email: <b>{email}</b>
+          </span>
+          <Button onClick={() => setShowEmailInput(!showEmailInput)}>
             Change
           </Button>
         </DivLine>
-        {showEmailInput ? <ChangeEmail /> : null}
+        {showEmailInput && (
+          <>
+            <DivLine>
+              <h4>New email: </h4>
+              <form
+                className="emailForm"
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmitEmail}
+              >
+                <input
+                  type="text"
+                  name="email"
+                  onChange={emailForm.handleChangeEvent}
+                  onBlur={emailForm.handleBlurEvent}
+                  value={emailFields.email}
+                />
+                <Button type="submit">Submit</Button>
+              </form>
+            </DivLine>
+            <ErrorLabel>
+              {emailErrors.email ? emailErrors.email : ""}
+            </ErrorLabel>
+          </>
+        )}
 
         <ErrorLabel>{errorText}</ErrorLabel>
       </ProfileContainer>
