@@ -30,6 +30,10 @@ export function SetSessionEmail(email) {
   secureLocalStorage.setItem(EMAIL_KEY, email);
 }
 
+export function GetSessionEmail() {
+  return secureLocalStorage.getItem(EMAIL_KEY);
+}
+
 export function GetSessionUserId() {
   return secureLocalStorage.getItem(USER_ID_KEY);
 }

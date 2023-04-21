@@ -14,14 +14,15 @@ import {
   GetSessionAccessToken,
   SetSessionEmail,
   SetsessionUsername,
+  GetSessionUserName,
+  GetSessionEmail,
 } from "../Storage.js";
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "./signup.js";
 import { useFormInputValidation } from "react-form-input-validation";
 
-function Profile() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+function Profile(props) {
+  const [username, setUsername] = useState(GetSessionUserName());
+  const [email, setEmail] = useState(GetSessionEmail());
 
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showEmailInput, setShowEmailInput] = useState(false);
@@ -44,23 +45,6 @@ function Profile() {
       email: "required|email",
     }
   );
-
-  useEffect(() => {
-    try {
-      fetch(API_URL + "/profile/" + GetSessionUserId()).then((res) => {
-        if (res.status !== 200) {
-          return;
-        }
-        res.json().then((data) => {
-          if (data != null) setUsername(data.userName);
-          setName(data.firstName + " " + data.lastName);
-          setEmail(data.email);
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, [username, email]);
 
   const handleSubmitUsername = async (event) => {
     const isValid = await usernameForm.validate(event);
@@ -123,7 +107,7 @@ function Profile() {
       <ProfileContainer>
         <DivLine>
           <span style={{wordBreak:"break-all"}}>
-            Name: <b>{name}</b>
+            Name: <b>{props.fullName}</b>
           </span>
         </DivLine>
 
