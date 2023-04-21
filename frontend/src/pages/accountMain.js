@@ -5,6 +5,9 @@ import {
   Username,
   ScoreTable,
   RecentScoreList,
+  AccountContainer,
+  AccountMainLineContainer,
+  AccountScrollContainer,
 } from "../StyledElements.js";
 import { API_URL } from "../App.js";
 import { GetSessionUserId } from "../Storage.js";
@@ -41,38 +44,47 @@ function AccountMain() {
   }, []);
 
   return (
-    <>
-      <ImageBox>
-        <img src="/avatar.png" width="200" height="230" alt="Avatar"></img>
-        <Username>{username}</Username>
-      </ImageBox>
+    <AccountScrollContainer>
+      <AccountContainer>
+        <AccountMainLineContainer>
+          <ImageBox>
+            <img
+              src="/avatar.png"
+              width="100%"
+              height="100%"
+              alt="Avatar"
+            ></img>
+            <Username>{username}</Username>
+          </ImageBox>
 
-      <ScoreTable>
-        <tbody>
-          <tr>
-            <td>{highest}</td>
-            <td>{avarage}</td>
-            <td>{total}</td>
-          </tr>
-          <tr>
-            <th>Highest</th>
-            <th>Average</th>
-            <th>Total</th>
-          </tr>
-        </tbody>
-      </ScoreTable>
+          <ScoreTable>
+            <tbody>
+              <tr>
+                <td>{highest}</td>
+                <td>{avarage}</td>
+                <td>{total}</td>
+              </tr>
+              <tr>
+                <th>Highest</th>
+                <th>Average</th>
+                <th>Total</th>
+              </tr>
+            </tbody>
+          </ScoreTable>
+        </AccountMainLineContainer>
 
-      <RecentScoreList>
-        <h4>Recent Scores</h4>
-        <ol>
-          {recentScores != null
-            ? recentScores.map((recentScore) => {
-                return <li>{recentScore.finalScore}</li>;
-              })
-            : ""}
-        </ol>
-      </RecentScoreList>
-    </>
+        <RecentScoreList>
+          <h4>Recent Scores</h4>
+          <ol>
+            {recentScores != null
+              ? recentScores.map((recentScore) => {
+                  return <li>{recentScore.finalScore}</li>;
+                })
+              : ""}
+          </ol>
+        </RecentScoreList>
+      </AccountContainer>
+    </AccountScrollContainer>
   );
 }
 

@@ -12,10 +12,7 @@ import {
   GetSessionPassword,
   GetSessionAccessToken,
 } from "../Storage.js";
-import {
-  MAX_USERNAME_LENGTH,
-  MIN_USERNAME_LENGTH,
-} from "./signup.js";
+import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "./signup.js";
 
 function Profile() {
   const [name, setName] = useState("");
@@ -130,37 +127,35 @@ function Profile() {
   );
 
   return (
-    <>
-      <ProfileContainer>
-        <DivLine>
-          <span>Name: {name}</span>
-        </DivLine>
+    <ProfileContainer>
+      <DivLine>
+        <span>Name: {name}</span>
+      </DivLine>
 
-        <DivLine>
-          <span>Username: {username}</span>
-          <button
-            type="button"
-            onClick={() => setShowUsernameInput(!showUsernameInput)}
-          >
-            Change
-          </button>
-        </DivLine>
-        {showUsernameInput ? <ChangeUsername /> : null}
+      <DivLine>
+        <span>Username: {username}</span>
+        <button
+          type="button"
+          onClick={() => setShowUsernameInput(!showUsernameInput)}
+        >
+          Change
+        </button>
+      </DivLine>
+      {showUsernameInput ? <ChangeUsername /> : null}
 
-        <DivLine>
-          <span>Email: {email}</span>
-          <button
-            type="button"
-            onClick={() => setShowEmailInput(!showEmailInput)}
-          >
-            Change
-          </button>
-        </DivLine>
-        {showEmailInput ? <ChangeEmail /> : null}
+      <DivLine>
+        <span>Email: {email}</span>
+        <button
+          type="button"
+          onClick={() => setShowEmailInput(!showEmailInput)}
+        >
+          Change
+        </button>
+      </DivLine>
+      {showEmailInput ? <ChangeEmail /> : null}
 
-        <ErrorLabel>{errorText}</ErrorLabel>
-      </ProfileContainer>
-    </>
+      <ErrorLabel>{errorText}</ErrorLabel>
+    </ProfileContainer>
   );
 }
 

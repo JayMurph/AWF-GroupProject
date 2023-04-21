@@ -44,7 +44,6 @@ function ChangePassword() {
   };
 
   return (
-    <>
       <ChangePasswordDiv>
       <PadLabel>New password:</PadLabel>
       <FormTextbox
@@ -66,7 +65,6 @@ function ChangePassword() {
 
       <ErrorLabel>{errorText}</ErrorLabel>
       </ChangePasswordDiv>
-    </>
   );
 }
 
