@@ -137,7 +137,7 @@ function Profile() {
     <ProfileOuterContainer>
       <ProfileContainer>
         <DivLine>
-          <span>Name: {name}</span>
+          <span>Name: <b>{name}</b></span>
         </DivLine>
 
         <DivLine>
