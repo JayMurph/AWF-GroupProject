@@ -9,24 +9,23 @@ export const CenteredDiv = styled.div`
   align-items: center;
 `;
 
-
 export const PadLabel = styled.label`
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-weight: bold;
 `;
 
 export const ChangePasswordDiv = styled.div`
-    position:absolute;
-    left: 40%;
-    top: 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-`;
+  width:100%;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  @media (max-height:420px) {
+    margin-top: 8px;
+  }
+`;
 
 export const PageHeader = styled.h1`
   text-align: center;
@@ -63,9 +62,11 @@ export const QuestionSequenceHeaderContainer = styled.div`
   }
 `;
 
-export const LeaderboardHeaderContainer = styled(QuestionSequenceHeaderContainer)`
-  width:100%
-`
+export const LeaderboardHeaderContainer = styled(
+  QuestionSequenceHeaderContainer
+)`
+  width: 100%;
+`;
 
 export const AppContentContainer = styled(FlexColumnContainer)`
   height: 90vh;
@@ -75,56 +76,104 @@ export const NoBreakScrollDiv = styled(CenteredDiv)`
   overflow-y: auto;
 `;
 
-export const AccountContentContainer = styled.div`
-    float: right;
-    height:100%;
-    width:80vw;
-`;
-
 export const ImageBox = styled.div`
-    position:absolute;
-    left: 25vw;
-    top: 20vh;
-    width: 200px;
-    height:230px;
+  width: 200px;
+  height: 230px;
+  @media (max-width: 640px) or (max-height: 420px) {
+    width: 150px;
+    height: 163px;
+  }
 `;
 
-export const ScoreTable = styled.table`   
-    position:absolute;
-    left: 40vw;
-    top: 40vh;
-    text-align: center;
-    width:600px;
+export const ScoreTable = styled.table`
+  height: 48px;
+  text-align: center;
+  width: 60%;
 `;
 
 export const Username = styled.div`
-    position:absolute;
-    top: 170px;
-    width: 200px;
-    text-align: center;
+  margin-top: -35%;
+  width: 100%;
+  text-align: center;
 `;
 
 export const RecentScoreList = styled.div`
-    position:absolute;
-    left: 45vw;
-    top: 60vh;
-    width: 200px;
-    text-align: center;
-`;
-
-export const ProfileContainer = styled.div`
-    position:absolute;
-    left: 35vw;
-    top: 30vh;
-    width: 40vw;
+  width: 200px;
+  text-align: center;
 `;
 
 export const DivLine = styled.div`
-    position: relative;
-    padding-bottom: 20px; 
-    width:100%; 
-    display: flex;
-    justify-content: space-between;
+  font-size:24px;
+  padding-bottom: 20px;
+  display: flex;
+
+  justify-content: space-between;
+  align-items:center;
+
+  @media (max-width:640px) {
+    flex-direction:column;
+    align-items:center;
+  }
+`;
+
+export const ProfileOuterContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+`;
+
+export const AccountOuterContainer = styled.div`
+  height: 100%;
+  width: 100%;
+`;
+
+export const ProfileContainer = styled.div`
+  width:100%;
+  max-width:  640px;
+
+  margin-top:72px;
+  @media (max-height:420px) {
+    margin-top:32px;
+  }
+`;
+
+export const AccountContentContainer = styled.div`
+  height: 100%;
+  width: 100%;
+`;
+
+export const AccountContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: min-content;
+  width: min-content;
+  margin-left: 72px;
+  margin-top: 72px;
+  align-items: center;
+  justify-items:center;
+
+  @media (max-width: 1000px) {
+    margin-left: 0px;
+    margin-top: 32px;
+    justify-self: center;
+    width: 100%;
+  }
+`;
+
+export const AccountMainLineContainer = styled.div`
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  height: min-content;
+  @media (max-width: 1000px) {
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 32px;
+  }
 `;
 
 export const ScrollDiv = styled(CenteredDiv)`
@@ -253,16 +302,16 @@ export const LeaderboardItemContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
-  align-self:start;
+  align-self: start;
 
   border-radius: 20px;
-  @media (max-width:640px) or (max-height:640px){
+  @media (max-width: 640px) or (max-height: 640px) {
     border-radius: 5px;
   }
 `;
 
 export const LeaderboardIndex = styled.div`
-  font-size:32px;
+  font-size: 32px;
   font-weight: bold;
   margin-right: 1.4vw;
   margin-left: 1.4vw;
@@ -270,9 +319,9 @@ export const LeaderboardIndex = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size:32px;
-  @media (max-width:640px) or (max-height:640px){
-    font-size:22px;
+  font-size: 32px;
+  @media (max-width: 640px) or (max-height: 640px) {
+    font-size: 22px;
   }
 `;
 
@@ -285,9 +334,9 @@ export const LeaderboardScore = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size:32px;
-  @media (max-width:640px) or (max-height:640px){
-    font-size:22px;
+  font-size: 32px;
+  @media (max-width: 640px) or (max-height: 640px) {
+    font-size: 22px;
   }
 `;
 
@@ -296,107 +345,103 @@ export const LeaderboardUsername = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size:16px;
-`
+  font-size: 16px;
+`;
 
 export const InfiniteListOuter = styled(FlexColumnContainer)`
+  overflow: clip;
 
-overflow:clip;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 
-margin-top:1vh;
-margin-bottom:1vh;
-
-@media (max-height:420px) {
-  margin-top:3vh;
-  margin-bottom:2vh;
-}
-`
-
-export const LeaderboardContainer = styled(CenteredDiv)`
-
-  @media (min-width: 641px) and (min-height:641px){
-    >* {
-      height:55px;
-      min-width:min-content;
-    }
-
-    >div:nth-child(1) {
-      height:100px
-    }
-    >div:nth-child(1) > ${LeaderboardIndex} {
-      font-size:72px;
-    }
-    >div:nth-child(1) > ${LeaderboardScore} {
-      font-size:72px;
-    }
-    >div:nth-child(1) > ${LeaderboardUsername} {
-      font-size:64px;
-    }
-
-    >div:nth-child(2) {
-      height:90px
-    }
-    >div:nth-child(2) > ${LeaderboardIndex} {
-      font-size:64px;
-    }
-    >div:nth-child(2) > ${LeaderboardScore} {
-      font-size:64px;
-    }
-    >div:nth-child(2) > ${LeaderboardUsername} {
-      font-size:56px;
-    }
-
-    >div:nth-child(3) {
-      height:80px
-    }
-    >div:nth-child(3) > ${LeaderboardIndex} {
-      font-size:56px;
-    }
-    >div:nth-child(3) > ${LeaderboardScore} {
-      font-size:56px;
-    }
-    >div:nth-child(3) > ${LeaderboardUsername} {
-      font-size:48px;
-    }
-
-    >div:nth-child(4) {
-      height:70px
-    }
-    >div:nth-child(4) > ${LeaderboardIndex} {
-      font-size:48px;
-    }
-    >div:nth-child(4) > ${LeaderboardScore} {
-      font-size:48px;
-    }
-    >div:nth-child(4) > ${LeaderboardUsername} {
-      font-size:32px;
-    }
-
-    >div:nth-child(5) {
-      height:60px
-    }
-    >div:nth-child(5) > ${LeaderboardIndex} {
-      font-size:40px;
-    }
-    >div:nth-child(5) > ${LeaderboardScore} {
-      font-size:40px;
-    }
-    >div:nth-child(5) > ${LeaderboardUsername} {
-      font-size:24px;
-    }
-  }
-
-  @media (max-width:640px) or (max-height:640px){
-    >* {
-      height:35px;
-      min-width:min-content;
-    }
-  }
-
-
-  row-gap: 24px;
-  @media (max-width:640px) or (max-height:640px){
-    row-gap: 16px;
+  @media (max-height: 420px) {
+    margin-top: 3vh;
+    margin-bottom: 2vh;
   }
 `;
 
+export const LeaderboardContainer = styled(CenteredDiv)`
+  @media (min-width: 641px) and (min-height: 641px) {
+    > * {
+      height: 55px;
+      min-width: min-content;
+    }
+
+    > div:nth-child(1) {
+      height: 100px;
+    }
+    > div:nth-child(1) > ${LeaderboardIndex} {
+      font-size: 72px;
+    }
+    > div:nth-child(1) > ${LeaderboardScore} {
+      font-size: 72px;
+    }
+    > div:nth-child(1) > ${LeaderboardUsername} {
+      font-size: 64px;
+    }
+
+    > div:nth-child(2) {
+      height: 90px;
+    }
+    > div:nth-child(2) > ${LeaderboardIndex} {
+      font-size: 64px;
+    }
+    > div:nth-child(2) > ${LeaderboardScore} {
+      font-size: 64px;
+    }
+    > div:nth-child(2) > ${LeaderboardUsername} {
+      font-size: 56px;
+    }
+
+    > div:nth-child(3) {
+      height: 80px;
+    }
+    > div:nth-child(3) > ${LeaderboardIndex} {
+      font-size: 56px;
+    }
+    > div:nth-child(3) > ${LeaderboardScore} {
+      font-size: 56px;
+    }
+    > div:nth-child(3) > ${LeaderboardUsername} {
+      font-size: 48px;
+    }
+
+    > div:nth-child(4) {
+      height: 70px;
+    }
+    > div:nth-child(4) > ${LeaderboardIndex} {
+      font-size: 48px;
+    }
+    > div:nth-child(4) > ${LeaderboardScore} {
+      font-size: 48px;
+    }
+    > div:nth-child(4) > ${LeaderboardUsername} {
+      font-size: 32px;
+    }
+
+    > div:nth-child(5) {
+      height: 60px;
+    }
+    > div:nth-child(5) > ${LeaderboardIndex} {
+      font-size: 40px;
+    }
+    > div:nth-child(5) > ${LeaderboardScore} {
+      font-size: 40px;
+    }
+    > div:nth-child(5) > ${LeaderboardUsername} {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 640px) or (max-height: 640px) {
+    > * {
+      height: 35px;
+      min-width: min-content;
+    }
+  }
+
+  row-gap: 24px;
+  @media (max-width: 640px) or (max-height: 640px) {
+    row-gap: 16px;
+  }
+`;

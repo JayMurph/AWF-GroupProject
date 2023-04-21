@@ -5,17 +5,17 @@ import {
   DivLine,
   ErrorLabel,
   Button,
+  ProfileOuterContainer,
 } from "../StyledElements.js";
 import { API_URL } from "../App.js";
 import {
   GetSessionUserId,
   GetSessionPassword,
   GetSessionAccessToken,
+  SetSessionEmail,
+  SetsessionUsername,
 } from "../Storage.js";
-import {
-  MAX_USERNAME_LENGTH,
-  MIN_USERNAME_LENGTH,
-} from "./signup.js";
+import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "./signup.js";
 
 function Profile() {
   const [name, setName] = useState("");
@@ -69,7 +69,9 @@ function Profile() {
           }),
         });
         if (res.status === 200) {
-          setErrorText("Updated successfully");
+          SetsessionUsername(newUsername);
+          setUsername(newUsername);
+          setShowUsernameInput(false);
         } else {
           setErrorText("Some error occured");
         }
@@ -94,7 +96,9 @@ function Profile() {
         }),
       });
       if (res.status === 200) {
-        setErrorText("Updated successfully");
+        SetSessionEmail(newEmail);
+        setEmail(newEmail);
+        setShowEmailInput(false);
       } else {
         setErrorText("Some error occured");
       }
@@ -130,37 +134,37 @@ function Profile() {
   );
 
   return (
-    <>
+    <ProfileOuterContainer>
       <ProfileContainer>
         <DivLine>
           <span>Name: {name}</span>
         </DivLine>
 
         <DivLine>
-          <span>Username: {username}</span>
-          <button
+          <span>Username: <b>{username}</b></span>
+          <Button
             type="button"
             onClick={() => setShowUsernameInput(!showUsernameInput)}
           >
             Change
-          </button>
+          </Button>
         </DivLine>
         {showUsernameInput ? <ChangeUsername /> : null}
 
         <DivLine>
-          <span>Email: {email}</span>
-          <button
+          <span>Email: <b>{email}</b></span>
+          <Button
             type="button"
             onClick={() => setShowEmailInput(!showEmailInput)}
           >
             Change
-          </button>
+          </Button>
         </DivLine>
         {showEmailInput ? <ChangeEmail /> : null}
 
         <ErrorLabel>{errorText}</ErrorLabel>
       </ProfileContainer>
-    </>
+    </ProfileOuterContainer>
   );
 }
 

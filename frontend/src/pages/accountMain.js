@@ -5,6 +5,9 @@ import {
   Username,
   ScoreTable,
   RecentScoreList,
+  AccountContainer,
+  AccountMainLineContainer,
+  AccountOuterContainer
 } from "../StyledElements.js";
 import { API_URL } from "../App.js";
 import { GetSessionUserId } from "../Storage.js";
@@ -39,11 +42,19 @@ function AccountMain() {
   }, []);
 
   return (
-    <>
-      <ImageBox>
-        <img src="/avatar.png" width="200" height="230" alt="Avatar"></img>
-        <Username>{username}</Username>
-      </ImageBox>
+    <AccountOuterContainer>
+      <AccountContainer>
+        <AccountMainLineContainer>
+          <ImageBox>
+            <img
+              src="/avatar.png"
+              width="100%"
+              height="100%"
+              alt="Avatar"
+            ></img>
+            <Username>{username}</Username>
+          </ImageBox>
+        </AccountMainLineContainer>
 
       <ScoreTable>
         <tbody>
@@ -60,17 +71,18 @@ function AccountMain() {
         </tbody>
       </ScoreTable>
 
-      <RecentScoreList>
-        <h4>Recent Scores</h4>
-        <ol>
-          {recentScores != null
-            ? recentScores.map((recentScore) => {
-                return <li>{recentScore.finalScore}</li>;
-              })
-            : ""}
-        </ol>
-      </RecentScoreList>
-    </>
+        <RecentScoreList>
+          <h4>Recent Scores</h4>
+          <ol>
+            {recentScores != null
+              ? recentScores.map((recentScore) => {
+                  return <li>{recentScore.finalScore}</li>;
+                })
+              : ""}
+          </ol>
+        </RecentScoreList>
+      </AccountContainer>
+    </AccountOuterContainer>
   );
 }
 
