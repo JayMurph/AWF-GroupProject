@@ -4,6 +4,7 @@ import {
   PageHeader,
   ErrorLabel,
   NoBreakScrollDiv,
+  LoadingLabel,
 } from "../StyledElements.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LoginUser } from "../ApiCalls.js";
@@ -12,6 +13,7 @@ const Login = (props) => {
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState("");
   const [loginData, setLoginData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const userName = location.state?.userName ?? "";
 
@@ -33,18 +35,22 @@ const Login = (props) => {
   }, [loginData, props, navigate, userName]);
 
   const formSubmit = (fields) => {
+    setLoading(true);
+    setErrorText("");
     LoginUser(fields.username, fields.password)
       .then((res) => res.json())
-      .then((authRes) =>
+      .then((authRes) => {
+        setLoading(false);
         setLoginData({
           accessToken: authRes.accessToken,
           refreshToken: authRes.refreshToken,
           userName: fields.username,
           password: fields.password,
-        })
-      )
+        });
+      })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
         setErrorText("Unable to Login!");
       });
   };
@@ -54,6 +60,7 @@ const Login = (props) => {
       <PageHeader>Login</PageHeader>
       <LoginForm onSubmit={formSubmit} username={userName}></LoginForm>
       <ErrorLabel>{errorText}</ErrorLabel>
+      {loading && <LoadingLabel>Loading...</LoadingLabel>}
     </NoBreakScrollDiv>
   );
 };
