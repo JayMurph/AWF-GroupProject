@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ProfileContainer,
   DivLine,
@@ -14,14 +14,15 @@ import {
   GetSessionAccessToken,
   SetSessionEmail,
   SetsessionUsername,
+  GetSessionUserName,
+  GetSessionEmail,
 } from "../Storage.js";
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "./signup.js";
 import { useFormInputValidation } from "react-form-input-validation";
 
-function Profile() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+function Profile(props) {
+  const [username, setUsername] = useState(GetSessionUserName());
+  const [email, setEmail] = useState(GetSessionEmail());
 
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showEmailInput, setShowEmailInput] = useState(false);
@@ -44,23 +45,6 @@ function Profile() {
       email: "required|email",
     }
   );
-
-  useEffect(() => {
-    try {
-      fetch(API_URL + "/profile/" + GetSessionUserId()).then((res) => {
-        if (res.status !== 200) {
-          return;
-        }
-        res.json().then((data) => {
-          if (data != null) setUsername(data.userName);
-          setName(data.firstName + " " + data.lastName);
-          setEmail(data.email);
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, [username, email]);
 
   const handleSubmitUsername = async (event) => {
     const isValid = await usernameForm.validate(event);
@@ -122,13 +106,13 @@ function Profile() {
     <ProfileOuterContainer>
       <ProfileContainer>
         <DivLine>
-          <span style={{wordBreak:"break-all"}}>
-            Name: <b>{name}</b>
+          <span style={{ wordBreak: "break-all" }}>
+            Name: <b>{props.fullName}</b>
           </span>
         </DivLine>
 
         <DivLine>
-          <span style={{wordBreak:"break-all"}}>
+          <span style={{ wordBreak: "break-all" }}>
             Username: <b>{username}</b>
           </span>
           <Button onClick={() => setShowUsernameInput(!showUsernameInput)}>
@@ -155,14 +139,14 @@ function Profile() {
                 <Button type="submit">Submit</Button>
               </form>
             </DivLine>
-            <ErrorLabel style={{textAlign:"center"}}>
+            <ErrorLabel style={{ textAlign: "center" }}>
               {usernameErrors.username ? usernameErrors.username : ""}
             </ErrorLabel>
           </>
         )}
 
         <DivLine>
-          <span style={{wordBreak:"break-all"}}>
+          <span style={{ wordBreak: "break-all" }}>
             Email: <b>{email}</b>
           </span>
           <Button onClick={() => setShowEmailInput(!showEmailInput)}>
@@ -189,13 +173,13 @@ function Profile() {
                 <Button type="submit">Submit</Button>
               </form>
             </DivLine>
-            <ErrorLabel style={{textAlign:"center"}}>
+            <ErrorLabel style={{ textAlign: "center" }}>
               {emailErrors.email ? emailErrors.email : ""}
             </ErrorLabel>
           </>
         )}
 
-        <ErrorLabel style={{textAlign:"center"}}>{errorText}</ErrorLabel>
+        <ErrorLabel style={{ textAlign: "center" }}>{errorText}</ErrorLabel>
       </ProfileContainer>
     </ProfileOuterContainer>
   );

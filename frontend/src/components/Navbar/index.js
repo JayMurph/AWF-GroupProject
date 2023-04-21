@@ -23,7 +23,7 @@ const Navbar = (props) => {
                 Quiz{" "}
               </NavLink>
               <NavLink to="/profile" activeStyle>
-                Profile
+                Account
               </NavLink>
               <NavLink to="/logout" activeStyle>
                 Logout

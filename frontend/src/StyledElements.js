@@ -16,14 +16,14 @@ export const PadLabel = styled.label`
 `;
 
 export const ChangePasswordForm = styled.form`
-  width:100%;
+  width: 100%;
   margin-top: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align:center;
+  text-align: center;
 
-  @media (max-height:420px) {
+  @media (max-height: 420px) {
     margin-top: 8px;
   }
 `;
@@ -104,32 +104,32 @@ export const RecentScoreList = styled.div`
 `;
 
 export const DivLine = styled.div`
-  font-size:24px;
+  font-size: 24px;
   padding-bottom: 20px;
   display: flex;
 
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
 
-  @media (max-width:640px) {
-    flex-direction:column;
-    align-items:center;
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
   }
 
-  @media (max-height:420px) or (max-width:640px){
-    padding-bottom:8px;
-    font-size:16px;
+  @media (max-height: 420px) or (max-width: 640px) {
+    padding-bottom: 8px;
+    font-size: 16px;
   }
 `;
 
 export const ProfileOuterContainer = styled.div`
   height: 100%;
   width: 100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   overflow-y: auto;
-  overflow-x:hidden;
+  overflow-x: hidden;
 `;
 
 export const AccountOuterContainer = styled.div`
@@ -139,21 +139,21 @@ export const AccountOuterContainer = styled.div`
 `;
 
 export const ProfileContainer = styled.div`
-  display:flex;
-  flex-direction:column;
-  width:100%;
-  max-width:  640px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
   margin-left: 20px;
   margin-right: 20px;
-  height:min-content;
+  height: min-content;
 
-  margin-top:72px;
-  @media (max-height:420px) {
-    margin-top:32px;
+  margin-top: 72px;
+  @media (max-height: 420px) {
+    margin-top: 32px;
   }
-  @media (max-width:640px) {
-    height:100%;
-    justify-content:space-evenly;
+  @media (max-width: 640px) {
+    height: 100%;
+    justify-content: space-evenly;
   }
 `;
 
@@ -170,7 +170,7 @@ export const AccountContainer = styled.div`
   margin-left: 72px;
   margin-top: 72px;
   align-items: center;
-  justify-items:center;
+  justify-items: center;
 
   @media (max-width: 1000px) {
     margin-left: 0px;
@@ -283,14 +283,14 @@ export const CenteredForm = styled.form`
 export const ErrorLabel = styled(CenteredDiv)`
   classname: "error";
   color: #df0000;
-  font-weight:bold;
-  font-size:18px;
+  font-weight: bold;
+  font-size: 18px;
 `;
 
 export const LoadingLabel = styled(CenteredDiv)`
   classname: "loadingLabel";
-  font-weight:bold;
-  font-size:18px;
+  font-weight: bold;
+  font-size: 18px;
 `;
 
 export const QuestionTextHeader = styled.div`
