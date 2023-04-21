@@ -16,14 +16,15 @@ export const PadLabel = styled.label`
 `;
 
 export const ChangePasswordDiv = styled.div`
-  position: absolute;
-  left: 40%;
-  top: 25%;
+  width:100%;
+  margin-top: 48px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  justify-items: center;
   align-items: center;
+
+  @media (max-height:420px) {
+    margin-top: 8px;
+  }
 `;
 
 export const PageHeader = styled.h1`
@@ -102,9 +103,8 @@ export const RecentScoreList = styled.div`
 `;
 
 export const ProfileContainer = styled.div`
-  position: absolute;
-  left: 35vw;
-  top: 30vh;
+  margin-left: 72px;
+  margin-top: 72px;
   width: 40vw;
 `;
 
@@ -127,6 +127,7 @@ export const AccountContainer = styled.div`
   margin-left: 72px;
   margin-top: 72px;
   align-items: center;
+  justify-items:center;
 
   @media (max-width: 1000px) {
     margin-left: 0px;
