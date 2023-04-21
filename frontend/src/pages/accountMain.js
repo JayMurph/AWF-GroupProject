@@ -7,7 +7,6 @@ import {
   RecentScoreList,
   AccountContainer,
   AccountMainLineContainer,
-  VerticalScrollContainer,
   AccountOuterContainer
 } from "../StyledElements.js";
 import { API_URL } from "../App.js";

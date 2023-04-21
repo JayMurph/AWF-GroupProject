@@ -5,8 +5,6 @@ import {
   DivLine,
   ErrorLabel,
   Button,
-  ProfileScrollContainer,
-  VerticalScrollContainer,
   ProfileOuterContainer,
 } from "../StyledElements.js";
 import { API_URL } from "../App.js";
@@ -14,6 +12,8 @@ import {
   GetSessionUserId,
   GetSessionPassword,
   GetSessionAccessToken,
+  SetSessionEmail,
+  SetsessionUsername,
 } from "../Storage.js";
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from "./signup.js";
 
@@ -69,6 +69,7 @@ function Profile() {
           }),
         });
         if (res.status === 200) {
+          SetsessionUsername(newUsername);
           setUsername(newUsername);
           setShowUsernameInput(false);
         } else {
@@ -95,8 +96,9 @@ function Profile() {
         }),
       });
       if (res.status === 200) {
-        setShowEmailInput(false);
+        SetSessionEmail(newEmail);
         setEmail(newEmail);
+        setShowEmailInput(false);
       } else {
         setErrorText("Some error occured");
       }

@@ -18,6 +18,18 @@ export const COOKIE_KEYS = [
 //const LAST_NAME_KEY = "lastName";
 //const BIRTH_DATE_KEY = "birthDate";
 
+export function SetSessionPassword(password) {
+  secureLocalStorage.setItem(PASSWORD_KEY, password);
+}
+
+export function SetsessionUsername(userName) {
+  secureLocalStorage.setItem(USERNAME_KEY, userName);
+}
+
+export function SetSessionEmail(email) {
+  secureLocalStorage.setItem(EMAIL_KEY, email);
+}
+
 export function GetSessionUserId() {
   return secureLocalStorage.getItem(USER_ID_KEY);
 }

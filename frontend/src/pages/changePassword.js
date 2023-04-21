@@ -12,6 +12,7 @@ import {
   GetSessionUserId,
   GetSessionPassword,
   GetSessionAccessToken,
+  SetSessionPassword,
 } from "../Storage.js";
 import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from "./signup.js";
 
@@ -46,6 +47,7 @@ function ChangePassword() {
         });
         if (res.status === 200) {
           setErrorText("Updated successfully");
+          SetSessionPassword(password1);
           setPassword1("");
           setPassword2("");
         } else {
